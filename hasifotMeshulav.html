@@ -221,7 +221,27 @@
                 padding: 0.5rem 1rem;
             }
             
-            footer{max-width: 100%;box-sizing: border-box;margin: 0;padding: 0;}
+            footer,
+            .site-footer,
+            .footer-content {
+                max-width: 100% !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+                margin: 0 !important;
+                padding: 15px 10px !important;
+                overflow-x: hidden !important;
+            }
+            
+            .footer-links {
+                flex-wrap: wrap !important;
+                gap: 10px !important;
+                max-width: 100% !important;
+            }
+            
+            .footer-links a {
+                word-wrap: break-word !important;
+                max-width: 100% !important;
+            }
 
             .nav-menu {
                 position: fixed;
@@ -766,33 +786,7 @@
     <script src='HasifotMeshulav.js'></script>
     
     <script>
-        // Mobile menu toggle
-        const hamburger = document.getElementById('hamburger');
-        const navMenu = document.getElementById('navMenu');
-
-        if (hamburger && navMenu) {
-            hamburger.addEventListener('click', () => {
-                hamburger.classList.toggle('active');
-                navMenu.classList.toggle('active');
-                if(navMenu.classList.contains('active')){
-                    document.querySelectorAll('.percentage').forEach(
-                        p => p.style.display = 'none'
-                    )
-                }else{
-                    document.querySelectorAll('.percentage').forEach(
-                        p => p.style.display = 'block'
-                    )
-                }
-            });
-
-            // Close menu when clicking on a link
-            navMenu.addEventListener('click', (e) => {
-                if (e.target.tagName === 'A' && !e.target.onclick) {
-                    hamburger.classList.remove('active');
-                    navMenu.classList.remove('active');
-                }
-            });
-        }
+        // Mobile menu toggle - removed to prevent duplication
         
         // Products dropdown functionality
         function toggleHasifotProductsDropdown(event) {
@@ -946,7 +940,8 @@
             const navMenu = document.getElementById('navMenu');
             
             if (hamburger && navMenu) {
-                hamburger.addEventListener('click', function() {
+                hamburger.addEventListener('click', function(e) {
+                    e.stopPropagation();
                     this.classList.toggle('active');
                     navMenu.classList.toggle('active');
                 });

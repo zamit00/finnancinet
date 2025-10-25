@@ -510,7 +510,27 @@
                 width: 120px;
             }
             
-            footer{max-width: 100%;box-sizing: border-box;margin: 0;padding: 0;}
+            footer,
+            .site-footer,
+            .footer-content {
+                max-width: 100% !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+                margin: 0 !important;
+                padding: 15px 10px !important;
+                overflow-x: hidden !important;
+            }
+            
+            .footer-links {
+                flex-wrap: wrap !important;
+                gap: 10px !important;
+                max-width: 100% !important;
+            }
+            
+            .footer-links a {
+                word-wrap: break-word !important;
+                max-width: 100% !important;
+            }
 
             .nav-menu {
                 display: none;
@@ -1894,7 +1914,8 @@ function createChart(lbl, dt) {
             const navMenu = document.getElementById('navMenu');
             
             if (hamburger && navMenu) {
-                hamburger.addEventListener('click', function() {
+                hamburger.addEventListener('click', function(e) {
+                    e.stopPropagation();
                     this.classList.toggle('active');
                     navMenu.classList.toggle('active');
                 });
@@ -1947,39 +1968,7 @@ function createChart(lbl, dt) {
             });
         });
 
-        // Hamburger menu functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            // Load all data
-            if (typeof loadalldata === 'function') {
-                loadalldata();
-            }
-            
-            const hamburger = document.getElementById('hamburger');
-            const navMenu = document.getElementById('navMenu');
-            
-            if (hamburger && navMenu) {
-                hamburger.addEventListener('click', function() {
-                    this.classList.toggle('active');
-                    navMenu.classList.toggle('active');
-                });
-
-                document.addEventListener('click', function(e) {
-                    if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
-                        navMenu.classList.remove('active');
-                        hamburger.classList.remove('active');
-                    }
-                });
-
-                document.querySelectorAll('.nav-menu a').forEach(link => {
-                    link.addEventListener('click', function(e) {
-                        if (window.innerWidth <= 768 && !this.hasAttribute('onclick')) {
-                            navMenu.classList.remove('active');
-                            hamburger.classList.remove('active');
-                        }
-                    });
-                });
-            }
-        });
+        // Hamburger menu functionality - removed duplicate
         
         // ========================================
         // Navigate to Home Page Function
