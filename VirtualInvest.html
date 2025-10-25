@@ -1,0 +1,1999 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-41JX3YK216"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-41JX3YK216');
+    </script>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="בנה תיק השקעות משולב מסלולים מותאם אישית. השווה תשואות בין חברות מנהלות שונות עם משקלים לפי בחירתך.">
+    <title>בנה תיק משולב מסלולים - השוואת חברות | פיננסי-נט</title>
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="בנה תיק משולב מסלולים - פיננסי-נט">
+    <meta property="og:description" content="בנה תיק השקעות משולב מסלולים מותאם אישית והשווה תשואות בין חברות מנהלות">
+    <meta property="og:image" content="https://i.postimg.cc/L4YLr22D/logoxnew.png">
+    <meta property="og:url" content="https://zamit00.github.io/NewFinnanciNet/VirtualInvest.html">
+    <meta property="og:type" content="website">
+    
+    <!-- External Styles -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="about-modal.css">
+    <link rel="stylesheet" href="consultation-form.css">
+    <link rel="stylesheet" href="terms-modal.css">
+    <link rel="stylesheet" href="mainStyle.css">
+    <link rel="stylesheet" href="footer.css">
+    
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="data.js"></script>
+    <script src="kochavimscript.js"></script>
+    <script src="PensiaScript.js"></script>
+    <script src="mainscript.js"></script>
+    
+    <style>
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --text-dark: #333;
+            --text-light: #666;
+        }
+
+        *{
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Heebo', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e8eef5 100%);
+            min-height: 100vh;
+            direction: rtl;
+            padding-top: 80px;
+        }
+        
+        #ex{display:none}
+        
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .page-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .page-title h1 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .page-title p {
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 900px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        
+        h3 {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+        
+        .row label {
+            min-width: 100px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+        
+        select, input {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: white;
+            max-width: 300px;
+        }
+        
+        select:focus, input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .closewindow{
+            display: none;
+        }
+        
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border-radius: 50%;
+            border: none;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        #btnclear{display: none;}
+        
+        .percentage {   
+            max-width: 80px;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .btn-add {  
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            font-size: 24px;
+            box-shadow: 0 4px 10px rgba(76, 175, 80, 0.3);
+        }
+        
+        .btn-add:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 15px rgba(76, 175, 80, 0.5);
+        }
+        
+        .error {
+            color: #F44336;
+            font-size: 1.1rem;
+            text-align: center;
+            margin: 15px 0;
+            font-weight: 600;
+        }
+        
+        .btndo {
+            width: clamp(140px, 45%, 180px);
+            height: 45px;
+            margin: 10px 5px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: bold;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+        
+        .btndo:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+        }
+        /* Tables */
+        .tblData {
+            margin-top: 25px;
+            width: 100%;
+            border-collapse: collapse;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .tblCenter {
+            display: none;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .tblData th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 10px;
+            font-weight: 600;
+            text-align: center;
+            font-size: 1.05rem;
+        }
+        
+        
+        
+        
+        
+        .tblData td {
+            padding: 12px;
+            border-bottom: 1px solid #e0e0e0;
+            text-align: center;
+        }
+        
+        .tblData tr:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .tdmaslul, #men {
+            width: 60%;
+            text-align: right !important;
+            font-weight: 500;
+        }
+        
+        .tdshiur {
+            width: 25%;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        
+        
+        .tdbitul button {
+            background: #F44336;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+        }
+        
+        .tdbitul button:hover {
+            background: #d32f2f;
+            transform: scale(1.1);
+        }
+        
+        /* Result Tables */
+        .klalikoch {
+            width: clamp(300px, 95%, 800px);
+            border-collapse: collapse;
+            margin: 20px auto;
+            background: white;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .klalikoch tr {
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .klalikoch td {
+            padding: 12px 8px;
+            font-size: 0.95rem;
+        }
+        
+        .klalikoch tr:first-child {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: bold;
+        }
+        
+        .klalikoch tr:hover:not(:first-child) {
+            background-color: #f0f4ff;
+        }
+        
+        .tdbig {
+            text-align: right !important;
+            padding-right: 10px !important;
+            font-weight: 500;
+        }
+        
+        .klalikoch .tdbig {
+            width: 55%;
+            color: var(--primary);
+            font-weight: bold;
+        }
+        
+        .tdsmall {
+            text-align: center;
+        }
+        
+        .klalikoch .tdsmall {
+            width: 16%;
+        }
+        
+        #shana, #shalosh, #hamesh {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .chart-container {
+            max-width: 100%;
+            height: 400px;
+            margin: 30px 0;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        #barchart {
+            height: 400px;  
+        }
+        
+        #centerTbl {
+            display: none;
+        }
+        
+        #notar {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            text-align: center;
+            margin: 15px 0;
+        }
+        
+        #divBtn {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        /* Navigation Styles */
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logoimg {
+            width: 200px;
+            height: auto;
+        }
+
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-menu a:hover {
+            color: #667eea;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            right: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s ease;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        .nav-dropdown {
+            position: relative;
+        }
+
+        .nav-dropdown .dropdown-content {
+            display: none;
+            position: absolute;
+            top: calc(100% + 5px);
+            right: 0;
+            background: white;
+            border-radius: 8px;
+            min-width: 220px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            z-index: 1001;
+        }
+
+        .nav-dropdown .dropdown-content a {
+            color: var(--text-dark);
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s ease;
+            font-size: 14px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .nav-dropdown .dropdown-content a:hover {
+            background-color: #f0f4ff;
+            color: var(--primary);
+        }
+
+        .nav-dropdown .dropdown-content a:last-child {
+            border-bottom: none;
+        }
+
+        .nav-dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: 0.3s;
+            border-radius: 3px;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+
+        .whatsapp-mobile {
+            display: none;
+        }
+
+        /* Mobile Navigation */
+        @media (max-width: 768px) {
+            .nav-container {
+                padding: 0.5rem 1rem;
+                flex-direction: row-reverse;
+                justify-content: flex-start;
+                align-items: center;
+            }
+
+            .logoimg {
+                width: 120px;
+            }
+            
+            footer{max-width: 100%;box-sizing: border-box;margin: 0;padding: 0;}
+
+            .nav-menu {
+                display: none;
+                position: fixed;
+                top: 70px;
+                right: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: white;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                padding-top: 1rem;
+                transition: right 0.3s ease;
+                box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            }
+
+            .nav-menu.active {
+                display: flex;
+                right: 0;
+            }
+
+            .hamburger {
+                display: flex;
+                order: 0;
+                margin-right: auto;
+                padding-right: 15px;
+            }
+
+            .nav-menu li {
+                margin: 1rem 0;
+                display: flex;
+                justify-content: center;
+            }
+            
+            .whatsapp-desktop {
+                display: none !important;
+            }
+
+            .whatsapp-mobile {
+                display: flex !important;
+                align-items: center;
+                order: 1;
+                margin-left: 8px;
+            }
+            
+            .whatsapp-mobile a {
+                text-decoration: none !important;
+            }
+            
+            .whatsapp-mobile a::before,
+            .whatsapp-mobile a::after {
+                display: none !important;
+                content: none !important;
+                width: 0 !important;
+            }
+            
+            .whatsapp-mobile i {
+                font-size: 1.6rem !important;
+            }
+            
+            .logo {
+                order: 3;
+                margin-left: auto;
+                padding-left: 15px;
+            }
+
+            .nav-menu a {
+                font-size: 1.2rem;
+            }
+
+            .nav-dropdown {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .nav-dropdown .dropdown-content {
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                min-width: auto;
+                width: clamp(200px, 90vw, 270px);
+                max-height: 0;
+                opacity: 0;
+                visibility: hidden;
+                overflow: hidden;
+                border: none;
+                background: white;
+                margin: 5px auto 0;
+                top: auto;
+                border-radius: 15px;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+                padding: 0;
+                transition: max-height 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
+            }
+
+            .nav-dropdown .dropdown-content a {
+                padding: 8px 16px;
+                border-bottom: 1px solid #eee;
+                font-size: 1rem;
+            }
+
+            .nav-dropdown .dropdown-content.show {
+                max-height: 500px;
+                opacity: 1;
+                visibility: visible;
+                padding-top: 15px;
+            }
+        }
+        
+        @media screen and (max-width:768px){
+            .main-content {
+                padding: 10px;
+            }
+            
+            .page-title h1 {
+                font-size: 1.8rem;
+            }
+            
+            .page-title p {
+                font-size: 0.95rem;
+            }
+            
+            .container {
+                padding: 20px;
+            }
+            
+            .row {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 10px;
+                padding: 0;
+            }
+            
+            .row label {
+                min-width: auto;
+                text-align: right;
+            }
+            
+            select, input {
+                max-width: 100%;
+                width: 100%;
+            }
+            
+            .percentage {
+                width: 100%;
+                max-width: 100%;
+            }
+            
+            #divBtn {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .btndo {
+                width: 100%;
+            }
+            
+            .centerTbl, #shana, .chart-container {
+                min-width: 100%;
+                max-width: 100%;
+            }
+            
+            .tblData {
+                font-size: 0.85rem;
+                width: 100%;
+                table-layout: fixed;
+            }
+            
+            .tblData .tdmaslul {
+                font-size: 0.75rem;
+                width: 40% !important;
+            }
+            
+            .tblData .tdshiur {
+                width: 30% !important;
+            }
+            
+            .tblData .tdbitul,
+            .tblData td:last-child {
+                width: 30% !important;
+            }
+            
+            .tblData th, .tblData td {
+                padding: 10px 5px;
+                word-wrap: break-word;
+            }
+            
+            .tdbig, .tdsmall {
+                line-height: 14px;
+                font-size: 0.8rem;
+            }
+            
+            .klalikoch .tdbig {
+                font-size: 0.7rem !important;
+                padding-right: 5px !important;
+            }
+            
+            .klalikoch .tdsmall {
+                font-size: 0.75rem;
+            }
+            
+            #shana, #shalosh, #hamesh {
+                overflow-x: auto;
+                width: 100%;
+            }
+            
+            .klalikoch {
+                width: 100% !important;
+                font-size: 0.75rem;
+            }
+            
+            .chart-container {
+                padding: 10px;
+                height: 300px;
+            }
+        }
+        
+        @media screen and (max-width:450px){
+            .row {
+                margin: 0;
+            }
+            
+            .container {
+                padding: 15px;
+            }
+        }
+        
+        @media screen and (min-width:769px){
+            .centerTbl, #shana, .chart-container, .klalikoch {
+                width: clamp(550px, 90%, 750px);
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- Header with Navigation (same as other pages) -->
+    <div class="nav-container">
+        <nav class="nav-menu" id="navMenu">
+          <li><a href="#" onclick="navigateToHome(); return false;"><i class="fa fa-home" style="font-size:2rem"></i></a></li>
+          <li class="nav-dropdown">
+            <a href="#" onclick="toggleVirtualProductsDropdown(event)">מוצרים ותשואות ▼</a>
+            <div class="dropdown-content" id="virtualProductsDropdown">
+              <a href="mozarim.html?product=hishtalmut">קרנות השתלמות</a>
+              <a href="mozarim.html?product=gemel">קופות גמל</a>
+              <a href="mozarim.html?product=gemelHashkaa">קופות גמל להשקעה</a>
+              <a href="mozarim.html?product=yeled">חסכון לילד</a>
+              <a href="mozarim.html?product=polisot">פוליסות חסכון</a>
+              <a href="mozarim.html?product=pensia">קרנות פנסיה חדשות</a>
+            </div>
+          </li>
+          <li class="nav-dropdown">
+            <a href="#" onclick="toggleVirtualCalculatorDropdown(event)">מחשבונים ▼</a>
+            <div class="dropdown-content" id="virtualCalculatorDropdown">
+              <a href="prisatMaanak.html">פריסת מענק פרישה</a>
+              <a href="calac.html">מחשבון דחיית קצבה</a>
+              <a href="ribitderibit.html">חישוב ערך עתידי</a>
+              <a href="loan.html">סימולטור הלוואה</a>
+              <a href="hafkada.html">מחשבון הפקדה לסכום מטרה</a>
+              <a href="hashDmeyNihul.html">השוואת דמי ניהול</a>
+            </div>
+          </li>
+          <li class="nav-dropdown">
+            <a href="#" onclick="toggleVirtualToolsDropdown(event)">כלי השוואה ▼</a>
+            <div class="dropdown-content" id="virtualToolsDropdown">
+              <a href="hashMenahalot.html">השוואת חברות מנהלות</a>
+              <a href="hasifotMeshulav.html">מחולל חשיפות</a>
+              <a href="VirtualInvest.html">השוואת תיק משולב מסלולים</a>
+            </div>
+          </li>
+          <li><a href="#" onclick="openAboutModal(); return false;">אודות</a></li>
+          <li><a href="index.html#contact">צור קשר</a></li>
+          <li class="whatsapp-desktop"><a href="https://wa.me/972545287184?text=שלום, אני מעוניין בייעוץ פנסיוני" target="_blank" title="צור קשר בוואטסאפ"><i class="fab fa-whatsapp" style="font-size:2rem; color:#25D366;"></i></a></li>
+        </nav>
+        <div class="whatsapp-mobile">
+            <a href="https://wa.me/972545287184?text=שלום, אני מעוניין בייעוץ פנסיוני" target="_blank" title="צור קשר בוואטסאפ">
+                <i class="fab fa-whatsapp" style="font-size:2rem; color:#25D366;"></i>
+            </a>
+        </div>
+        <div class="logo"> <img class="logoimg" src="logoxnew.png" onclick="navigateToHome();" style="cursor: pointer;"/></div>
+        <div class="hamburger" id="hamburger" style="padding: 10px;">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="page-title">
+            <h1>🔧 בנה תיק משולב מסלולים</h1>
+            <p>בחר מסלולים שונים וצור תיק מותאם אישית עם משקלים לפי בחירתך</p>
+        </div>
+        
+        <div class="container" id="container">
+         <div id='mas'  style='width:clamp(300px,90vw,600px);height:100vh;z-index:1000;background-color:white;display:none;' ></div> 
+        <div class="row">
+            <label>בחר מוצר:</label>
+            <select id="sugMMen" class="selectShemkupaA" style="text-align: center;" onchange="clearform();addMaslulim()">
+                <option value="" disabled selected>בחר מוצר</option>
+                <option value='קרנות השתלמות'>קרנות השתלמות</option>
+				<option value='תגמולים ואישית לפיצויים'>קופות גמל</option>
+                <option value='קופת גמל להשקעה'>קופת גמל להשקעה</option>
+                <option value='פוליסות חסכון'>פוליסות חסכון</option>
+                <option value='קרנות חדשות'>קרנות פנסיה</option> 
+            </select>
+        </div>
+        <div id="track-container">
+            <div class="row track-row">
+                <label >בחר מסלול:</label>
+                <select id="selectShemkupa" class="selectShemkupa" ></select>        
+            </div>
+        </div>
+        <div  class="row">
+            <label >שיעור:</label>
+                <div style="display: flex; width: 60px;margin-right: 33px;">
+                    <input id="percentage" type="number" class="percentage" min="0" max="100" 
+                     style="width: 100%;">
+                </div>
+                <button  style="margin-right: 50px;" class="btn btn-add" id='btnDo'  onclick="addRow(this)">+</button>
+                <label >הוסף</label>
+        </div>
+        <div class="error" id="error-msg"></div>
+        
+        <div class="tblCenter" id="tblCenter">
+            <table id="tblData" class="tblData">
+                <thead>
+                <tr>
+                    <th class="tdmaslul">מסלול</th>
+                    <th class="tdshiur">שיעור</th>
+                    <th class="tdbitul"><i class="fas fa-trash-alt"></i></th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+
+        </div>
+        <div id="notar" style="margin-top: 10px;width: 100%;text-align: center;"></div>
+        <div id="divBtn" style="display:flex;justify-content: center;width:100%;">
+            <button class="btndo" id="btndo" onclick="submitForm()">הפעל</button>
+            <button class="btndo" id="btnclear" onclick="clearform()">נקה</button>
+        </div>
+        <div class="centerTbl" id="centerTbl" style="flex-direction: column;
+    align-items: center;">
+        <div id="shana" style="margin-top: 10px;"></div>
+        <div style="width: 100%;box-sizing: border-box;max-width: 100%;
+    margin: 0%;padding: 0%;text-align: center;">* נתון ריק או 0 - לא משתתף בהשוואה</div>
+        <div id="shalosh" style="margin-top: 10px;"></div>
+        <div id="hamesh" style="margin-top: 10px;"></div>
+        
+    
+    
+        <div id="chartKot" style="width: 100%;box-sizing: border-box;max-width: 100%;
+        margin: 0%;padding: 0%;text-align: center;"></div>
+        <div style="width: 100%;box-sizing: border-box;max-width: 100%;
+        margin: 0%;padding: 0%;text-align: center;">(שנה גרף באמצעות המיון בטבלה) </div>
+        <div class="chart-container" id="chart-container">
+            <canvas id="barChart"></canvas>
+        </div> 
+</div>
+        
+    </div>
+
+
+    <script>
+  // Define clearform first so it can be called from onchange
+  function clearform(){
+    const btn=document.getElementById('btndo'); 
+    const btnclear=document.getElementById('btnclear'); 
+    if (btn) btn.style.display='block';
+    if (btnclear) btnclear.style.display='none';
+    if (typeof chngTik === 'function') chngTik();
+  }
+  
+  function addMaslulim () {
+        const selectedProduct = document.getElementById('sugMMen').value;
+        console.log('Selected product:', selectedProduct);
+        
+        let tbody = document.getElementById("tblData").getElementsByTagName('tbody')[0];
+        tbody.innerHTML = '';
+        const allSelects = document.querySelectorAll('.selectShemkupa');
+        console.log('Found selects:', allSelects.length);
+        
+        let relevantList;
+        if (selectedProduct === "קרנות השתלמות" || selectedProduct === "קופת גמל להשקעה" 
+        || selectedProduct === 'פוליסות חסכון') {
+            relevantList = hishtalmot;
+        } else if (selectedProduct === "תגמולים ואישית לפיצויים"  || selectedProduct==='קרנות חדשות' ) {
+            relevantList = gemel;
+        } else if (selectedProduct.includes('לילד' )){relevantList = layeled; }
+        
+        console.log('Relevant list:', relevantList);
+        
+        // Check if variables are defined
+        if (typeof hishtalmot === 'undefined') {
+            console.error('hishtalmot is not defined - kochavimscript.js not loaded yet');
+            alert('המערכת עדיין טוענת נתונים. נסה שוב בעוד שנייה.');
+            return;
+        }
+        
+        if (!relevantList || relevantList.length === 0) {
+            console.error('No relevant list found for product:', selectedProduct);
+            return;
+        }
+
+        allSelects.forEach(select => {
+            select.innerHTML = '';
+        for(let i=0;i<relevantList.length;i++){
+            const option = document.createElement('option');
+            option.value = relevantList[i];
+            option.textContent = relevantList[i];
+            select.appendChild(option);
+        }
+
+        });
+
+        
+};
+
+function chngTik(){
+  
+    document.getElementById('shana').innerHTML='';
+    document.getElementById('shalosh').innerHTML='';
+    document.getElementById('hamesh').innerHTML='';
+    document.getElementById('centerTbl').style.display='none'
+    document.querySelectorAll('.row').forEach(el => el.style.display = 'flex');
+    let tbody = document.getElementById("tblData").getElementsByTagName('tbody')[0];
+    let tblCenter= document.getElementById("tblCenter");
+    document.getElementById('btnDo').innerHTML==='הפעל';
+    tblCenter.style.display='none';
+    tbody.innerHTML = '';
+    document.getElementById('notar').innerHTML='';
+}
+
+async function addRow(x) {
+
+    const selectedProduct = document.getElementById('sugMMen').value;
+    if(!selectedProduct){Swal.fire({
+    title: "<span style='color: green; font-size: 16px;'>לא נבחר מוצר  </span>",
+    icon: "warning",
+    width: "clamp(300px, 90vw, 600px)",
+          position: "center", 
+          timer: 2000, 
+          timerProgressBar: true, 
+          background: "#fff",
+}).then((result) => {
+    if (result) {
+        Array.from(expo).forEach(exp=>{
+          exp.style.display='flex';
+          submitForm(x);doTheCircle(x);
+        })
+    } 
+	    
+});;return}
+    const inp = document.getElementById('percentage');
+    if(inp.value>100){Swal.fire({
+    title: "<span style='color: green; font-size: 16px;'>סך השיעורים לא יכול לעלות על 100</span>",
+    width: "90vw", 
+    icon: "warning",
+    width: "clamp(300px, 90vw, 600px)",
+          position: "center", 
+          timer: 2000, 
+          timerProgressBar: true, 
+          background: "#fff",
+}).then((result) => {
+    if (result) {
+        Array.from(expo).forEach(exp=>{
+          exp.style.display='flex';
+          submitForm(x);doTheCircle(x);
+        })
+    } 
+});;inp.value='';return}
+    var Select = document.getElementById('selectShemkupa');
+
+    var rtn;
+        if(inp.value<=0 || inp.value===''){Swal.fire({
+    title: "<span style='color: green; font-size: 16px;'>יש להקליד אחוזים תקינים</span>",
+    icon: "warning",
+    width: "clamp(300px, 90vw, 600px)",
+          position: "center", 
+          timer: 2000, 
+          timerProgressBar: true, 
+          background: "#fff",
+}).then((result) => {
+    if (result) {
+        Array.from(expo).forEach(exp=>{
+          exp.style.display='flex';
+          submitForm(x);doTheCircle(x);
+        })
+    } 
+});rtn="back"
+            ;inp.value='';
+        }
+
+    if(rtn==="back"){rtn="";return}
+    
+    let table = document.getElementById("tblData").getElementsByTagName('tbody')[0];
+    let tblCenter= document.getElementById("tblCenter");
+    
+    tblCenter.style.display='flex';
+    const rows=table.querySelectorAll("tr")
+    var accum=0
+
+    rows.forEach((row,index)=>{
+        if(row.children[0].innerText===Select.value){
+            Swal.fire({
+    title: "<span style='color: green; font-size: 16px;'>מסלול  כבר קיים</span>",
+    icon: "warning",
+    width: "clamp(300px, 90vw, 600px)",
+          position: "center", 
+          timer: 2000, 
+          timerProgressBar: true, 
+          background: "#fff",
+}).then((result) => {
+    if (result) {
+        Array.from(expo).forEach(exp=>{
+          exp.style.display='flex';
+          submitForm(x);doTheCircle(x);
+        })
+    } 
+});rtn="back";inp.value='';return;
+        }
+        
+        if(index!==0){
+            accum =accum+ Number(row.children[1].innerText.replace('%', ''));
+        
+            if(accum+ Number(inp.value)>100){Swal.fire({
+    title: "<span style='color: green; font-size: 16px;'>סך השיעורים לא יכול לעלות על 100</span>",
+    icon: "warning",
+    width: "clamp(300px, 90vw, 600px)",
+          position: "center", 
+          timer: 2000, 
+          timerProgressBar: true, 
+          background: "#fff",
+}).then((result) => {
+    if (result) {
+        Array.from(expo).forEach(exp=>{
+          exp.style.display='flex';
+          submitForm(x);doTheCircle(x);
+        })
+    } 
+});inp.value='';accum=0; rtn="back"}}
+            
+        });
+        accum=0;
+    if(rtn==="back"){rtn="";return}
+    
+    table.innerHTML+= `
+        <tr>
+            <td>${Select.value}</td>
+            <td>${inp.value}%</td> 
+                <td style="background-color: red;font-size: 16px;width: 100%;" onclick="removeRow(this)">-</td>  
+        </tr>      
+    `;
+    updateNotar()
+    inp.value='';return;
+
+
+}
+function updateNotar(){
+    let tbody = document.getElementById("tblData").getElementsByTagName('tbody')[0];
+    const rows = tbody.querySelectorAll("tr");
+    var accum=0
+
+    rows.forEach((row)=>{
+        accum = accum + Number(row.children[1].innerText.replace('%', ''));
+    });
+    document.getElementById('notar').innerHTML='';
+    document.getElementById('notar').innerHTML=`נותר לנצל: ${100-accum}%`;
+}
+
+
+function removeRow(btn) {
+    const btnr=document.getElementById('btndo')
+    if(btnr.innerHTML==='הפעל'){
+    btn.parentElement.remove();
+    updateNotar();
+    document.getElementById('shana').innerHTML='';
+    document.getElementById('shalosh').innerHTML='';
+    document.getElementById('hamesh').innerHTML='';}
+}
+function validateSum() {
+            let tbody = document.getElementById("tblData").getElementsByTagName('tbody')[0];
+            const rows = tbody.querySelectorAll("tr");
+            var accum=0;var bt=0;
+            rows.forEach((row)=>{
+                accum = accum + Number(row.children[1].innerText.replace('%', ''));
+            });
+           if(accum<100) {bt=1}   
+           return bt;
+        }
+
+async function submitForm() {
+    const btn=document.getElementById('btndo')
+   const btnclear=document.getElementById('btnclear');
+
+    var bt=0;var abc;  
+    const selectedProduct = document.getElementById('sugMMen').value;
+    if(!selectedProduct){Swal.fire({
+    title: "<span style='color: green; font-size: 16px;'>יש לבחור מוצר</span>",
+    icon: "warning",
+    width: "clamp(300px, 90vw, 600px)",
+          position: "center", 
+          timer: 2000, 
+          timerProgressBar: true, 
+          background: "#fff",
+    }).then((result) => {
+    if (result) {
+        Array.from(expo).forEach(exp=>{
+          exp.style.display='flex';
+          submitForm(x);doTheCircle(x);
+        })
+    } 
+});return}
+    const checkSum=validateSum();
+    if(checkSum===1){Swal.fire({
+    title: "<span style='color: green; font-size: 16px;'>נדרש להשלים ל 100%</span>",
+    icon: "warning",
+    width: "clamp(300px, 90vw, 600px)",
+          position: "center", 
+          timer: 2000, 
+          timerProgressBar: true, 
+          background: "#fff",
+}).then((result) => {
+    if (result) {
+        Array.from(expo).forEach(exp=>{
+          exp.style.display='flex';
+          submitForm(x);doTheCircle(x);
+        })
+    } 
+});return}
+    btn.innerHTML='נקה' ;
+
+    document.getElementById('centerTbl').style.display='flex';
+    if (selectedProduct === "קרנות השתלמות" || selectedProduct === "קופת גמל להשקעה" 
+            || selectedProduct === "תגמולים ואישית לפיצויים" || selectedProduct.includes('לילד' )
+            ) {
+            
+    abc= await fetchdataJasonMA()
+
+    } else if (selectedProduct === "פוליסות חסכון"  ) {
+        abc= await fetchdataJasonBA()
+    } else if (selectedProduct==='קרנות חדשות' ){
+        
+    abc= await fetchdataJasonPA(); 
+    } else {
+        console.error('Unknown product type:', selectedProduct);
+        alert('מוצר לא נתמך');
+        return;
+    }
+
+    if (!abc || !Array.isArray(abc)) {
+        console.error('Data not loaded properly');
+        alert('שגיאה בטעינת נתונים');
+        return;
+    }
+
+    abc=abc.filter(item=>item.mozar===selectedProduct)
+    
+    let tbody = document.getElementById("tblData").getElementsByTagName('tbody')[0];
+    const rows = tbody.querySelectorAll("tr");
+
+
+    var accum=0;var abc1; var accum36=0;var accum60=0;
+    var accumW=0; var accum36W=0;var accum60W=0
+    var collection=[];var abc2;const mySet = new Set();
+
+for(let i=0;i<gufmosdixA.length;i++){
+    for (const row of Array.from(rows)) {
+        
+        abc2 = await filterMaslulA(String(row.children[0].innerText), abc,selectedProduct);
+       
+        if(selectedProduct !== "פוליסות חסכון"){ 
+        abc2 =abc2.filter(item=>item.menahelet.includes(gufmosdixA[i]) && item.tesuam!==0
+        && item.tesuam!==undefined)}
+        else{abc2 =abc2.filter(item=>item.shemkupa.includes(gufmosdixA[i].split(" ")[0]) && item.tesuam!==0
+            && item.tesuam!==undefined)}
+        if(abc2.length===0){accum=1};
+        
+    }
+    
+    if(Number(accum)===0){
+        mySet.add(gufmosdixA[i])   
+    }
+    else{accum=0}
+}
+for (var value of Array.from(mySet)) {
+    if(selectedProduct !== "פוליסות חסכון"){
+    abc1=abc.filter(item=>item.menahelet.includes(value) && item.tesuam!==0
+    && item.tesuam!==undefined)}
+    else{
+        abc1=abc.filter(item=>item.shemkupa.includes(value.split(" ")[0]) && item.tesuam!==0
+    && item.tesuam!==undefined)
+    }
+    for (const row of Array.from(rows)) {
+        abc2 = await filterMaslulA(String(row.children[0].innerText), abc1,selectedProduct);
+        abc2 =  abc2.filter(item=>item.tesuam!==undefined && item.tesuam!==0);
+        if(abc2.length!==0 && accumW===0){
+            accum=accum+Math.round(Number(row.children[1].innerText.replace('%', ''))*100)/10000* 
+            Math.round(Number(abc2[0].tesuam)*100)/100}
+        else{
+            accumW=1;
+            accum='';
+        }
+        
+        abc2 = await filterMaslulA(String(row.children[0].innerText), abc1,selectedProduct);
+        abc2 = abc2.filter(item=>item.tesuam36!==undefined && item.tesuam36!==0)
+
+        if(abc2.length!==0 && accum36W===0){
+        accum36=accum36+Math.round(Number(row.children[1].innerText.replace('%', ''))*100)/10000* 
+        Math.round(Number(abc2[0].tesuam36)*100)/100}
+        else{
+            accum36W=1;
+            accum36='';
+        }
+        
+        abc2 = await filterMaslulA(String(row.children[0].innerText), abc1,selectedProduct);
+        abc2 = abc2.filter(item=>item.tesuam60!==undefined && item.tesuam60!==0)
+
+        if(abc2.length!==0 && accum60W===0){
+        accum60=accum60+Math.round(Number(row.children[1].innerText.replace('%', ''))*100)/10000* 
+        Math.round(Number(abc2[0].tesuam60)*100)/100}
+        else{
+            accum60W=1;
+            accum60='';
+        } 
+    }
+    collection.push({
+        menah:value,
+        accum:Math.round(accum*100)/100,
+        accum36:Math.round(accum36*100)/100,
+        accum60:Math.round(accum60*100)/100
+    })
+    accum=0; accum36=0; accum60=0;
+	accumW=0; accum36W=0; accum60W=0;
+}
+
+    
+   
+
+const shanaTable= document.getElementById('shana');
+document.querySelectorAll('.row').forEach(el => el.style.display = 'none');
+let selectedProductA;
+if(selectedProduct==='תגמולים ואישית לפיצויים'){selectedProductA='קופות גמל'}
+else{selectedProductA=selectedProduct}
+shanaTable.innerHTML=
+`
+    <h4 style='color:rgb(0,148,254);margin-top:10px;'>תשואת התיק במוצר ${selectedProductA}</h4>	
+    <table class="klalikoch" id="tblshana">
+        <tr>
+            <td class="tdbig" style="background:rgb(0,148,254);color:white;">שם גוף מוסדי</td>
+            <td class="tdsmall" 
+            id="miyunshana"
+            style="background:rgb(0,148,254);color:white;"  onclick='sortTableX(this)'>שנה <i class="fa fa-sort"></i></td>
+            <td class="tdsmall" 
+            id="miyunshalosh"
+            style="background:rgb(0,148,254);color:white;" onclick='sortTableX(this)'>3 שנים <i class="fa fa-sort"></i></td>
+            <td class="tdsmall" 
+            id="miyunhamesh"
+            style="background:rgb(0,148,254);color:white;" onclick='sortTableX(this)'>5 שנים <i class="fa fa-sort"></i></td>
+        </tr> 
+    </table>	
+    
+`;
+
+
+var td;var tr;
+collection.sort((a, b) => b.accum - a.accum);
+for(let i=0;i<collection.length;i++){
+    tr=document.createElement('tr')
+    td=document.createElement('td')
+    td.className='tdbig'
+    td.textContent=collection[i].menah
+    tr.appendChild(td)
+    td=document.createElement('td')
+    td.className='tdsmall'
+    if(collection[i].accum){td.textContent=collection[i].accum.toFixed(2)+"%"}
+    else{td.textContent=''}
+    tr.appendChild(td)
+    td=document.createElement('td')
+    td.className='tdsmall'
+    if(collection[i].accum36){td.textContent=collection[i].accum36.toFixed(2)+"%"}
+    else{td.textContent=''}
+    tr.appendChild(td)
+    td=document.createElement('td')
+    td.className='tdsmall'
+    if(collection[i].accum60){td.textContent=collection[i].accum60.toFixed(2)+"%"}
+    else{td.textContent=''}
+    tr.appendChild(td)
+    document.getElementById('tblshana').appendChild(tr)
+
+}
+let lbl=[];let dt=[]
+for(let i=0;i<collection.length;i++){
+    lbl.push(collection[i].menah.split(" ")[0])
+    dt.push(collection[i].accum)           
+}
+document.getElementById('chartKot').innerHTML="גרף תשואת התיק ל - 12 חודשים"
+createChart(lbl, dt);
+}
+
+async function fetchdataJasonMA() {
+    try {
+        const response = await fetch('dataJasonM.json'); 
+        if (!response.ok) {
+            throw new Error(`שגיאה: ${response.status} ${response.statusText}`);
+        }
+        var data = await response.json(); 
+       
+        data=  data.filter(item=>!item.menahelet.includes('סלייס') &&
+        !item.ochlosiyayaad.includes('עובדי מפעל/גוף מסויים'));    
+        return data;  // חובה להחזיר נתונים כדי שהפונקציה תחכה באמת
+    } catch (error) {
+        console.error('שגיאה בשליפת הנתונים:', error);
+        throw error;  // נזרוק את השגיאה כדי ש-Promise.all יוכל לטפל בה
+    }
+}
+async function fetchdataJasonBA() {
+    try {
+        const response = await fetch('dataJasonB.json'); 
+        if (!response.ok) {
+            throw new Error(`שגיאה: ${response.status} ${response.statusText}`);
+        }
+        var data = await response.json(); 
+        return data;  // החזרת הנתונים כדי ש-`await` יעבוד נכון
+    } catch (error) {
+        console.error('שגיאה בשליפת הנתונים:', error);
+        throw error;  // זורק את השגיאה כדי ש-Promise.all יוכל לטפל בה
+    }
+}
+async function fetchdataJasonPA() {
+    try {
+        const response = await fetch('dataJasonP.json'); 
+        if (!response.ok) {
+            throw new Error(`שגיאה: ${response.status} ${response.statusText}`);
+        }
+        var data = await response.json(); 
+        return data;  // מחזיר את הנתונים כדי שהפונקציה תהיה באמת אסינכרונית
+    } catch (error) {
+        console.error('שגיאה בשליפת הנתונים:', error);
+        throw error;  // זורק את השגיאה כדי ש-Promise.all יוכל לטפל בה
+    }
+}
+    
+async function filterMaslulA(mas,datax,moza){
+    var data;
+    var dataforfilter=datax.filter(item=>
+        item.tesuam !== undefined &&
+        Number(item.tesuam)!==0
+    );
+
+         if (mas==='כללי'){
+             data = dataforfilter.filter(item => 
+                item.shemkupa.includes(mas) && !item.shemkupa.includes('כללי ב'));
+         data.sort((a, b) => b.tesuam - a.tesuam); 
+         return data;
+         }
+
+         else if(mas.includes('500') && moza!=="פוליסות חסכון"){
+             data = dataforfilter.filter(item =>       
+                 item.shemkupa.includes('500')  
+             
+             
+             );
+         data.sort((a, b) => b.tesuam - a.tesuam);    
+         return data;
+         }
+         else if(mas==='עוקב מדד s&p 500' && moza==="פוליסות חסכון"){
+             data = dataforfilter.filter(item => 
+                
+                
+                 item.shemkupa.includes('500')
+                
+             );
+         data.sort((a, b) => b.tesuam - a.tesuam);    
+         return data;
+         }
+         else if(mas==="מניות"){
+             data = dataforfilter.filter(item => 
+                  item.shemkupa.includes('מניות') &&
+                 !item.shemkupa.includes('מדד') &&
+                 !item.shemkupa.includes('עוקב') &&
+                 !item.shemkupa.includes('סחיר') &&
+                 !item.shemkupa.includes('משולב') &&
+                 !item.shemkupa.includes('25') &&
+                 !item.shemkupa.includes('"אג\"ח"') && 
+                 !item.shemkupa.includes('פאסיבי')
+             );
+         data.sort((a, b) => b.tesuam - a.tesuam);    
+         return data;
+         }
+         else if(mas==="אשראי ואג\"ח"){
+                 data = dataforfilter.filter(item => 
+                 item.shemkupa.includes('אשראי') &&
+                 !item.shemkupa.includes('מניות') &&
+                 !item.shemkupa.includes('עוקב') &&
+                 !item.shemkupa.includes('סחיר')
+             );
+         data.sort((a, b) => b.tesuam - a.tesuam);    
+         return data;
+         }
+         else if(mas==="אשראי ואג\"ח עם מניות"){
+             data = dataforfilter.filter(item => 
+                 item.shemkupa.includes('אשראי') &&
+                 item.shemkupa.includes('25') 
+               );
+         data.sort((a, b) => b.tesuam - a.tesuam);    
+         return data;
+         }
+         else if(mas==="כספי (שקלי)"){
+             data = dataforfilter.filter(item =>                
+                 item.shemkupa.includes('כספי (שקלי)') 
+             );
+         data.sort((a, b) => b.tesuam - a.tesuam);    
+         return data;
+         }
+         else if(mas==="עוקב מדדים - גמיש"){
+             data = dataforfilter.filter(item => 
+                
+                  item.shemkupa.includes('עוקב') &&
+                 item.shemkupa.includes('גמיש')
+            );
+         data.sort((a, b) => b.tesuam - a.tesuam);    
+         return data;
+         }
+         else if(mas==="אג\"ח ממשלות"){
+             data = dataforfilter.filter(item => 
+                 item.shemkupa.includes('ממשלות')
+             );
+         data.sort((a, b) => b.tesuam - a.tesuam);    
+         return data;
+         }
+         else if(mas==="הלכה יהודית"){
+             data = dataforfilter.filter(item => 
+                 item.shemkupa.includes('הלכה')
+             );
+         data.sort((a, b) => b.tesuam - a.tesuam);    
+         return data;
+         }
+         else if(mas==="משולב סחיר"){
+             data = dataforfilter.filter(item => 
+                 item.shemkupa.includes("משולב סחיר")
+              );
+         data.sort((a, b) => b.tesuam - a.tesuam);    
+         return data;
+         }
+         else if(mas==="עוקב מדדי אג\"ח"){
+             data = dataforfilter.filter(item => 
+                item.shemkupa.includes("עוקב") &&
+                 item.shemkupa.includes("אג\"ח") &&
+                 !item.shemkupa.includes("מניות") 
+             );
+         data.sort((a, b) => b.tesuam - a.tesuam);    
+         return data;
+         }
+         else if(mas==="עוקב מדדי מניות"){
+             data = dataforfilter.filter(item => 
+                 item.shemkupa.includes("מניות") &&
+                 !item.shemkupa.includes("אג\"ח") &&
+                 item.shemkupa.includes("עוקב") &&
+                 !item.shemkupa.includes("25") 
+             );
+         data.sort((a, b) => b.tesuam - a.tesuam);    
+         return data;
+         }
+         else if(mas==="מניות סחיר"){
+             data = dataforfilter.filter(item => 
+                item.shemkupa.includes("מניות") &&
+                 item.shemkupa.includes("סחיר") && 
+                 !item.shemkupa.includes("25")  
+             );
+         data.sort((a, b) => b.tesuam - a.tesuam);    
+         return data;
+         }
+         else if(mas==="אג\"ח סחיר"){
+             data = dataforfilter.filter(item => 
+                 item.shemkupa.includes("סחיר") &&
+                 item.shemkupa.includes("אג\"ח") &&
+                 !item.shemkupa.includes("מניות") 
+              );
+         data.sort((a, b) => b.tesuam - a.tesuam);    
+         return data;
+         }
+         else if(mas==="אג\"ח סחיר עם מניות"){
+             data = dataforfilter.filter(item => 
+                
+                 item.shemkupa.includes("סחיר") &&
+                 item.shemkupa.includes("אג\"ח") &&
+                 item.shemkupa.includes("מניות") 
+             );
+         data.sort((a, b) => b.tesuam - a.tesuam);    
+         return data;
+         }
+         else if(mas==="עוקב מדדי אג\"ח עם מניות"){
+             data = dataforfilter.filter(item => 
+                 !item.shemkupa.includes("סחיר") &&
+                 item.shemkupa.includes("אג\"ח") &&
+                 item.shemkupa.includes("מניות") &&
+                 item.shemkupa.includes("עוקב")
+              );
+         data.sort((a, b) => b.tesuam - a.tesuam);    
+         return data;
+         }
+         else if(mas==="50-60"){
+             data = dataforfilter.filter(item => 
+                  item.shemkupa.includes("50") &&
+                 item.shemkupa.includes("60") 
+             );
+         data.sort((a, b) => b.tesuam - a.tesuam);    
+         return data;
+         }
+         else if(mas==="עד 50"){
+             data = dataforfilter.filter(item => 
+                 item.shemkupa.includes("50") &&
+                 !item.shemkupa.includes('עוקב') &&
+                 !item.shemkupa.includes("60") 
+  
+             );
+         data.sort((a, b) => b.tesuam - a.tesuam);    
+         return data;
+         }
+         else if(mas==="60 ומעלה"){
+             data = dataforfilter.filter(item => 
+                 !item.shemkupa.includes("50") &&
+                 item.shemkupa.includes("60") 
+              );
+         data.sort((a, b) => b.tesuam - a.tesuam);    
+         return data;
+         }
+         else if(mas==='סיכון מוגבר'){
+             data = dataforfilter.filter(item => 
+                 item.shemkupa.includes("מוגבר")                
+             );
+         data.sort((a, b) => b.tesuam - a.tesuam);    
+         return data;
+          }
+          else if(mas==='סיכון מועט'){
+             data = dataforfilter.filter(item => 
+                 item.shemkupa.includes("מועט") 
+             );
+         data.sort((a, b) => b.tesuam - a.tesuam);    
+         return data;
+          }
+          else if(mas==='סיכון בינוני'){
+             data = dataforfilter.filter(item => 
+                 item.shemkupa.includes("בינוני") 
+             );
+         data.sort((a, b) => b.tesuam - a.tesuam);    
+         return data;
+          }
+ }   
+ 
+ function sortTableX(x) {
+    var data = [];
+    const table = x.closest('table');
+    
+    if (!table) {
+        console.error('לא נמצאה טבלה.');
+        return;
+    }
+
+    const rows = table.getElementsByTagName('tr');
+
+    for (let i = 1; i < rows.length; i++) {
+        const tds = rows[i].getElementsByTagName('td');
+
+        if (tds.length >= 4) {
+            data.push({
+                shemkupa: tds[0].textContent.trim() || '',
+                tesuam: cleanNumberX(tds[1].textContent),
+                tesuam36: cleanNumberX(tds[2].textContent),
+                tesuam60: cleanNumberX(tds[3].textContent)
+            });
+        } else {
+            console.warn(`שורה ${i} אינה מכילה מספיק עמודות.`);
+        }
+    }
+
+    // מיון לפי הכותרת שנלחצה
+    const options = [ 'שנה', '3 שנים', '5 שנים'];
+    const selectedKey = options.find(opt => x.innerHTML.includes(opt));
+   
+    const sortKey = selectedKey ? {
+        'שנה': 'tesuam',
+        '3 שנים': 'tesuam36',
+        '5 שנים': 'tesuam60'
+    }[selectedKey] : null;
+
+    if (sortKey) {
+        data.sort((a, b) => b[sortKey] - a[sortKey]);
+    }
+
+
+    // עדכון הנתונים בטבלה
+    for (let i = 1; i < rows.length; i++) {
+        const tds = rows[i].children;
+        if (data[i - 1]) {
+            tds[0].textContent = data[i - 1].shemkupa;            
+            tds[1].textContent = formatNumberX(data[i - 1].tesuam);
+            tds[2].textContent = formatNumberX(data[i - 1].tesuam36);
+            tds[3].textContent = formatNumberX(data[i - 1].tesuam60);
+        }
+    }
+    let coll=[];let lbl=[];
+    
+        for (let i = 0; i < data.length; i++) {
+            lbl.push(data[i].shemkupa.split(" ")[0])
+            if(selectedKey==='שנה'){document.getElementById('chartKot').innerHTML="גרף תשואת התיק ל - 12 חודשים"
+            ;coll.push(data[i].tesuam)}
+            if(selectedKey==='3 שנים'){coll.push(data[i].tesuam36);document.getElementById('chartKot')
+            .innerHTML="גרף תשואת התיק ל - 3 שנים"}
+            if(selectedKey==='5 שנים'){coll.push(data[i].tesuam60);document.getElementById('chartKot').
+            innerHTML="גרף תשואת התיק ל - 5 שנים"}
+}
+createChart(lbl, coll)
+ }
+// פונקציה שמנקה את הערכים וממירה אותם למספרים
+function cleanNumberX(value) {
+    let num = parseFloat(value.replace(/[^0-9.-]/g, ''));
+    return isNaN(num) ? 0 : num;
+}
+
+// פונקציה שמחזירה מספר בפורמט הנכון
+function formatNumberX(value) {
+    return value.toFixed(2) + '%';
+}
+let myChart = null;
+
+
+
+function createChart(lbl, dt) {
+    let chrt=document.getElementById("chart-container")
+    chrt.innerHTML='';
+    chrt.innerHTML=`<canvas id="barChart"></canvas> `
+    const ctx = document.getElementById('barChart').getContext('2d');
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: lbl,
+                datasets: [{
+                    data:dt,
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 0.7)',
+                        'rgba(75, 192, 192, 0.7)',
+                        'rgba(255, 159, 64, 0.7)',
+                        'rgba(153, 102, 255, 0.7)',
+                        'rgba(255, 99, 132, 0.7)'
+                    ],
+                    borderColor: [
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 99, 132, 1)'
+                    ],
+                    borderWidth: 2,
+                    borderRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                       
+                        ticks: {
+                            callback: function(value) {
+                                return value + '%';
+                            }
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                animation: {
+                    duration: 2000,
+                    easing: 'easeInOutQuart'
+                }
+            }
+        });
+   
+}
+ 
+ </script>
+
+    <!-- Modal Container -->
+    <div id="modals-container"></div>
+
+    <!-- External Modal Scripts -->
+    <script src="about-modal.js"></script>
+    <script src="consultation-form.js"></script>
+    <script src="terms-modal.js"></script>
+        <script src="accessibility.js"></script>
+        
+        <script>
+        // Load Modal HTML files
+        fetch('about-modal.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('modals-container').innerHTML += html;
+            })
+            .catch(err => console.error('Error loading about modal:', err));
+        
+        fetch('terms-modal.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('modals-container').innerHTML += html;
+            })
+            .catch(err => console.error('Error loading terms modal:', err));
+        
+        fetch('consultation-form.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('modals-container').innerHTML += html;
+            })
+            .catch(err => console.error('Error loading consultation form:', err));
+        
+        // Load Footer
+        fetch('footer.html')
+            .then(response => response.text())
+            .then(html => {
+                document.body.insertAdjacentHTML('beforeend', html);
+            })
+            .catch(err => console.error('Error loading footer:', err));
+        
+        // Dropdown functions for mobile menu
+        function toggleVirtualProductsDropdown(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            if (window.innerWidth > 768) {return;}
+            const dropdown = document.getElementById('virtualProductsDropdown');
+            const link = event.target;
+            
+            document.querySelectorAll('.dropdown-content.show').forEach(d => {
+                if (d !== dropdown) {
+                    d.classList.remove('show');
+                    const parentLi = d.closest('.nav-dropdown');
+                    const parentLink = parentLi?.querySelector('a');
+                    if (parentLink) {
+                        if (d.id === 'virtualCalculatorDropdown') {
+                            parentLink.innerHTML = 'מחשבונים ▼';
+                        } else if (d.id === 'virtualToolsDropdown') {
+                            parentLink.innerHTML = 'כלי השוואה ▼';
+                        }
+                    }
+                }
+            });
+            
+            if (dropdown.classList.contains('show')) {
+                dropdown.classList.remove('show');
+                link.innerHTML = 'מוצרים ותשואות ▼';
+            } else {
+                dropdown.classList.add('show');
+                link.innerHTML = 'מוצרים ותשואות ▲';
+            }
+            
+            return false;
+        }
+        
+        function toggleVirtualCalculatorDropdown(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            if (window.innerWidth > 768) {return;}
+            const dropdown = document.getElementById('virtualCalculatorDropdown');
+            const link = event.target;
+            
+            document.querySelectorAll('.dropdown-content.show').forEach(d => {
+                if (d !== dropdown) {
+                    d.classList.remove('show');
+                    const parentLi = d.closest('.nav-dropdown');
+                    const parentLink = parentLi?.querySelector('a');
+                    if (parentLink) {
+                        if (d.id === 'virtualProductsDropdown') {
+                            parentLink.innerHTML = 'מוצרים ותשואות ▼';
+                        } else if (d.id === 'virtualToolsDropdown') {
+                            parentLink.innerHTML = 'כלי השוואה ▼';
+                        }
+                    }
+                }
+            });
+            
+            if (dropdown.classList.contains('show')) {
+                dropdown.classList.remove('show');
+                link.innerHTML = 'מחשבונים ▼';
+            } else {
+                dropdown.classList.add('show');
+                link.innerHTML = 'מחשבונים ▲';
+            }
+            
+            return false;
+        }
+
+        function toggleVirtualToolsDropdown(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            if (window.innerWidth > 768) {return;}
+            const dropdown = document.getElementById('virtualToolsDropdown');
+            const link = event.target;
+            
+            document.querySelectorAll('.dropdown-content.show').forEach(d => {
+                if (d !== dropdown) {
+                    d.classList.remove('show');
+                    const parentLi = d.closest('.nav-dropdown');
+                    const parentLink = parentLi?.querySelector('a');
+                    if (parentLink && d.id === 'virtualCalculatorDropdown') {
+                        parentLink.innerHTML = 'מחשבונים ▼';
+                    }
+                }
+            });
+            
+            if (dropdown.classList.contains('show')) {
+                dropdown.classList.remove('show');
+                link.innerHTML = 'כלי השוואה ▼';
+            } else {
+                dropdown.classList.add('show');
+                link.innerHTML = 'כלי השוואה ▲';
+            }
+            
+            return false;
+        }
+        
+        // Close nav dropdowns when clicking outside
+        document.addEventListener('click', function(event) {
+            document.querySelectorAll('.dropdown-content.show').forEach(d => {
+                if (!d.contains(event.target)) {
+                    const parentLi = d.closest('.nav-dropdown');
+                    const parentLink = parentLi?.querySelector('a');
+                    if (parentLink && !parentLink.contains(event.target)) {
+                        d.classList.remove('show');
+                        if (d.id === 'virtualProductsDropdown') {
+                            parentLink.innerHTML = 'מוצרים ותשואות ▼';
+                        } else if (d.id === 'virtualCalculatorDropdown') {
+                            parentLink.innerHTML = 'מחשבונים ▼';
+                        } else if (d.id === 'virtualToolsDropdown') {
+                            parentLink.innerHTML = 'כלי השוואה ▼';
+                        }
+                    }
+                }
+            });
+        });
+
+        // Close nav dropdown when clicking on links
+        document.addEventListener('click', function(event) {
+            if (event.target.closest('#virtualProductsDropdown a')) {
+                const navDropdown = document.getElementById('virtualProductsDropdown');
+                const navLink = navDropdown?.closest('.nav-dropdown')?.querySelector('a');
+                
+                if (navDropdown) navDropdown.classList.remove('show');
+                if (navLink) navLink.innerHTML = 'מוצרים ותשואות ▼';
+            }
+            
+            if (event.target.closest('#virtualCalculatorDropdown a')) {
+                const navDropdown = document.getElementById('virtualCalculatorDropdown');
+                const navLink = navDropdown?.closest('.nav-dropdown')?.querySelector('a');
+                
+                if (navDropdown) navDropdown.classList.remove('show');
+                if (navLink) navLink.innerHTML = 'מחשבונים ▼';
+            }
+            
+            if (event.target.closest('#virtualToolsDropdown a')) {
+                const navDropdown = document.getElementById('virtualToolsDropdown');
+                const navLink = navDropdown?.closest('.nav-dropdown')?.querySelector('a');
+                
+                if (navDropdown) navDropdown.classList.remove('show');
+                if (navLink) navLink.innerHTML = 'כלי השוואה ▼';
+            }
+        });
+
+        // Hamburger menu functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburger = document.getElementById('hamburger');
+            const navMenu = document.getElementById('navMenu');
+            
+            if (hamburger && navMenu) {
+                hamburger.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    navMenu.classList.toggle('active');
+                });
+
+                document.addEventListener('click', function(e) {
+                    if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
+                        navMenu.classList.remove('active');
+                        hamburger.classList.remove('active');
+                    }
+                });
+
+                document.querySelectorAll('.nav-menu a').forEach(link => {
+                    link.addEventListener('click', function(e) {
+                        if (window.innerWidth <= 768 && !this.hasAttribute('onclick')) {
+                            navMenu.classList.remove('active');
+                            hamburger.classList.remove('active');
+                        }
+                    });
+                });
+            }
+        });
+
+        // Ensure nav dropdown links work properly
+        document.querySelectorAll('#virtualProductsDropdown a, #virtualCalculatorDropdown a, #virtualToolsDropdown a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                // Don't prevent default - let the link work normally
+                e.stopPropagation();
+                
+                // Close dropdown after a short delay to allow navigation
+                setTimeout(() => {
+                    const allDropdowns = ['virtualProductsDropdown', 'virtualCalculatorDropdown', 'virtualToolsDropdown'];
+                    allDropdowns.forEach(dropdownId => {
+                        const dropdown = document.getElementById(dropdownId);
+                        const dropdownLink = dropdown?.closest('.nav-dropdown')?.querySelector('a');
+                        
+                        if (dropdown) {
+                            dropdown.classList.remove('show');
+                        }
+                        if (dropdownLink) {
+                            if (dropdownId.includes('Products')) {
+                                dropdownLink.innerHTML = 'מוצרים ותשואות ▼';
+                            } else if (dropdownId.includes('Calculator')) {
+                                dropdownLink.innerHTML = 'מחשבונים ▼';
+                            } else if (dropdownId.includes('Tools')) {
+                                dropdownLink.innerHTML = 'כלי השוואה ▼';
+                            }
+                        }
+                    });
+                }, 100);
+            });
+        });
+
+        // Hamburger menu functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load all data
+            if (typeof loadalldata === 'function') {
+                loadalldata();
+            }
+            
+            const hamburger = document.getElementById('hamburger');
+            const navMenu = document.getElementById('navMenu');
+            
+            if (hamburger && navMenu) {
+                hamburger.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    navMenu.classList.toggle('active');
+                });
+
+                document.addEventListener('click', function(e) {
+                    if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
+                        navMenu.classList.remove('active');
+                        hamburger.classList.remove('active');
+                    }
+                });
+
+                document.querySelectorAll('.nav-menu a').forEach(link => {
+                    link.addEventListener('click', function(e) {
+                        if (window.innerWidth <= 768 && !this.hasAttribute('onclick')) {
+                            navMenu.classList.remove('active');
+                            hamburger.classList.remove('active');
+                        }
+                    });
+                });
+            }
+        });
+        
+        // ========================================
+        // Navigate to Home Page Function
+        // ========================================
+        function navigateToHome() {
+            // אם אנחנו כבר בדף הבית - פשוט נגלול למעלה
+            if (window.location.pathname.endsWith('index.html') || window.location.pathname === '/') {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                // אנחנו בדף אחר - נעבור לדף הבית
+                window.location.href = 'index.html';
+            }
+        }
+    </script>
+ 
+</body>
+</html>

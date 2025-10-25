@@ -1,0 +1,123 @@
+/* Terms Consent Overlay - appears on first visit */
+#termsConsentOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.85);
+    display: none; /* Hidden by default */
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+    backdrop-filter: blur(8px);
+}
+
+#termsConsentOverlay.show {
+    display: flex;
+    animation: fadeIn 0.5s ease;
+}
+
+#termsConsentOverlay.hidden {
+    display: none !important;
+}
+
+.consent-box {
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
+    max-width: 550px;
+    width: 90%;
+    animation: slideIn 0.5s ease;
+    direction: rtl;
+}
+
+.consent-box h2 {
+    color: #667eea;
+    margin: 0 0 20px;
+    font-size: 2rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.consent-box p {
+    margin: 0 0 25px;
+    color: #555;
+    line-height: 1.8;
+    font-size: 1.1rem;
+}
+
+.consent-box .terms-link {
+    color: #667eea;
+    text-decoration: underline;
+    cursor: pointer;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.consent-box .terms-link:hover {
+    color: #764ba2;
+}
+
+#acceptTermsBtn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    border-radius: 50px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+#acceptTermsBtn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+}
+
+#acceptTermsBtn:active {
+    transform: translateY(0);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50px) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@media (max-width: 768px) {
+    .consent-box {
+        padding: 30px 20px;
+        max-width: 95%;
+    }
+    
+    .consent-box h2 {
+        font-size: 1.5rem;
+    }
+    
+    .consent-box p {
+        font-size: 1rem;
+    }
+    
+    #acceptTermsBtn {
+        font-size: 1rem;
+        padding: 12px 30px;
+    }
+}
+

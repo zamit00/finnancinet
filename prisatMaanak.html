@@ -1,0 +1,1541 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8" />
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-41JX3YK216"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-41JX3YK216');
+</script>
+
+<!-- SEO Meta Tags -->
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="סימולטור פריסת מענק פרישה - חשב את אופן פריסת מענק הפרישה האופטימלי שלך. השווה בין אפשרויות פריסה שונות.">
+<title>סימולטור פריסת מענק פרישה - חישוב אופטימלי | פיננסי-נט</title>
+
+<!-- Open Graph Tags -->
+<meta property="og:title" content="סימולטור פריסת מענק פרישה - פיננסי-נט">
+<meta property="og:description" content="חשב את אופן פריסת מענק הפרישה האופטימלי שלך">
+<meta property="og:image" content="https://i.postimg.cc/L4YLr22D/logoxnew.png">
+<meta property="og:url" content="https://zamit00.github.io/NewFinnanciNet/prisatMaanak.html">
+<meta property="og:type" content="website">
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap');
+  
+  :root{
+    --bg: white;
+    --card: #f8f9fa;
+    --primary: #667eea;
+    --secondary: #5a6fd8;
+    --text-primary: #333;
+    --text-secondary: #666;
+    --danger: #dc3545;
+    --border: rgba(0, 0, 0, 0.1);
+    --ring: rgba(102, 126, 234, 0.25);
+  }
+  *{
+    box-sizing:border-box;
+    font-family: 'Heebo', sans-serif;
+  }
+  html,body{height:100%}
+  body{
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--text-primary);
+  }
+
+  /* Navigation Styles */
+  .nav-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    position: relative;
+    z-index: 1000;
+    
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+  }
+
+  .logoimg{
+    width: 200px;
+    height: auto;
+  }
+
+  .nav-menu {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    
+  }
+
+  .nav-menu a {
+    text-decoration: none;
+    color:var(--text-primary);
+    font-weight: 500;
+    transition: color 0.3s ease;
+    position: relative;
+    padding: 0.5rem 0;
+  }
+
+  .nav-menu a:hover {
+    color: #667eea;
+  }
+
+  .nav-menu a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    right: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    transition: width 0.3s ease;
+  }
+
+  .nav-menu a:hover::after {
+    width: 100%;
+  }
+
+  /* Navigation Dropdown */
+  .nav-dropdown {
+    position: relative;
+  }
+
+  .nav-dropdown .dropdown-content {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: calc(100% - 2px);
+    right: 0;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 0 0 8px 8px;
+    box-shadow: none;
+    min-width: 220px;
+    z-index: 1001;
+    margin-top: 0;
+    border-top: none;
+    max-height: 0;
+    opacity: 0;
+    visibility: hidden;
+    overflow: hidden;
+    transition: max-height 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
+  }
+
+  .nav-dropdown .dropdown-content a {
+    color: #333;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.3s ease;
+    font-size: 14px;
+    border-bottom: 1px solid #eee;
+  }
+
+  .nav-dropdown .dropdown-content a:hover {
+    background-color: #f5f5f5;
+    color: #667eea;
+  }
+
+  .nav-dropdown .dropdown-content a:last-child {
+    border-bottom: none;
+  }
+
+  .nav-dropdown .dropdown-content.show {
+    max-height: 500px;
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  /* Desktop hover behavior - only when not using JavaScript */
+  @media (min-width: 769px) {
+    .nav-dropdown:hover .dropdown-content:not(.show) {
+      max-height: 500px;
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 4px;
+  }
+
+  .hamburger span {
+    width: 25px;
+    height: 3px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    transition: 0.3s;
+    border-radius: 3px;
+  }
+
+  .hamburger.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+
+  .hamburger.active span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .hamburger.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -6px);
+  }
+
+  /* Mobile Navigation */
+  @media (max-width: 768px) {
+    .nav-container {
+      padding: 1rem 1rem;
+    }
+
+    .logoimg{
+      width: 150px;
+      height: auto;
+    }
+    
+    footer{max-width: 100%;box-sizing: border-box;margin: 0;padding: 0;}
+
+    .nav-menu {
+      display: none;
+      position: fixed;
+      top: 80px;
+      right: -100%;
+      width: 100%;
+      height: calc(100vh - 80px);
+      background: white;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      padding-top: 2rem;
+      transition: right 0.3s ease;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+
+    .nav-menu.active {
+      display: flex;
+      flex-direction: column;
+      right: 0;
+    }
+
+    .hamburger {
+      display: flex;
+    }
+
+    .nav-menu li {
+      margin: 1rem 0;
+      text-align: center;
+    }
+
+    .nav-menu a {
+      font-size: 1.2rem;
+    }
+
+   /* Mobile nav-dropdown adjustments */
+   .nav-dropdown .dropdown-content {
+       position: relative;
+       display: flex;
+       flex-direction: column;
+       min-width: auto;
+       width: clamp(200px, 100%, 270px);
+       max-height: 0;
+       opacity: 0;
+       visibility: hidden;
+       overflow: hidden;
+       border: none;
+       background: white;
+       margin-top: 5px;
+       top: auto;
+       border-radius: 15px;
+       box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+       padding: 0;
+       transition: max-height 0.3s ease, opacity 0.3s ease, visibility 0.3s ease, padding-top 0.3s ease;
+     }
+
+    .nav-dropdown .dropdown-content a {
+      padding: 8px 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      font-size: 1rem;
+    }
+
+    .nav-dropdown .dropdown-content.show {
+      max-height: 500px;
+      opacity: 1;
+      visibility: visible;
+      padding-top: 15px;
+    }
+  }
+  .container{
+    max-width:1100px;
+    margin:0 auto;
+    padding:20px;
+  }
+  @media (max-width:768px){
+    .container{padding:12px}
+  }
+  header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    margin-bottom:16px;
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+  h1{
+    font-size:1.8rem;
+    font-weight: 700;
+    margin:0 0 2px;
+    line-height: 1.2;
+  }
+  @media (max-width:768px){
+    h1{font-size:1.3rem}
+  }
+  
+  .subtitle{
+    font-size:1.1rem;
+    color:var(--text-secondary);
+  }
+  .adkani{
+    font-size:0.9rem;
+    color:var(--text-secondary);
+    margin:4px 0 0;
+  }
+
+  /* Stepper */
+  .steps{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:8px;
+    margin:16px 0 10px;
+  }
+  @media (max-width:768px){
+    .steps{gap:4px;margin:12px 0 8px}
+  }
+  
+  .step{
+    position:relative;
+    padding:14px 12px;
+    border-radius:12px;
+    background:var(--card);
+    border:1px solid var(--border);
+    color:var(--text-p);
+    text-align:center;
+    font-size:.9rem;
+    user-select:none;
+    transition: background 0.3s;
+  }
+  @media (max-width:768px){
+    .step{padding:10px 4px;font-size:.7rem;border-radius:8px}
+  }
+  
+  .step.active{
+    background: var(--primary);
+    color: var(--card);
+    font-weight: bold;
+  }
+  
+  /* Panels */
+  .panel{
+    position:relative;
+    border-radius:16px;
+    background: var(--card);
+    border:1px solid var(--border);
+    padding:24px;
+    display:none;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity .35s, transform .35s;
+  }
+  @media (max-width:768px){
+    .panel{padding:16px;border-radius:12px}
+  }
+  
+  .panel.show{
+    display:block;
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+  }
+  @media (max-width:900px){
+    .grid{grid-template-columns:1fr}
+  }
+  
+  label{
+    display:block;
+    font-size:1rem;
+    color:var(--text-primary);
+    margin-bottom:8px;
+  }
+  @media (max-width:768px){
+    label{font-size:.9rem}
+  }
+  
+  .input{
+    width:100%;
+    padding:14px;
+    border-radius:8px;
+    border:1px solid var(--border);
+    background:var(--bg);
+    color:var(--text-primary);
+    font-size:1rem;
+    outline:none;
+    transition:border-color .2s, box-shadow .2s;
+  }
+  .input:focus{
+    border-color:var(--primary);
+    box-shadow:0 0 0 3px var(--ring);
+  }
+  .help{
+    font-size:.85rem;
+    color:var(--text-secondary);
+    margin-top:8px;
+  }
+  @media (max-width:768px){
+    .help{font-size:.8rem}
+  }
+  
+  .row{
+    display:flex;
+    gap:10px;
+    align-items:center;
+    flex-wrap:wrap;
+  }
+  @media (max-width:768px){
+    .row{gap:6px}
+  }
+  
+  .btn{
+    padding:14px 24px;
+    border:none;
+    border-radius:8px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color:white;
+    font-weight:700;
+    cursor:pointer;
+    transition:transform .1s ease, box-shadow .2s;
+    box-shadow:0 8px 18px rgba(102, 126, 234, 0.2);
+    font-size:1rem;
+  }
+  @media (max-width:768px){
+    .btn{padding:12px 16px;font-size:.9rem}
+  }
+  
+  .btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 10px 20px rgba(102, 126, 234, 0.3);
+  }
+  .btn:active{transform:translateY(1px)}
+  .btn.secondary{
+    background:var(--secondary);
+    color:var(--text-primary);
+    border:1px solid var(--border);
+    box-shadow:none;
+  }
+  .btn.ghost{
+    background:transparent;
+    border:1px dashed var(--border);
+    color:var(--text-secondary);
+    box-shadow: none;
+  }
+  .stack{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    align-items: center;
+  }
+  .spacer{height:20px}
+  .pill{
+    padding:10px 16px;
+    border-radius:999px;
+    background:var(--bg);
+    border:1px solid var(--border);
+    color:var(--text-primary);
+    font-size:.9rem;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .pill:hover{
+    background: rgba(255,255,255,0.05);
+  }
+  .pill input{
+    display: none;
+  }
+  .pill input:checked + span {
+    color: var(--primary);
+    font-weight: 700;
+  }
+  .note{
+    font-size:.9rem;
+    color:var(--text-secondary);
+  }
+  
+  .mono{
+    font-family: 'JetBrains Mono', monospace;
+    text-align: right;
+    direction: rtl;
+  }
+  .kpi{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));
+    gap:16px;
+    margin-top:20px;
+  }
+  @media (max-width:768px){
+    .kpi{gap:12px}
+  }
+  
+  .kpi .card{
+    background:var(--bg);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:18px;
+  }
+  @media (max-width:768px){
+    .kpi .card{padding:14px}
+  }
+  
+  .kpi .title{
+    font-size:.85rem;
+    color:var(--text-secondary);
+  }
+  .kpi .value{
+    font-size:1.4rem;
+    margin-top:8px;
+    font-weight:700;
+  }
+  
+  /* Currency formatting for panel-4 */
+  .panel#panel-4 .mono {
+    direction: rtl;
+    text-align: right;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  
+  /* Table */
+  table{
+    width:100%;
+    border-collapse:separate;
+    border-spacing:0;
+    margin-top:16px;
+  }
+  thead th{
+    position:sticky;
+    top:0;
+    background:var(--bg);
+    border-bottom:1px solid var(--border);
+    padding:14px;
+    font-size:.9rem;
+    color:var(--text-secondary);
+    z-index:1;
+  }
+  tbody td{
+    border-bottom:1px dashed var(--border);
+    padding:12px;
+    color:var(--text-primary);
+  }
+  tbody tr:hover{
+    background:rgba(255,255,255,0.05);
+  }
+  .td-num{
+    font-family: 'JetBrains Mono', monospace;
+    text-align:right;
+    direction:rtl;
+  }
+  
+  /* Table currency formatting */
+  .panel#panel-4 .td-num {
+    direction: rtl;
+    text-align: right;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  
+  .input-num{
+    width:100%;
+    padding:10px;
+    border-radius:8px;
+    border:1px solid var(--border);
+    background:var(--bg);
+    color:var(--text-primary);
+    direction:ltr;
+    text-align:left;
+  }
+
+  /* Pie Chart */
+  .pie-wrap{
+    display:flex;
+    gap:40px;
+    align-items:center;
+    justify-content:center;
+    flex-wrap:wrap;
+    margin-top:20px;
+  }
+  .pie-chart{
+    width:240px;
+    height:240px;
+    background: conic-gradient(#667eea 0%, #667eea var(--taxable-angle), #ddd var(--taxable-angle), #ddd 100%);
+    border-radius: 50%;
+    position: relative;
+  }
+  .pie-chart:before{
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 80%;
+    height: 80%;
+    background: var(--card);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .legend{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+  }
+  .legend .item{
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .swatch{
+    width:18px;
+    height:18px;
+    border-radius:4px;
+  }
+  .swatch.taxable{background:#667eea}
+  .swatch.exempt{background:#ddd}
+
+  /* Alerts */
+  .alert{
+    border:1px solid var(--border);
+    background:var(--bg);
+    border-radius:12px;
+    padding:16px;
+    font-size:.95rem;
+    line-height: 1.5;
+  }
+  .alert.ok{
+    border-color: rgba(102, 126, 234, 0.35);
+    background: rgba(102, 126, 234, 0.08);
+  }
+  .alert.warn{
+    border-color:rgba(245,158,11,.35);
+    background:rgba(245,158,11,.08);
+  }
+  .alert.danger{
+    border-color:rgba(239,68,68,.35);
+    background:rgba(239,68,68,.08);
+  }
+
+  .footer-note{
+    margin-top:20px;
+    color:var(--text-secondary);
+    font-size:.85rem;
+    text-align: center;
+  }
+</style>
+
+<!-- External Modal Styles -->
+<link rel="stylesheet" href="about-modal.css">
+<link rel="stylesheet" href="consultation-form.css">
+<link rel="stylesheet" href="terms-modal.css">
+<link rel="stylesheet" href="mainStyle.css">
+<link rel="stylesheet" href="footer.css">
+</head>
+<body>
+  <div class="nav-container">
+    <nav class="nav-menu" id="navMenu">
+      <li><a href="#" onclick="navigateToHome(); return false;"><i class="fa fa-home" style="font-size:2rem"></i></a></li>
+      <li class="nav-dropdown">
+        <a href="#" onclick="togglePrisatProductsDropdown(event)">מוצרים ותשואות ▼</a>
+        <div class="dropdown-content" id="prisatProductsDropdown">
+          <a href="mozarim.html?product=hishtalmut">קרנות השתלמות</a>
+          <a href="mozarim.html?product=gemel">קופות גמל</a>
+          <a href="mozarim.html?product=gemelHashkaa">קופות גמל להשקעה</a>
+          <a href="mozarim.html?product=yeled">חסכון לילד</a>
+          <a href="mozarim.html?product=polisot">פוליסות חסכון</a>
+          <a href="mozarim.html?product=pensia">קרנות פנסיה חדשות</a>
+        </div>
+      </li>
+      <li class="nav-dropdown">
+        <a href="#" onclick="togglePrisatCalculatorDropdown(event)">מחשבונים ▼</a>
+        <div class="dropdown-content" id="prisatCalculatorDropdown">
+          <a href="prisatMaanak.html">פריסת מענק פרישה</a>
+          <a href="calac.html">מחשבון דחיית קצבה</a>
+          <a href="ribitderibit.html">חישוב ערך עתידי</a>
+          <a href="loan.html">סימולטור הלוואה</a>
+          <a href="hafkada.html">מחשבון הפקדה לסכום מטרה</a>
+          <a href="hashDmeyNihul.html">השוואת דמי ניהול</a>
+        </div>
+      </li>
+      <li class="nav-dropdown">
+        <a href="#" onclick="togglePrisatToolsDropdown(event)">כלי השוואה ▼</a>
+        <div class="dropdown-content" id="prisatToolsDropdown">
+          <a href="hashMenahalot.html">השוואת חברות מנהלות</a>
+          <a href="hasifotMeshulav.html">מחולל חשיפות</a>
+              <a href="VirtualInvest.html">השוואת תיק משולב מסלולים</a>
+          
+          <a href="#">ציון משקל תשואה לשארפ</a>
+        </div>
+      </li>
+      <li><a href="#" onclick="openAboutModal(); return false;">אודות</a></li>
+      <li><a href="index.html#contact">צור קשר</a></li>
+      <li class="whatsapp-desktop"><a href="https://wa.me/972545287184?text=שלום, אני מעוניין בייעוץ פנסיוני" target="_blank" title="צור קשר בוואטסאפ"><i class="fab fa-whatsapp" style="font-size:2rem; color:#25D366;"></i></a></li>
+    </nav>
+    <div class="whatsapp-mobile">
+        <a href="https://wa.me/972545287184?text=שלום, אני מעוניין בייעוץ פנסיוני" target="_blank" title="צור קשר בוואטסאפ">
+            <i class="fab fa-whatsapp" style="font-size:2rem; color:#25D366;"></i>
+        </a>
+    </div>
+    <div class="logo"> <img class="logoimg" src="logoxnew.png" onclick="navigateToHome();" style="cursor: pointer;"/></div>
+    <div class="hamburger" id="hamburger" style="padding: 10px;">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div>
+          <h1>סימולטור פריסת מענק פרישה</h1>
+          <div class="subtitle">חישוב לפי סעיף 8ג' לפקודת מס הכנסה</div>
+          <div class="adkani">עדכני לנתוני רשות המיסים לשנת 2025</div>
+        </div>
+      </div>
+    </header>
+
+    <div class="steps">
+      <div class="step active" data-step="1">1. נתונים ראשוניים</div>
+      <div class="step" data-step="2">2. תוצאות בסיס</div>
+      <div class="step" data-step="3">3. העדפות פריסה</div>
+      <div class="step" data-step="4">4. סיכום וחיסכון</div>
+    </div>
+
+    <section class="panel show" id="panel-1">
+      <div class="grid">
+        <div>
+          <label for="grantTotal">מענק פרישה למשיכה (סה"כ)</label>
+          <input class="input money" id="grantTotal" inputmode="numeric" placeholder="לדוגמה: 250,000" />
+          <div class="help">סכום המענק הכולל לפני פטור/פריסה.</div>
+        </div>
+        <div>
+          <label>שכר אחרון (חודשי ברוטו)</label>
+          <input class="input money" id="lastSalary" inputmode="numeric" placeholder="לדוגמה: 12,500" />
+          <div class="help">משמש לחישוב תקרת השכר הפטור.</div>
+        </div>
+        <div>
+          <label>תאריך תחילת עבודה</label>
+          <input class="input" id="startDate" type="date" />
+          <div class="help">משמש לחישוב הוותק בעבודה.</div>
+        </div>
+        <div>
+          <label>תאריך פרישה</label>
+          <input class="input" id="retireDate" type="date" />
+          <div class="help">התאריך בו עזבת את מקום העבודה.</div>
+        </div>
+        <div>
+          <label>הכנסות נוספות בשנה הראשונה</label>
+          <input class="input money" id="firstYearIncome" inputmode="numeric" placeholder="לדוגמה: 120,000" />
+          <div class="help">הכנסות אחרות בשנת הפרישה (ללא המענק).</div>
+        </div>
+      </div>
+
+      <div class="spacer"></div>
+      <div class="stack">
+        <button class="btn" id="to-step-2">המשך לתוצאות בסיס</button>
+        <button class="btn ghost" id="resetAll" onclick="resetAll()">אפס הכל</button>
+      </div>
+    </section>
+
+    <section class="panel" id="panel-2">
+      <div class="kpi">
+        <div class="card">
+          <div class="title">ותק בעבודה (שנים)</div>
+          <div class="value mono" id="kpi-tenure">0.00</div>
+        </div>
+        <div class="card">
+          <div class="title">מענק פטור ממס</div>
+          <div class="value mono" id="kpi-exempt">0.00 ש"ח</div>
+        </div>
+        <div class="card">
+          <div class="title">מענק חייב במס</div>
+          <div class="value mono" id="kpi-taxable">0.00 ש"ח</div>
+        </div>
+      </div>
+
+      <div class="pie-wrap">
+        <div class="pie-chart" style="--taxable-angle: 0deg;"></div>
+        <div class="legend">
+          <div class="item"><span class="swatch exempt"></span> פטור ממס</div>
+          <div class="item"><span class="swatch taxable"></span> חייב במס</div>
+        </div>
+      </div>
+      
+      <div class="spacer"></div>
+      <div class="alert warn" id="capNote" style="display:none"></div>
+
+      <div class="spacer"></div>
+      <div class="stack">
+        <button class="btn secondary goBack" data-back="1">חזרה</button>
+        <button class="btn" id="to-step-3">המשך להעדפות פריסה</button>
+      </div>
+    </section>
+
+    <section class="panel" id="panel-3">
+      <div class="grid">
+        <div>
+          <label>מין ונקודות זיכוי</label>
+          <div class="row">
+            <label class="pill"><input type="radio" name="gender" value="male" checked /><span>גבר</span></label>
+            <label class="pill"><input type="radio" name="gender" value="female" /><span>אישה</span></label>
+          </div>
+          <div class="help">שווי נקודת זיכוי לשנת 2025: 2,904 ש"ח.</div>
+        </div>
+        <div>
+          <label>כיוון פריסה</label>
+          <div class="row">
+            <label class="pill"><input type="radio" name="direction" value="forward" checked onchange="addYearsOptions()" /><span>קדימה</span></label>
+            <label class="pill"><input type="radio" name="direction" value="backward" onchange="addYearsOptions()" /><span>אחורה</span></label>
+          </div>
+          <div class="help">אפשרות לפריסה עד 6 שנים או לפי חישוב הזכאות.</div>
+        </div>
+        <div>
+          <label id="lblYearsSelect"></label>
+          <select class="input" id="yearsSelect"></select>
+          <div class="help" id="eligibilityText">זכאות תתעדכן אוטומטית.</div>
+        </div>
+      </div>
+      
+      <div class="spacer"></div>
+      <div class="alert ok" id="eligibilityAlert" style="display:none"></div>
+
+      <div class="spacer"></div>
+      <div class="stack">
+        <button class="btn secondary goBack" data-back="2">חזרה</button>
+        <button class="btn" id="to-step-4">הצג סיכום וחיסכון</button>
+      </div>
+    </section>
+
+    <section class="panel" id="panel-4">
+      <div class="kpi">
+        <div class="card">
+          <div class="title">מס על המענק ללא פריסה</div>
+          <div class="value mono" id="sum-tax-no-spread"> </div>
+        </div>
+        <div class="card">
+          <div class="title">סך מס על המענק בפריסה</div>
+          <div class="value mono" id="sum-tax-with-spread"></div>
+        </div>
+        <div class="card">
+          <div class="title">חיסכון במס בזכות הפריסה</div>
+          <div class="value mono" id="sum-savings"></div>
+        </div>
+        <div class="card">
+          <div class="title">שנות פריסה שנבחרו</div>
+          <div class="value mono" id="sum-years"></div>
+        </div>
+      </div>
+
+      <div class="spacer"></div>
+      
+      <!-- שדה להכנסה אחידה -->
+      <div class="grid" style="margin-bottom: 20px;">
+        <div>
+          <label>הכנסה אחידה לכל השנים הנוספות</label>
+          <input class="input money" id="uniformIncome" inputmode="numeric" placeholder="לדוגמה: 50,000" />
+          
+          <div class="help">הסכום יוחל על כל השנים הנוספות (לא על השנה הראשונה אם היא נוכחית)</div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+            <input type="checkbox" id="uniformIncomeEnabled" />
+            <span>החלה אחידה</span>
+          </label>
+        </div>
+      </div>
+
+      <div style="overflow:auto;border:1px solid var(--border);border-radius:12px">
+        <table id="spreadTable">
+          <thead>
+            <tr>
+              <th style="width:70px">שנה</th>
+              <th>הכנסה נוספת</th>
+              <th>חלק המענק</th>
+              <th>מס על החלק</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <div class="spacer"></div>
+      <div class="alert ok">
+        החישוב מבוסס על הנתונים שהזנת. מומלץ תמיד להתייעץ עם איש מקצוע.
+      </div>
+
+      <div class="spacer"></div>
+      <div class="stack">
+        <button class="btn secondary goBack" data-back="3">חזרה</button>
+        <button class="btn ghost" id="restart">התחל מחדש</button>
+      </div>
+    </section>
+
+  </div>
+
+<script>
+const INCOME_TAX_BRACKETS = [
+    { limit: 84120, rate: 0.10 },
+    { limit: 120720, rate: 0.14 },
+    { limit: 193800, rate: 0.20 },
+    { limit: 269280, rate: 0.31 },
+    { limit: 560280, rate: 0.35 },
+    { limit: 721560, rate: 0.47 },
+    { limit: Infinity, rate: 0.50 }
+  ];
+const CREDIT_POINTS = { male: 2.25, female: 2.75 };
+const DEFAULT_SALARY_CAP = 13750;
+const CREDIT_POINT_VALUE = 2904;
+
+function fmtMoney(v) {
+    if (isNaN(v) || v == null) v = 0;
+    return v.toLocaleString('he-IL', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + " ₪";
+}
+function fmtNum(v) {
+    if (isNaN(v) || v == null) v = 0;
+    return v.toLocaleString('he-IL', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+function parseNum(el) {
+    const raw = (typeof el === "string") ? el : el.value;
+    const clean = raw.replace(/[^\d]/g, "");
+    return parseFloat(clean) || 0;
+}
+
+function calcTax(income, gender) {
+    let tax = 0, prev = 0;
+    for (const b of INCOME_TAX_BRACKETS) {
+        if (income > prev) {
+            const taxable = Math.min(income, b.limit) - prev;
+            tax += taxable * b.rate;
+            prev = b.limit;
+        } else break;
+        if (income <= prev) break;
+    }
+    const credits = (CREDIT_POINTS[gender] || 0) * CREDIT_POINT_VALUE;
+    return Math.max(0, tax - credits);
+}
+
+function showPanel(n) {
+    document.querySelectorAll(".panel").forEach(p => p.classList.remove("show"));
+    document.querySelector("#panel-" + n).classList.add("show");
+    
+    document.querySelectorAll(".step").forEach(s => s.classList.remove("active"));
+    document.querySelector('.step[data-step="' + n + '"]').classList.add("active");
+}
+
+function calcBase() {
+    const grantTotal = parseNum(document.querySelector("#grantTotal"));
+    const lastSalary = parseNum(document.querySelector("#lastSalary"));
+    const salaryCap = DEFAULT_SALARY_CAP;
+    const start = new Date(document.querySelector("#startDate").value);
+    const retire = new Date(document.querySelector("#retireDate").value);
+    
+    if (isNaN(start) || isNaN(retire)) return null;
+
+    const tenureYears = (retire - start) / (1000 * 60 * 60 * 24 * 365);
+    const basePerYear = Math.min(lastSalary * 1.5, salaryCap);
+    const exempt = Math.min(grantTotal, tenureYears * basePerYear);
+    const taxable = Math.max(0, grantTotal - exempt);
+
+    document.querySelector("#kpi-tenure").textContent = fmtNum(tenureYears);
+    document.querySelector("#kpi-exempt").textContent = fmtMoney(exempt);
+    document.querySelector("#kpi-taxable").textContent = fmtMoney(taxable);
+
+    drawPie(exempt, taxable);
+    return { grantTotal, tenureYears, exempt, taxable };
+}
+
+function drawPie(exempt, taxable) {
+    const total = exempt + taxable || 1;
+    const taxablePct = (taxable / total) * 100;
+    document.querySelector(".pie-chart").style.setProperty('--taxable-angle', `${taxablePct}%`);
+}
+
+function buildTable(data, gender, years) {
+    const tbody = document.querySelector("#spreadTable tbody");
+    tbody.innerHTML = "";
+    
+    if (data.taxable === 0) {
+        document.querySelector("#sum-tax-with-spread").textContent = fmtMoney(0);
+        document.querySelector("#sum-savings").textContent = fmtMoney(0);
+        return;
+    }
+
+    const partPerYear = data.taxable / years;
+    const retireDate = new Date(document.querySelector("#retireDate").value);
+    const firstYear = retireDate.getFullYear();
+    const firstIncome = parseNum(document.querySelector("#firstYearIncome"));
+    const direction = document.querySelector('input[name="direction"]:checked').value;
+    
+    for (let i = 0; i < years; i++) {
+        let y = (direction === 'forward') ? firstYear + i : firstYear - i;
+
+        const tr = document.createElement("tr");
+        
+        const additionalIncome = (i === 0) ? firstIncome : 0;
+        
+        tr.innerHTML = `
+          <td>${y}</td>
+          <td><input  class="input-num money" data-year="${y}" value="${additionalIncome.toLocaleString('he-IL')}" /></td>
+          <td  class="td-num">${fmtMoney(partPerYear)}</td>
+          <td  class="td-num" data-tax-for-year="${y}">${fmtMoney(0)}</td>
+        `;
+        tbody.appendChild(tr);
+    }
+    
+    document.querySelectorAll('#spreadTable .input-num').forEach(input => {
+        input.addEventListener('input', (e) => {
+          formatInput(e);
+          calcTable();
+        });
+    });
+
+    calcTable();
+}
+
+function calcTable() {
+    const d = calcBase();
+    if (!d) return;
+
+    const gender = document.querySelector("input[name=gender]:checked").value;
+    const years = parseInt(document.querySelector("#yearsSelect").value) || 1;
+    const partPerYear = d.taxable / years;
+    let sumTaxWithSpread = 0;
+
+    document.querySelectorAll("#spreadTable tbody tr").forEach(tr => {
+        const year = tr.querySelector("td").textContent;
+        const input = tr.querySelector(".input-num");
+        const additionalIncome = parseNum(input);
+
+        const totalIncome = additionalIncome + partPerYear;
+        const taxWith = calcTax(totalIncome, gender);
+        const taxWithout = calcTax(additionalIncome, gender);
+        const taxOnPart = Math.max(0, taxWith - taxWithout);
+
+        document.querySelector(`[data-tax-for-year="${year}"]`).textContent = fmtMoney(taxOnPart);
+        sumTaxWithSpread += taxOnPart;
+    });
+
+    const firstIncome = parseNum(document.querySelector("#firstYearIncome"));
+    const noSpreadTax = Math.max(0, calcTax(d.taxable + firstIncome, gender) - calcTax(firstIncome, gender));
+    
+    document.querySelector("#sum-tax-no-spread").textContent = fmtMoney(noSpreadTax);
+    document.querySelector("#sum-tax-with-spread").textContent = fmtMoney(sumTaxWithSpread);
+    document.querySelector("#sum-savings").textContent = fmtMoney(noSpreadTax - sumTaxWithSpread);
+    document.querySelector("#sum-years").textContent = years;
+}
+
+function applyUniformIncome() {
+    const checkbox = document.querySelector("#uniformIncomeEnabled");
+    const isEnabled = checkbox.checked;
+    
+    if (!isEnabled) {
+        // אם ביטלנו את הסימון - איפוס כל השדות
+        clearAllIncomeFields();
+        return;
+    }
+    
+    const uniformAmount = parseNum(document.querySelector("#uniformIncome"));
+    
+    const currentYear = new Date().getFullYear();
+    const rows = document.querySelectorAll("#spreadTable tbody tr");
+    
+    if (rows.length === 0) {
+        return; // אין טבלה
+    }
+
+    // מציאת השורה הראשונה
+    const firstRow = rows[0];
+    const firstRowYear = parseInt(firstRow.querySelector("td").textContent);
+    
+    // החלטה אם למלא גם את השורה הראשונה
+    const fillFirstRow = firstRowYear !== currentYear;
+    
+    rows.forEach((row, index) => {
+        const year = parseInt(row.querySelector("td").textContent);
+        const input = row.querySelector(".input-num");
+        
+        // אם זה השורה הראשונה והשנה הנוכחית - לא נוגעים
+        if (index === 0 && year === currentYear) {
+            return;
+        }
+        
+        // החלה של הסכום החדש
+        if (uniformAmount > 0) {
+            const formattedValue = new Intl.NumberFormat('he-IL').format(uniformAmount);
+            input.value = formattedValue;
+            
+            // הפעלת ה-event של השדה כדי לעדכן חישובים
+            input.dispatchEvent(new Event('input'));
+        }
+    });
+}
+
+function clearAllIncomeFields() {
+    const rows = document.querySelectorAll("#spreadTable tbody tr");
+    const currentYear = new Date().getFullYear();
+    
+    rows.forEach((row, index) => {
+        const year = parseInt(row.querySelector("td").textContent);
+        const input = row.querySelector(".input-num");
+        
+        // אם זה השורה הראשונה והשנה הנוכחית - לא נוגעים
+        if (index === 0 && year === currentYear) {
+            return;
+        }
+        
+        // איפוס השדה וטיפול ב-event
+        input.value = '';
+        input.dispatchEvent(new Event('input'));
+    });
+}
+
+function addYearsOptions() {
+    const tenureYears = Number(document.querySelector("#kpi-tenure").textContent) || 0;
+    const direction = document.querySelector('input[name="direction"]:checked').value;
+    let maxYears;
+    
+    if (direction === 'forward') {
+        maxYears = Math.min(6, Math.floor(tenureYears / 4));
+    } else { // backward
+        maxYears = Math.min(6, Math.floor(tenureYears));
+    }
+    document.querySelector("#lblYearsSelect").textContent = `שנות פריסה (בחר בין 1 ל -  ${maxYears})`;
+    const sel = document.querySelector("#yearsSelect");
+    sel.innerHTML = "";
+    if (maxYears > 0) {
+        for (let i = 1; i <= maxYears; i++) {
+            const opt = document.createElement("option");
+            opt.value = i;
+            opt.textContent = i;
+            if(i ===  maxYears) {opt.selected = true;}
+            sel.appendChild(opt);
+        }
+        document.querySelector("#eligibilityText").textContent = `זכאות לפריסה: עד ${maxYears} שנים.`;
+        document.querySelector("#eligibilityAlert").style.display = "block";
+        document.querySelector("#eligibilityAlert").className = "alert ok";
+        document.querySelector("#eligibilityAlert").textContent = `יש לך זכאות לפרוס את המענק עד ${maxYears} שנים.`;
+        document.querySelector("#to-step-4").disabled = false;
+    } else {
+        document.querySelector("#eligibilityAlert").style.display = "block";
+        document.querySelector("#eligibilityAlert").className = "alert danger";
+        document.querySelector("#eligibilityAlert").textContent = "אין זכאות לפריסה, המענק חייב במס בשנה הנוכחית.";
+        document.querySelector("#to-step-4").disabled = true;
+    }
+}
+
+document.querySelector("#to-step-2").onclick = () => {
+    const requiredFields = ["#grantTotal", "#lastSalary", "#startDate", "#retireDate", "#firstYearIncome"];
+    for (const selector of requiredFields) {
+        const el = document.querySelector(selector);
+        if (el.value.trim() === "") {
+            Swal.fire({
+                title: "שגיאה",
+                text: "יש למלא את כל השדות כדי להמשיך.",
+                icon: "error",
+                confirmButtonText: "הבנתי"
+            });
+            el.focus();
+            return;
+        }
+    }
+    const d = calcBase();
+    if(d) showPanel(2);
+};
+
+document.querySelector("#to-step-3").onclick = () => {
+    const d = calcBase();
+    if (d.taxable === 0) {
+        Swal.fire({
+            title: "אין צורך בפריסה",
+            text: "המענק כולו פטור ממס. אין צורך לבצע פריסה.",
+            icon: "info",
+            confirmButtonText: "הבנתי"
+        });
+        document.querySelector("#to-step-4").disabled = true;
+        return;
+    }
+    addYearsOptions();
+    showPanel(3);
+};
+
+document.querySelector("#to-step-4").onclick = () => {
+    const d = calcBase();
+    const gender = document.querySelector("input[name=gender]:checked").value;
+    const years = parseInt(document.querySelector("#yearsSelect").value) || 1;
+    buildTable(d, gender, years);
+    showPanel(4);
+};
+
+document.querySelectorAll(".goBack").forEach(b => b.onclick = () => {
+    showPanel(b.dataset.back);
+});
+
+document.querySelector("#restart").onclick = () => {
+    location.reload();
+};
+
+function formatInput(e) {
+  const input = e.target;
+  const value = input.value.replace(/[^\d]/g, '');
+  if (!value) {
+    input.value = '';
+    return;
+  }
+  const formattedValue = new Intl.NumberFormat('he-IL').format(value);
+  input.value = formattedValue;
+}
+
+document.querySelectorAll('.money').forEach(input => {
+  input.addEventListener('input', formatInput);
+});
+
+document.querySelector('#yearsSelect').addEventListener('change', () => {
+  const d = calcBase();
+  const gender = document.querySelector("input[name=gender]:checked").value;
+  const years = parseInt(document.querySelector("#yearsSelect").value) || 1;
+  buildTable(d, gender, years);
+});
+
+// Event listeners להכנסה אחידה
+document.querySelector("#uniformIncomeEnabled").addEventListener('change', applyUniformIncome);
+document.querySelector("#uniformIncome").addEventListener('input', function() {
+    const checkbox = document.querySelector("#uniformIncomeEnabled");
+    if (checkbox.checked) {
+        applyUniformIncome();
+    }
+});
+
+
+
+// Close menu when clicking on a link
+document.querySelectorAll('.nav-menu a').forEach(link => {
+    link.addEventListener('click', function(e) {
+        // Don't close if clicking on calculator dropdown toggle
+        if (this.getAttribute('onclick') && this.getAttribute('onclick').includes('togglePrisatCalculatorDropdown')
+      || this.getAttribute('onclick') && this.getAttribute('onclick').includes('togglePrisatToolsDropdown')
+    || this.getAttribute('onclick') && this.getAttribute('onclick').includes('togglePrisatProductsDropdown')) {
+            return;
+        }
+        
+        document.getElementById('hamburger').classList.remove('active');
+        document.getElementById('navMenu').classList.remove('active');
+    });
+});
+
+// Close menu when clicking outside
+document.addEventListener('click', function(e) {
+    const navMenu = document.getElementById('navMenu');
+    const hamburger = document.getElementById('hamburger');
+    
+    if (!navMenu.contains(e.target) && !hamburger.contains(e.target)) {
+        hamburger.classList.remove('active');
+        navMenu.classList.remove('active');
+    }
+});
+
+// Products dropdown functionality
+function togglePrisatProductsDropdown(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    if (window.innerWidth > 768) {return;}
+    const dropdown = document.getElementById('prisatProductsDropdown');
+    const link = event.target;
+    
+    document.querySelectorAll('.dropdown-content.show').forEach(d => {
+        if (d !== dropdown) {
+            d.classList.remove('show');
+            const parentLi = d.closest('.nav-dropdown');
+            const parentLink = parentLi?.querySelector('a');
+            if (parentLink) {
+                if (d.id === 'prisatCalculatorDropdown') {
+                    parentLink.innerHTML = 'מחשבונים ▼';
+                } else if (d.id === 'prisatToolsDropdown') {
+                    parentLink.innerHTML = 'כלי השוואה ▼';
+                }
+            }
+        }
+    });
+    
+    if (dropdown.classList.contains('show')) {
+        dropdown.classList.remove('show');
+        link.innerHTML = 'מוצרים ותשואות ▼';
+    } else {
+        dropdown.classList.add('show');
+        link.innerHTML = 'מוצרים ותשואות ▲';
+    }
+    return false;
+}
+
+// Calculator dropdown functionality
+function togglePrisatCalculatorDropdown(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    if (window.innerWidth > 768) {return;}
+    
+    const dropdown = document.getElementById('prisatCalculatorDropdown');
+    const link = event.target;
+    
+    document.querySelectorAll('.dropdown-content.show').forEach(d => {
+        if (d !== dropdown) {
+            d.classList.remove('show');
+            const parentLi = d.closest('.nav-dropdown');
+            const parentLink = parentLi?.querySelector('a');
+            if (parentLink) {
+                if (d.id === 'prisatProductsDropdown') {
+                    parentLink.innerHTML = 'מוצרים ותשואות ▼';
+                } else if (d.id === 'prisatToolsDropdown') {
+                    parentLink.innerHTML = 'כלי השוואה ▼';
+                }
+            }
+        }
+    });
+    
+    if (dropdown.classList.contains('show')) {
+        dropdown.classList.remove('show');
+        link.innerHTML = 'מחשבונים ▼';
+    } else {
+        dropdown.classList.add('show');
+        link.innerHTML = 'מחשבונים ▲';
+    }
+    
+    return false;
+}
+
+// Tools dropdown functionality
+function togglePrisatToolsDropdown(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    if (window.innerWidth > 768) {return;}
+    
+    const dropdown = document.getElementById('prisatToolsDropdown');
+    const link = event.target;
+    
+    document.querySelectorAll('.dropdown-content.show').forEach(d => {
+        if (d !== dropdown) {
+            d.classList.remove('show');
+            const parentLi = d.closest('.nav-dropdown');
+            const parentLink = parentLi?.querySelector('a');
+            if (parentLink) {
+                if (d.id === 'prisatProductsDropdown') {
+                    parentLink.innerHTML = 'מוצרים ותשואות ▼';
+                } else if (d.id === 'prisatCalculatorDropdown') {
+                    parentLink.innerHTML = 'מחשבונים ▼';
+                }
+            }
+        }
+    });
+    
+    if (dropdown.classList.contains('show')) {
+        dropdown.classList.remove('show');
+        link.innerHTML = 'כלי השוואה ▼';
+    } else {
+        dropdown.classList.add('show');
+        link.innerHTML = 'כלי השוואה ▲';
+    }
+    
+    return false;
+}
+
+// Close nav dropdowns when clicking outside
+document.addEventListener('click', function(event) {
+    document.querySelectorAll('.dropdown-content.show').forEach(d => {
+        if (!d.contains(event.target)) {
+            const parentLi = d.closest('.nav-dropdown');
+            const parentLink = parentLi?.querySelector('a');
+            if (parentLink && !parentLink.contains(event.target)) {
+                d.classList.remove('show');
+                if (d.id === 'prisatProductsDropdown') {
+                    parentLink.innerHTML = 'מוצרים ותשואות ▼';
+                } else if (d.id === 'prisatCalculatorDropdown') {
+                    parentLink.innerHTML = 'מחשבונים ▼';
+                } else if (d.id === 'prisatToolsDropdown') {
+                    parentLink.innerHTML = 'כלי השוואה ▼';
+                }
+            }
+        }
+    });
+});
+
+// Close nav dropdown when clicking on links
+document.addEventListener('click', function(event) {
+    if (event.target.closest('#prisatProductsDropdown a')) {
+        const navDropdown = document.getElementById('prisatProductsDropdown');
+        const navLink = navDropdown?.closest('.nav-dropdown')?.querySelector('a');
+        
+        if (navDropdown) navDropdown.classList.remove('show');
+        if (navLink) navLink.innerHTML = 'מוצרים ותשואות ▼';
+    }
+    
+    if (event.target.closest('#prisatCalculatorDropdown a')) {
+        const navDropdown = document.getElementById('prisatCalculatorDropdown');
+        const navLink = navDropdown?.closest('.nav-dropdown')?.querySelector('a');
+        
+        if (navDropdown) navDropdown.classList.remove('show');
+        if (navLink) navLink.innerHTML = 'מחשבונים ▼';
+    }
+    
+    if (event.target.closest('#prisatToolsDropdown a')) {
+        const navDropdown = document.getElementById('prisatToolsDropdown');
+        const navLink = navDropdown?.closest('.nav-dropdown')?.querySelector('a');
+        
+        if (navDropdown) navDropdown.classList.remove('show');
+        if (navLink) navLink.innerHTML = 'כלי השוואה ▼';
+    }
+});
+
+// Hamburger menu functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('navMenu');
+    
+    if (hamburger && navMenu) {
+        hamburger.addEventListener('click', function() {
+            this.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        document.addEventListener('click', function(e) {
+            if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
+                navMenu.classList.remove('active');
+                hamburger.classList.remove('active');
+            }
+        });
+
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                if (window.innerWidth <= 768 && !this.hasAttribute('onclick')) {
+                    navMenu.classList.remove('active');
+                    hamburger.classList.remove('active');
+                }
+            });
+        });
+    }
+});
+        
+// Ensure nav dropdown links work properly
+document.querySelectorAll('#prisatProductsDropdown a, #prisatCalculatorDropdown a, #prisatToolsDropdown a').forEach(link => {
+    link.addEventListener('click', function(e) {
+        // Don't prevent default - let the link work normally
+        e.stopPropagation();
+        
+        // Close dropdown after a short delay to allow navigation
+        setTimeout(() => {
+            const allDropdowns = ['prisatProductsDropdown', 'prisatCalculatorDropdown', 'prisatToolsDropdown'];
+            allDropdowns.forEach(dropdownId => {
+                const dropdown = document.getElementById(dropdownId);
+                const dropdownLink = dropdown?.closest('.nav-dropdown')?.querySelector('a');
+                
+                if (dropdown) {
+                    dropdown.classList.remove('show');
+                }
+                if (dropdownLink) {
+                    if (dropdownId.includes('Products')) {
+                        dropdownLink.innerHTML = 'מוצרים ותשואות ▼';
+                    } else if (dropdownId.includes('Calculator')) {
+                        dropdownLink.innerHTML = 'מחשבונים ▼';
+                    } else if (dropdownId.includes('Tools')) {
+                        dropdownLink.innerHTML = 'כלי השוואה ▼';
+                    }
+                }
+            });
+        }, 100);
+    });
+});
+</script>
+
+<!-- Modal Container -->
+<div id="modals-container"></div>
+
+<!-- External Modal Scripts -->
+<script src="about-modal.js"></script>
+<script src="consultation-form.js"></script>
+<script src="terms-modal.js"></script>
+<script src="accessibility.js"></script>
+<script>
+    // Load Modal HTML files
+    fetch('about-modal.html')
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById('modals-container').innerHTML += html;
+        })
+        .catch(err => console.error('Error loading about modal:', err));
+    
+    fetch('terms-modal.html')
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById('modals-container').innerHTML += html;
+        })
+        .catch(err => console.error('Error loading terms modal:', err));
+    
+    fetch('consultation-form.html')
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById('modals-container').innerHTML += html;
+        })
+        .catch(err => console.error('Error loading consultation form:', err));
+    
+    // Load Footer
+    fetch('footer.html')
+        .then(response => response.text())
+        .then(html => {
+            document.body.insertAdjacentHTML('beforeend', html);
+        })
+        .catch(err => console.error('Error loading footer:', err));
+    
+    // ========================================
+    // Navigate to Home Page Function
+    // ========================================
+    function navigateToHome() {
+        // אם אנחנו כבר בדף הבית - פשוט נגלול למעלה
+        if (window.location.pathname.endsWith('index.html') || window.location.pathname === '/') {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+            // אנחנו בדף אחר - נעבור לדף הבית
+            window.location.href = 'index.html';
+        }
+    }
+</script>
+
+<div class="footer-note">כל הזכויות שמורות. החישוב אינו מהווה ייעוץ פיננסי או משפטי.</div>
+</body>
+</html>

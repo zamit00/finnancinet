@@ -1,0 +1,1057 @@
+
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-41JX3YK216"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-41JX3YK216');
+    </script>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="מחולל חשיפות - בנה תיק השקעות מותאם לפרופיל הסיכון שלך. קבל המלצות לחלוקת נכסים אופטימלית.">
+    <title>מחולל חשיפות - בניית תיק לפי פרופיל סיכון | פיננסי-נט</title>
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="מחולל חשיפות - פיננסי-נט">
+    <meta property="og:description" content="בנה תיק השקעות מותאם לפרופיל הסיכון שלך">
+    <meta property="og:image" content="https://i.postimg.cc/L4YLr22D/logoxnew.png">
+    <meta property="og:url" content="https://zamit00.github.io/NewFinnanciNet/hasifotMeshulav.html">
+    <meta property="og:type" content="website">
+    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8fafc;
+            color: #333;
+            display: flex;
+            min-height: 100vh;
+            margin: 0;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 80px;
+        }
+        
+        /* Header and Navigation */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            cursor: pointer;
+        }
+
+        .logoimg {
+            max-width: 200px;
+            height: auto;
+            cursor: pointer;
+        }
+
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+            font-size: 16px;
+        }
+
+        .nav-menu a:hover {
+            color: #667eea;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            right: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s ease;
+        }
+
+        /* Navigation Dropdown */
+        .nav-dropdown {
+            position: relative;
+        }
+
+        .nav-dropdown .dropdown-content {
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            top: calc(100% - 2px);
+            right: 0;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 0 0 8px 8px;
+            box-shadow: none;
+            min-width: 220px;
+            z-index: 1001;
+            margin-top: 0;
+            border-top: none;
+            max-height: 0;
+            opacity: 0;
+            visibility: hidden;
+            overflow: hidden;
+            transition: max-height 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .nav-dropdown .dropdown-content a {
+            color: #333;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s ease;
+            font-size: 14px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .nav-dropdown .dropdown-content a:hover {
+            background-color: #f5f5f5;
+            color: #667eea;
+        }
+
+        .nav-dropdown .dropdown-content a:last-child {
+            border-bottom: none;
+        }
+
+        .nav-dropdown .dropdown-content.show {
+            max-height: 500px;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Desktop hover behavior */
+        @media (min-width: 769px) {
+            .nav-dropdown:hover .dropdown-content:not(.show) {
+                max-height: 500px;
+                opacity: 1;
+                visibility: visible;
+            }
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: 0.3s;
+            border-radius: 3px;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+        
+        /* Mobile Navigation */
+        @media (max-width: 768px) {
+            body {
+                padding-top: 70px;
+            }
+            
+            .header {
+                padding: 0.5rem 0;
+            }
+
+            .nav-container {
+                padding: 0.5rem 1rem;
+            }
+            
+            footer{max-width: 100%;box-sizing: border-box;margin: 0;padding: 0;}
+
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                right: 0;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(10px);
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                padding-top: 2rem;
+                display: flex;
+                opacity: 0;
+                visibility: hidden;
+                transform: translateX(100%);
+                transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+            }
+
+            .hamburger {
+                display: flex;
+                padding-left: 5%;
+            }
+
+            .nav-menu.active {
+                opacity: 1;
+                visibility: visible;
+                transform: translateX(0);
+                z-index: 100002;
+            }
+            
+            .nav-menu.active li,
+            .nav-menu.active li a {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                margin-left: auto;
+                margin-right: auto;
+                width: 100%;
+            }
+            
+            /* Mobile nav-dropdown adjustments */
+            .nav-dropdown .dropdown-content {
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                min-width: auto;
+                width: clamp(200px, 100%, 270px);
+                max-height: 0;
+                opacity: 0;
+                visibility: hidden;
+                overflow: hidden;
+                border: none;
+                background: white;
+                margin-top: 5px;
+                top: auto;
+                border-radius: 15px;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+                padding: 0;
+                transition: max-height 0.3s ease, opacity 0.3s ease, visibility 0.3s ease, padding-top 0.3s ease;
+            }
+
+            .nav-dropdown .dropdown-content a {
+                padding: 8px 16px;
+                border-bottom: 1px solid #eee;
+                font-size: 1rem;
+            }
+
+            .nav-dropdown .dropdown-content.show {
+                max-height: 500px;
+                opacity: 1;
+                visibility: visible;
+                padding-top: 15px;
+            }
+            
+            .logoimg {
+                width: 150px;
+                height: auto;
+            }
+        }
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            width: clamp(300px, 95%, 700px);
+            margin: 2rem auto;
+            box-sizing: border-box;
+        }
+        
+        h2 {
+            text-align: center;
+            color: #667eea;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        label {
+            font-weight: 600;
+            color: #333;
+            font-size: 1rem;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        select, button {
+            width: 100%;
+            padding: 12px 16px;
+            margin-top: 8px;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            margin-top: 1.5rem;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+    
+        .exposure {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            gap: 1rem;
+        }
+        
+        .exposure > label,
+        .exposure > div:first-child {
+            font-weight: 600;
+            color: #667eea;
+            font-size: 1.1rem;
+            min-width: 60px;
+        }
+        
+        .slct {
+            width: 150px;
+            text-align: center;
+            margin: 0 5px;
+            padding: 10px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .slct:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .slct:disabled {
+            background: #f0f0f0;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+        
+        #tblHasifot {
+            margin: 2rem auto;
+            max-width: 1000px;
+            width: 100%;
+            box-sizing: border-box;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            table-layout: fixed;
+        }
+        
+        .tblHsifot {
+            margin: 2rem auto;
+            max-width: 1000px;
+            width: 100%;
+            box-sizing: border-box;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            table-layout: fixed;
+        }
+        
+        .tblHsifot th,
+        #tblHasifot th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 10px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.95rem;
+            border: none;
+        }
+        
+        .tblHsifot td,
+        #tblHasifot td {
+            padding: 12px 10px;
+            border: 1px solid #e2e8f0;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+        
+        .tblHsifot .tdsmall,
+        #tblHasifot .tdsmall {
+            width: 12%;
+            text-align: center !important;
+        }
+        
+        .tblHsifot .tdbig,
+        #tblHasifot .tdbig {
+            width: 28%;
+            text-align: right !important;
+            padding-right: 15px !important;
+        }
+        
+        .tblHsifot tr:nth-child(even),
+        #tblHasifot tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+        
+        .tblHsifot tr:hover,
+        #tblHasifot tr:hover {
+            background-color: #f0f4ff;
+        }
+        
+        
+        .return-positive {
+            color: #27ae60 !important;
+            font-weight: 600;
+        }
+        
+        .return-negative {
+            color: #e74c3c !important;
+            font-weight: 600;
+        }
+        
+        @media screen and (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
+                width: clamp(300px, 98%, 700px);
+            }
+            
+            .tblHsifot,
+            #tblHasifot {
+                width: 95vw;
+                max-width: 95vw;
+            }
+            
+            .tblHsifot th,
+            .tblHsifot td,
+            #tblHasifot th,
+            #tblHasifot td {
+                padding: 8px 5px;
+                font-size: 10px;
+            }
+            
+            .tblHsifot .tdbig,
+            #tblHasifot .tdbig {
+                text-align: right !important;
+                padding-right: 8px !important;
+                font-size: 10px;
+            }
+            
+            .tblHsifot .tdsmall,
+            #tblHasifot .tdsmall {
+                text-align: center !important;
+                font-size: 10px;
+            }
+        }
+        
+        @media screen and (max-width: 600px) {
+            .tblHsifot,
+            #tblHasifot {
+                width: 98vw;
+                max-width: 98vw;
+            }
+            
+            .tblHsifot th,
+            .tblHsifot td,
+            #tblHasifot th,
+            #tblHasifot td {
+                padding: 6px 3px;
+                font-size: 8px;
+            }
+            
+            .tblHsifot .tdbig,
+            #tblHasifot .tdbig {
+                text-align: right !important;
+                padding-right: 5px !important;
+                font-size: 8px;
+            }
+            
+            .tblHsifot .tdsmall,
+            #tblHasifot .tdsmall {
+                text-align: center !important;
+                font-size: 8px;
+            }
+        }
+        .circular-progress {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .circular-progress:hover {
+            transform: scale(1.05);
+        }
+
+        .inner-circle {
+            width: 70%;
+            height: 70%;
+            border-radius: 50%;
+            position: absolute;
+            background: white;
+            z-index: 1;
+        }
+
+        .percentage {
+            font-size: 14px;
+            font-weight: 700;
+            position: relative;
+            z-index: 2;
+            color: #667eea;
+        }
+        
+        @media screen and (max-width: 768px) {
+            .exposure {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 1rem;
+                padding: 1.5rem 1rem;
+            }
+            
+            .exposure > label,
+            .exposure > div:first-child {
+                text-align: center;
+                width: 100%;
+            }
+            
+            .slct {
+                width: 100%;
+                margin: 0.5rem 0;
+            }
+            
+            .circular-progress {
+                margin: 0.5rem auto;
+            }
+        }
+    </style>
+    
+    <!-- External Modal Styles -->
+    <link rel="stylesheet" href="about-modal.css">
+    <link rel="stylesheet" href="consultation-form.css">
+    <link rel="stylesheet" href="terms-modal.css">
+    <link rel="stylesheet" href="mainStyle.css">
+    <link rel="stylesheet" href="footer.css">
+
+</head>
+<body dir="rtl">
+    <header class="header">
+        <div class="nav-container">   
+            <nav class="nav-menu" id="navMenu">
+                <li><a href="#" onclick="navigateToHome(); return false;"><i class="fa fa-home" style="font-size:2rem"></i></a></li>
+                <li class="nav-dropdown">
+                    <a href="#" onclick="toggleHasifotProductsDropdown(event)">מוצרים ותשואות ▼</a>
+                    <div class="dropdown-content" id="hasifotProductsDropdown">
+                        <a href="mozarim.html?product=hishtalmut">קרנות השתלמות</a>
+                        <a href="mozarim.html?product=gemel">קופות גמל</a>
+                        <a href="mozarim.html?product=gemelHashkaa">קופות גמל להשקעה</a>
+                        <a href="mozarim.html?product=yeled">חסכון לילד</a>
+                        <a href="mozarim.html?product=polisot">פוליסות חסכון</a>
+                        <a href="mozarim.html?product=pensia">קרנות פנסיה חדשות</a>
+                    </div>
+                </li>
+                <li class="nav-dropdown">
+                    <a href="#" onclick="toggleHasifotCalculatorDropdown(event)">מחשבונים ▼</a>
+                    <div class="dropdown-content" id="hasifotCalculatorDropdown">
+                        <a href="prisatMaanak.html">פריסת מענק פרישה</a>
+                        <a href="calac.html">מחשבון דחיית קצבה</a>
+                        <a href="ribitderibit.html">חישוב ערך עתידי</a>
+                        <a href="loan.html">סימולטור הלוואה</a>
+                        <a href="hafkada.html">מחשבון הפקדה לסכום מטרה</a>
+                        <a href="hashDmeyNihul.html">השוואת דמי ניהול</a>
+                    </div>
+                </li>
+                <li class="nav-dropdown">
+                    <a href="#" onclick="toggleHasifotToolsDropdown(event)">כלי השוואה ▼</a>
+                    <div class="dropdown-content" id="hasifotToolsDropdown">
+                        <a href="hashMenahalot.html">השוואת חברות מנהלות</a>
+                        <a href="hasifotMeshulav.html">מחולל חשיפות</a>
+                        <a href="VirtualInvest.html">השוואת תיק משולב מסלולים</a>                 
+                        <a href="#">ציון משקל תשואה לשארפ</a>
+                    </div>
+                </li>
+                <li><a href="#" onclick="openAboutModal(); return false;">אודות</a></li>
+                <li><a href="index.html" onclick="openConsultationForm(); return false;">צור קשר</a></li>
+                <li class="whatsapp-desktop"><a href="https://wa.me/972545287184?text=שלום, אני מעוניין בייעוץ פנסיוני" target="_blank" title="צור קשר בוואטסאפ"><i class="fab fa-whatsapp" style="font-size:2rem; color:#25D366;"></i></a></li>
+            </nav>
+            <div class="whatsapp-mobile">
+                <a href="https://wa.me/972545287184?text=שלום, אני מעוניין בייעוץ פנסיוני" target="_blank" title="צור קשר בוואטסאפ">
+                    <i class="fab fa-whatsapp" style="font-size:2rem; color:#25D366;"></i>
+                </a>
+            </div>
+            <div class="logo" style="cursor: pointer;"> 
+                <img class="logoimg" src="logoxnew.png" alt="לוגו" onclick="navigateToHome();" style="cursor: pointer;" title="מעבר לדף הבית"/>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <div class="container" >
+     
+        
+        <h2>מחולל חשיפות מרובה</h2>
+
+        <label for="product">בחר מוצר:</label>
+        <select id="product" class="product" onchange="submitForm(this)">
+              <option value="" disabled selected>בחר מוצר</option>
+            <option value="קרנות השתלמות">קרן השתלמות</option>
+            <option value='תגמולים ואישית לפיצויים'>קופת גמל </option>
+            <option value='קרנות חדשות'>קרן פנסיה</option>
+            <option value='פוליסות חסכון'>פוליסת חיסכון</option> 
+            <option value='קופת גמל להשקעה'>קופת גמל להשקעה</option>
+                        <option value='קופת גמל להשקעה - חסכון לילד'>קופת חיסכון לילד</option>
+        </select>
+
+        <label>בחר חשיפות:</label>
+
+     <div class="exposure">
+       מניות
+            <select id="stocks" class='slct' onchange="hasifch(this);submitForm(this);doTheCircle(this)" disabled>
+               <option value="">לא נבחר</option>
+                <option value=15>15%-0%</option>
+                <option value=30>30%-15%</option>
+                <option value=50>50%-30%</option>
+                <option value=70>70%-50%</option>
+                <option value=100>70% ומעלה</option>
+            </select>
+        
+        <div class="circular-progress" id="stockscircle"
+                data-inner-circle-color="white" 
+                data-percentage="0" 
+                data-progress-color="#362FD9" 
+                data-bg-color="#EFEFEF">
+                <div class="inner-circle" style="border-radius: 50%;background: white;z-index: 50000;"></div>
+                <p class="percentage" style="z-index: 100000;">לא נבחר</p>
+        </div>
+    </div>
+
+        <div class="exposure">חו"ל
+            <select id="abroad" class='slct'  onchange="hasifch(this);submitForm(this);doTheCircle(this)" disabled>
+                <option value="">לא נבחר</option>
+                <option value=15>15%-0%</option>
+                <option value=30>30%-15%</option>
+                <option value=50>50%-30%</option>
+                <option value=70>70%-50%</option>
+                <option value=100>70% ומעלה</option>
+            </select>
+            <div class="circular-progress" id="abroadcircle"
+                data-inner-circle-color="white" 
+                data-percentage="0" 
+                data-progress-color="#362FD9" 
+                data-bg-color="#EFEFEF">
+                <div class="inner-circle" style="border-radius: 50%;background: white;z-index: 50000;"></div>
+                <p class="percentage" style="z-index: 100000;">לא נבחר</p>
+            </div>
+        </div>
+
+        <div class="exposure" >
+           מט"ח
+            <select id="currency" class='slct'  onchange="hasifch(this);submitForm(this);doTheCircle(this)" disabled>
+                <option value="">לא נבחר</option>
+                <option value=15>15%-0%</option>
+                <option value=30>30%-15%</option>
+                <option value=50>50%-30%</option>
+                <option value=70>70%-50%</option>
+                <option value=100>70% ומעלה</option>
+            </select>
+            <div class="circular-progress" id="currencycircle"
+                data-inner-circle-color="white" 
+                data-percentage="0" 
+                data-progress-color="#362FD9" 
+                data-bg-color="#EFEFEF">
+                <div class="inner-circle" style="border-radius: 50%;background: white;z-index: 50000;"></div>
+                <p class="percentage" style="z-index: 100000;">לא נבחר</p>
+            </div>
+        </div>
+    </div>
+    <table id="tblHasifot" class="tblHasifot"></table>
+
+    <script src='HasifotMeshulav.js'></script>
+    
+    <script>
+        // Mobile menu toggle
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('navMenu');
+
+        if (hamburger && navMenu) {
+            hamburger.addEventListener('click', () => {
+                hamburger.classList.toggle('active');
+                navMenu.classList.toggle('active');
+                if(navMenu.classList.contains('active')){
+                    document.querySelectorAll('.percentage').forEach(
+                        p => p.style.display = 'none'
+                    )
+                }else{
+                    document.querySelectorAll('.percentage').forEach(
+                        p => p.style.display = 'block'
+                    )
+                }
+            });
+
+            // Close menu when clicking on a link
+            navMenu.addEventListener('click', (e) => {
+                if (e.target.tagName === 'A' && !e.target.onclick) {
+                    hamburger.classList.remove('active');
+                    navMenu.classList.remove('active');
+                }
+            });
+        }
+        
+        // Products dropdown functionality
+        function toggleHasifotProductsDropdown(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            if (window.innerWidth > 768) {return;}
+            const dropdown = document.getElementById('hasifotProductsDropdown');
+            const link = event.target;
+            
+            document.querySelectorAll('.dropdown-content.show').forEach(d => {
+                if (d !== dropdown) {
+                    d.classList.remove('show');
+                    const parentLi = d.closest('.nav-dropdown');
+                    const parentLink = parentLi?.querySelector('a');
+                    if (parentLink) {
+                        if (d.id === 'hasifotCalculatorDropdown') {
+                            parentLink.innerHTML = 'מחשבונים ▼';
+                        } else if (d.id === 'hasifotToolsDropdown') {
+                            parentLink.innerHTML = 'כלי השוואה ▼';
+                        }
+                    }
+                }
+            });
+            
+            if (dropdown.classList.contains('show')) {
+                dropdown.classList.remove('show');
+                link.innerHTML = 'מוצרים ותשואות ▼';
+            } else {
+                dropdown.classList.add('show');
+                link.innerHTML = 'מוצרים ותשואות ▲';
+            }
+            return false;
+        }
+        
+        function toggleHasifotCalculatorDropdown(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            if (window.innerWidth > 768) {return;}
+            
+            const dropdown = document.getElementById('hasifotCalculatorDropdown');
+            const link = event.target;
+            
+            document.querySelectorAll('.dropdown-content.show').forEach(d => {
+                if (d !== dropdown) {
+                    d.classList.remove('show');
+                    const parentLi = d.closest('.nav-dropdown');
+                    const parentLink = parentLi?.querySelector('a');
+                    if (parentLink) {
+                        if (d.id === 'hasifotProductsDropdown') {
+                            parentLink.innerHTML = 'מוצרים ותשואות ▼';
+                        } else if (d.id === 'hasifotToolsDropdown') {
+                            parentLink.innerHTML = 'כלי השוואה ▼';
+                        }
+                    }
+                }
+            });
+            
+            if (dropdown.classList.contains('show')) {
+                dropdown.classList.remove('show');
+                link.innerHTML = 'מחשבונים ▼';
+            } else {
+                dropdown.classList.add('show');
+                link.innerHTML = 'מחשבונים ▲';
+            }
+            return false;
+        }
+        
+        function toggleHasifotToolsDropdown(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            if (window.innerWidth > 768) {return;}
+            
+            const dropdown = document.getElementById('hasifotToolsDropdown');
+            const link = event.target;
+            
+            document.querySelectorAll('.dropdown-content.show').forEach(d => {
+                if (d !== dropdown) {
+                    d.classList.remove('show');
+                    const parentLi = d.closest('.nav-dropdown');
+                    const parentLink = parentLi?.querySelector('a');
+                    if (parentLink) {
+                        if (d.id === 'hasifotProductsDropdown') {
+                            parentLink.innerHTML = 'מוצרים ותשואות ▼';
+                        } else if (d.id === 'hasifotCalculatorDropdown') {
+                            parentLink.innerHTML = 'מחשבונים ▼';
+                        }
+                    }
+                }
+            });
+            
+            if (dropdown.classList.contains('show')) {
+                dropdown.classList.remove('show');
+                link.innerHTML = 'כלי השוואה ▼';
+            } else {
+                dropdown.classList.add('show');
+                link.innerHTML = 'כלי השוואה ▲';
+            }
+            return false;
+        }
+
+        // Close nav dropdowns when clicking outside
+        document.addEventListener('click', function(event) {
+            document.querySelectorAll('.dropdown-content.show').forEach(d => {
+                if (!d.contains(event.target)) {
+                    const parentLi = d.closest('.nav-dropdown');
+                    const parentLink = parentLi?.querySelector('a');
+                    if (parentLink && !parentLink.contains(event.target)) {
+                        d.classList.remove('show');
+                        if (d.id === 'hasifotProductsDropdown') {
+                            parentLink.innerHTML = 'מוצרים ותשואות ▼';
+                        } else if (d.id === 'hasifotCalculatorDropdown') {
+                            parentLink.innerHTML = 'מחשבונים ▼';
+                        } else if (d.id === 'hasifotToolsDropdown') {
+                            parentLink.innerHTML = 'כלי השוואה ▼';
+                        }
+                    }
+                }
+            });
+        });
+
+        // Close nav dropdown when clicking on links
+        document.addEventListener('click', function(event) {
+            if (event.target.closest('#hasifotProductsDropdown a')) {
+                const navDropdown = document.getElementById('hasifotProductsDropdown');
+                const navLink = navDropdown?.closest('.nav-dropdown')?.querySelector('a');
+                
+                if (navDropdown) navDropdown.classList.remove('show');
+                if (navLink) navLink.innerHTML = 'מוצרים ותשואות ▼';
+            }
+            
+            if (event.target.closest('#hasifotCalculatorDropdown a')) {
+                const navDropdown = document.getElementById('hasifotCalculatorDropdown');
+                const navLink = navDropdown?.closest('.nav-dropdown')?.querySelector('a');
+                
+                if (navDropdown) navDropdown.classList.remove('show');
+                if (navLink) navLink.innerHTML = 'מחשבונים ▼';
+            }
+            
+            if (event.target.closest('#hasifotToolsDropdown a')) {
+                const navDropdown = document.getElementById('hasifotToolsDropdown');
+                const navLink = navDropdown?.closest('.nav-dropdown')?.querySelector('a');
+                
+                if (navDropdown) navDropdown.classList.remove('show');
+                if (navLink) navLink.innerHTML = 'כלי השוואה ▼';
+            }
+        });
+
+        // Hamburger menu functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburger = document.getElementById('hamburger');
+            const navMenu = document.getElementById('navMenu');
+            
+            if (hamburger && navMenu) {
+                hamburger.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    navMenu.classList.toggle('active');
+                });
+
+                document.addEventListener('click', function(e) {
+                    if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
+                        navMenu.classList.remove('active');
+                        hamburger.classList.remove('active');
+                    }
+                });
+
+                document.querySelectorAll('.nav-menu a').forEach(link => {
+                    link.addEventListener('click', function(e) {
+                        if (window.innerWidth <= 768 && !this.hasAttribute('onclick')) {
+                            navMenu.classList.remove('active');
+                            hamburger.classList.remove('active');
+                        }
+                    });
+                });
+            }
+        });
+
+        // Ensure nav dropdown links work properly
+        document.querySelectorAll('#hasifotProductsDropdown a, #hasifotCalculatorDropdown a, #hasifotToolsDropdown a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                // Don't prevent default - let the link work normally
+                e.stopPropagation();
+                
+                // Close dropdown after a short delay to allow navigation
+                setTimeout(() => {
+                    const allDropdowns = ['hasifotProductsDropdown', 'hasifotCalculatorDropdown', 'hasifotToolsDropdown'];
+                    allDropdowns.forEach(dropdownId => {
+                        const dropdown = document.getElementById(dropdownId);
+                        const dropdownLink = dropdown?.closest('.nav-dropdown')?.querySelector('a');
+                        
+                        if (dropdown) {
+                            dropdown.classList.remove('show');
+                        }
+                        if (dropdownLink) {
+                            if (dropdownId.includes('Products')) {
+                                dropdownLink.innerHTML = 'מוצרים ותשואות ▼';
+                            } else if (dropdownId.includes('Calculator')) {
+                                dropdownLink.innerHTML = 'מחשבונים ▼';
+                            } else if (dropdownId.includes('Tools')) {
+                                dropdownLink.innerHTML = 'כלי השוואה ▼';
+                            }
+                        }
+                    });
+                }, 100);
+            });
+        });
+    </script>
+
+    <!-- Modal Container -->
+    <div id="modals-container"></div>
+
+    <!-- External Modal Scripts -->
+    <script src="about-modal.js"></script>
+    <script src="consultation-form.js"></script>
+    <script src="terms-modal.js"></script>
+    <script src="accessibility.js"></script>
+    <script>
+        // Load Modal HTML files
+        fetch('about-modal.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('modals-container').innerHTML += html;
+            })
+            .catch(err => console.error('Error loading about modal:', err));
+        
+        fetch('terms-modal.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('modals-container').innerHTML += html;
+            })
+            .catch(err => console.error('Error loading terms modal:', err));
+        
+        fetch('consultation-form.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('modals-container').innerHTML += html;
+            })
+            .catch(err => console.error('Error loading consultation form:', err));
+        
+        // Load Footer
+        fetch('footer.html')
+            .then(response => response.text())
+            .then(html => {
+                document.body.insertAdjacentHTML('beforeend', html);
+            })
+            .catch(err => console.error('Error loading footer:', err));
+        
+        // ========================================
+        // Navigate to Home Page Function
+        // ========================================
+        function navigateToHome() {
+            // אם אנחנו כבר בדף הבית - פשוט נגלול למעלה
+            if (window.location.pathname.endsWith('index.html') || window.location.pathname === '/') {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                // אנחנו בדף אחר - נעבור לדף הבית
+                window.location.href = 'index.html';
+            }
+        }
+    </script>
+
+</body>
+</html>

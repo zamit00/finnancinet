@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="he">
+<head>
+    <meta charset="UTF-8">
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-41JX3YK216"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-41JX3YK216');
+    </script>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="מחשבון הפקדה לסכום מטרה - חשב כמה להפקיד כל חודש כדי להגיע ליעד הכספי שלך. תכנון חיסכון חכם.">
+    <title>מחשבון הפקדה לסכום מטרה - תכנון חיסכון | פיננסי-נט</title>
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="מחשבון הפקדה לסכום מטרה - פיננסי-נט">
+    <meta property="og:description" content="חשב כמה להפקיד כל חודש כדי להגיע ליעד הכספי שלך">
+    <meta property="og:image" content="https://i.postimg.cc/L4YLr22D/logoxnew.png">
+    <meta property="og:url" content="https://zamit00.github.io/NewFinnanciNet/hafkada.html">
+    <meta property="og:type" content="website">
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --accent: #27ae60;
+            --background: white;
+            --card-bg: #f8f9fa;
+            --text-dark: #333;
+            --text-light: #666;
+            --error-color: #e74c3c;
+            --border: rgba(0, 0, 0, 0.1);
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --border-radius: 8px;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            color: var(--text-dark);
+            font-family: 'Heebo', sans-serif;
+        }
+
+        html {
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'Heebo', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: var(--background);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+            overflow-x: hidden;
+        }
+        
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 10px;
+                margin-top: 0;
+            }
+            
+            .nav-header {
+                margin-bottom: 10px;
+            }
+            
+            footer{max-width: 100%;box-sizing: border-box;margin: 0;padding: 0;}
+        }
+        
+        /* Navigation Styles */
+  .nav-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding:1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    position: fixed;
+    top: 0;   
+    width: 90%;
+    right: 5%;
+    left: 5%;
+    z-index: 1000;
+
+    
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+  }
+
+  .logoimg{
+    width: 200px;
+    height: auto;
+  }
+
+  .nav-menu {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    
+  }
+
+  .nav-menu a {
+    text-decoration: none;
+    color:var(--text-primary);
+    font-weight: 500;
+    transition: color 0.3s ease;
+    position: relative;
+    padding: 0.5rem 0;
+  }
+
+  .nav-menu a:hover {
+    color: #667eea;
+  }
+
+  .nav-menu a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    right: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    transition: width 0.3s ease;
+  }
+
+  .nav-menu a:hover::after {
+    width: 100%;
+  }
+
+  /* Navigation Dropdown */
+  .nav-dropdown {
+    position: relative;
+  }
+
+   .nav-dropdown .dropdown-content {
+     display: flex;
+     flex-direction: column;
+     position: absolute;
+     top: calc(100% - 2px);
+     right: 0;
+     background: white;
+     border: 1px solid #ddd;
+     border-radius: 0 0 8px 8px;
+     box-shadow: none;
+     min-width: 220px;
+     z-index: 1001;
+     margin-top: 0;
+     border-top: none;
+     max-height: 0;
+     opacity: 0;
+     visibility: hidden;
+     overflow: hidden;
+     transition: max-height 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
+   }
+
+  .nav-dropdown .dropdown-content a {
+    color: #333;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.3s ease;
+    font-size: 14px;
+    border-bottom: 1px solid #eee;
+  }
+
+  .nav-dropdown .dropdown-content a:hover {
+    background-color: #f5f5f5;
+    color: #667eea;
+  }
+
+  .nav-dropdown .dropdown-content a:last-child {
+    border-bottom: none;
+  }
+
+  .nav-dropdown .dropdown-content.show {
+    max-height: 500px;
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  /* Desktop hover behavior - only when not using JavaScript */
+  @media (min-width: 769px) {
+    .nav-dropdown:hover .dropdown-content:not(.show) {
+      max-height: 500px;
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 4px;
+  }
+
+  .hamburger span {
+    width: 25px;
+    height: 3px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    transition: 0.3s;
+    border-radius: 3px;
+  }
+
+  .hamburger.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+
+  .hamburger.active span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .hamburger.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -6px);
+  }
+
+ /* Mobile Navigation */
+ @media (max-width: 768px) {
+            .nav-container {
+                padding:  1.5rem;
+            }
+
+            .logoimg {
+                width: 150px;
+                height: auto;
+            }
+
+            .nav-menu {
+                display: none;
+                position: fixed;
+                top: 70px;
+                right: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: white;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                padding-top: 1rem;
+                transition: right 0.3s ease;
+                box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            }
+
+            .nav-menu.active {
+                display: flex;
+                right: 0;
+                z-index: 1000;
+                
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-menu li {
+                margin: 1rem 0;
+                display: flex;
+                justify-content: center;
+            }
+            
+            /* Hide WhatsApp desktop icon on mobile */
+            .whatsapp-desktop {
+                display: none !important;
+            }
+
+            .nav-menu a {
+                font-size: 1.2rem;
+            }
+
+            .nav-dropdown {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .nav-dropdown .dropdown-content {
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                min-width: auto;
+                width: clamp(200px, 90vw, 270px);
+                max-height: 0;
+                opacity: 0;
+                visibility: hidden;
+                overflow: hidden;
+                border: none;
+                background: white;
+                margin: 5px auto 0;
+                top: auto;
+                border-radius: 15px;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+                padding: 0;
+                transition: max-height 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
+            }
+
+            .nav-dropdown .dropdown-content a {
+                padding: 8px 16px;
+                font-size: 1rem;
+                text-align: center;
+            }
+
+            .nav-dropdown .dropdown-content.show {
+                max-height: 500px;
+                opacity: 1;
+                visibility: visible;
+                padding-top: 15px;
+            }
+            .nav-dropdown .dropdown-content.show a {
+                border-bottom: none;
+            }
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .calculator {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 700;
+            font-size: 1.8rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+        }
+
+        @media (min-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .input-group {
+            background-color: var(--background);
+            padding: 15px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 12px;
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 1.05rem;
+        }
+
+        .input-wrapper {
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        input[type="number"] , input[type="text"] {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            outline: none;
+            background: var(--background);
+            color: var(--text-dark);
+            font-family: 'Heebo', sans-serif;
+        }
+
+        input[type="number"]:focus, input[type="text"]:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.25);
+        }
+
+        input[type="range"] {
+            width: 100%;
+            margin: 10px 0;
+            -webkit-appearance: none;
+            appearance: none;
+            height: 6px;
+            background: #ddd;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s ease;
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            background: var(--secondary);
+            transform: scale(1.1);
+        }
+
+        input[type="range"]::-moz-range-thumb:hover {
+            background: var(--secondary);
+            transform: scale(1.1);
+        }
+
+        .range-display {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .range-value {
+            text-align: center;
+            font-weight: 500;
+            color: var(--primary);
+            font-size: 0.95rem;
+            margin-top: 5px;
+        }
+
+        button {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 16px 24px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: 600;
+            width: 100%;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            font-family: 'Heebo', sans-serif;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        button:active {
+            transform: translateY(1px);
+        }
+
+        .error {
+            color: var(--error-color);
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 12px;
+            background-color: rgba(231, 76, 60, 0.1);
+            display: none;
+            text-align: center;
+            font-weight: 500;
+            border: 1px solid rgba(231, 76, 60, 0.2);
+        }
+
+        .result {
+            margin-top: 30px;
+            padding: 25px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            border-radius: 16px;
+            text-align: center;
+            display: none;
+            animation: fadeIn 0.5s;
+            border-right: 4px solid var(--primary);
+            border: 1px solid var(--border);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .result-title {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .result-amount {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 10px 0;
+        }
+
+        .result-details {
+            font-size: 1rem;
+            color: var(--text-dark);
+        }
+
+       
+
+       
+        
+        
+       
+       
+
+
+        
+       
+
+       
+
+       
+
+        .input-suffix {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #777;
+            font-weight: 500;
+        }
+
+        .credits {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.8rem;
+            color: #888;
+        }
+
+        /* Tooltip styles */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: help;
+            margin-right: 5px;
+        }
+
+        .tooltip-icon {
+            background-color: #ddd;
+            color: #666;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .tooltip-text {
+            visibility: hidden;
+            width: 200px;
+            background-color: var(--dark-color);
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 8px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            right: 50%;
+            margin-right: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.8rem;
+        }
+
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+        .closewindow{color:black;margin-top: 10px;margin-right: 30px;}
+    </style>
+    
+    <!-- External Modal Styles -->
+    <link rel="stylesheet" href="about-modal.css">
+    <link rel="stylesheet" href="consultation-form.css">
+    <link rel="stylesheet" href="terms-modal.css">
+    <link rel="stylesheet" href="mainStyle.css">
+    <link rel="stylesheet" href="footer.css">
+</head>
+<body>
+    
+    <div class="nav-container">
+        <nav class="nav-menu" id="navMenu">
+          <li><a href="#" onclick="navigateToHome(); return false;"><i class="fa fa-home" style="font-size:2rem"></i></a></li>
+          <li class="nav-dropdown">
+            <a href="#" onclick="toggleHafkadaProductsDropdown(event)">מוצרים ותשואות ▼</a>
+            <div class="dropdown-content" id="hafkadaProductsDropdown">
+              <a href="mozarim.html?product=hishtalmut">קרנות השתלמות</a>
+              <a href="mozarim.html?product=gemel">קופות גמל</a>
+              <a href="mozarim.html?product=gemelHashkaa">קופות גמל להשקעה</a>
+              <a href="mozarim.html?product=yeled">חסכון לילד</a>
+              <a href="mozarim.html?product=polisot">פוליסות חסכון</a>
+              <a href="mozarim.html?product=pensia">קרנות פנסיה חדשות</a>
+            </div>
+          </li>
+          <li class="nav-dropdown">
+            <a href="#" onclick="toggleHafkadaCalculatorDropdown(event)">מחשבונים ▼</a>
+            <div class="dropdown-content" id="hafkadaCalculatorDropdown">
+              <a href="prisatMaanak.html">פריסת מענק פרישה</a>
+              <a href="calac.html">מחשבון דחיית קצבה</a>
+              <a href="ribitderibit.html">חישוב ערך עתידי</a>
+              <a href="loan.html">סימולטור הלוואה</a>
+              <a href="hafkada.html">מחשבון הפקדה לסכום מטרה</a>
+              <a href="hashDmeyNihul.html">השוואת דמי ניהול</a>
+            </div>
+          </li>
+          <li class="nav-dropdown">
+            <a href="#" onclick="toggleHafkadaToolsDropdown(event)">כלי השוואה ▼</a>
+            <div class="dropdown-content" id="hafkadaToolsDropdown">
+              <a href="hashMenahalot.html">השוואת חברות מנהלות</a>
+              <a href="hasifotMeshulav.html">מחולל חשיפות</a>
+              <a href="VirtualInvest.html">השוואת תיק משולב מסלולים</a>
+              
+              <a href="#">ציון משקל תשואה לשארפ</a>
+            </div>
+          </li>
+          <li><a href="#" onclick="openAboutModal(); return false;">אודות</a></li>
+          <li><a href="index.html#contact">צור קשר</a></li>
+          <li class="whatsapp-desktop"><a href="https://wa.me/972544440044?text=שלום, אני מעוניין בייעוץ פנסיוני" target="_blank" title="צור קשר בוואטסאפ"><i class="fab fa-whatsapp" style="font-size:2rem; color:#25D366;"></i></a></li>
+        </nav>
+        <div class="whatsapp-mobile">
+            <a href="https://wa.me/972544440044?text=שלום, אני מעוניין בייעוץ פנסיוני" target="_blank" title="צור קשר בוואטסאפ">
+                <i class="fab fa-whatsapp" style="font-size:2rem; color:#25D366;"></i>
+            </a>
+        </div>
+        <div class="logo"> <img class="logoimg" src="logoxnew.png" onclick="navigateToHome();" style="cursor: pointer;"/></div>
+        <div class="hamburger" id="hamburger" style="padding: 10px;">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+
+    <div class="main-container">
+        <div class="nav-header" style=" background: white; padding: 20px; margin-bottom: 20px; border-bottom: 2px solid #667eea; border-radius: 16px;">
+            <div class="brand" style="display: flex; align-items: center; gap: 15px;">
+                <div style="margin-left: auto;margin-right: auto;margin-top: 30px;">
+                    <h1 style="font-size: 24px; font-weight: 700; color: #667eea; margin-top: 15%; display: flex; align-items: center; gap: 10px;">
+                        מחשבון הפקדה נדרשת לסכום מטרה
+                    </h1>
+                    <div style="font-size: 14px; color: #777; margin-top: 4px;">חישוב כמה צריך להפקיד חודשית כדי להגיע לסכום יעד מסוים</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+        <div class="calculator">
+            <div class='closewindow' onclick='window.parent.showMachshevonim();'>
+            </div>
+            <h3 style="color:rgba(0,148,254);"> הפקדה חודשית לסכום יעד</h3>
+            
+            <div class="form-grid">
+                <div class="input-group">
+                    <label for="targetAmount" style="color:var(--main-color);" >
+                        <div class="tooltip" >
+                            <span  class="tooltip-text">סכום היעד בסוף התקופה</span>
+                        </div>
+                        סכום יעד
+                    </label>
+                    <div class="input-wrapper">
+                        <input type="text" id="targetAmount" onchange="hideresult()"
+                         value="" required>
+                        <span class="input-suffix">₪</span>
+                    </div>
+                    <div class="range-display">
+                        <span>0 ₪</span>
+                        <span>5,000,000 ₪</span>
+                    </div>
+                    <input type="range" id="targetAmount_slider" min="0" max="5000000" step="10000" value="0" 
+                        onchange="hideresult()">
+                    <div class="range-value" id="targetAmount_value">1,000,000 ₪</div>
+                </div>
+                
+                <div class="input-group">
+                    <label for="initialAmount" style="color:var(--main-color);">
+                        <div class="tooltip" >
+                            <span class="tooltip-text">סכום התחלתי קיים</span>
+                        </div>
+                        סכום התחלתי קיים
+                    </label>
+                    <div class="input-wrapper">
+                        <input type="text" id="initialAmount"  value="" onchange="hideresult()">
+                        <span class="input-suffix">₪</span>
+                    </div>
+                    <div class="range-display">
+                        <span>0 ₪</span>
+                        <span>1,000,000 ₪</span>
+                    </div>
+                    <input type="range" id="initialAmount_slider" min="0" max="1000000" step="5000" value="0"
+                         onchange="hideresult()">
+                    <div class="range-value" id="initialAmount_value">0 ₪</div>
+                </div>
+                
+                <div class="input-group">
+                    <label for="interestRate" style="color: var(--main-color);">
+                        <div class="tooltip">
+                            <span class="tooltip-text">שיעור הריבית השנתית </span>
+                        </div>
+                         ריבית שנתית   (%)
+                    </label>
+                    <div class="input-wrapper">
+                        <input type="text" id="interestRate" onchange="hideresult()"  value="">
+                        <span class="input-suffix">%</span>
+                    </div>
+                    <div class="range-display">
+                        <span>0%</span>
+                        <span>15%</span>
+                    </div>
+                    <input type="range" id="interestRate_slider" min="0" max="20" step="0.1" value="0"
+                         onchange="hideresult()">
+                    <div class="range-value" id="interestRate_value">0%</div>
+                </div>
+                
+                <div class="input-group">
+                    <label for="managementFee" style="color:var(--main-color);">
+                        <div class="tooltip">
+                            <span class="tooltip-text">שיעור דמי הניהול מהחיסכון</span>
+                        </div>
+                       דמי ניהול שנתיים (%)
+                    </label>
+                    <div class="input-wrapper">
+                        <input type="text" id="managementFee" onchange="hideresult()"  value="">
+                        <span class="input-suffix">%</span>
+                    </div>
+                    <div class="range-display">
+                        <span>0%</span>
+                        <span>2%</span>
+                    </div>
+                    <input type="range" id="managementFee_slider" min="0" max="2" step="0.05" value="0"
+                         onchange="hideresult()">
+                    <div class="range-value" id="managementFee_value">0.5%</div>
+                </div>
+                
+                <div class="input-group">
+                    <label for="years" style="color:var(--main-color);">
+                        <div class="tooltip">
+                            <span class="tooltip-text">משך זמן החיסכון בשנים</span>
+                        </div>
+                        תקופת החיסכון
+                    </label>
+                    <div class="input-wrapper">
+                        <input type="text" id="years"  onchange="hideresult()" value="">
+                        <span class="input-suffix">שנים</span>
+                    </div>
+                    <div class="range-display">
+                        <span>1 שנה</span>
+                        <span>30 שנים</span>
+                    </div>
+                    <input type="range" id="years_slider" min="1" max="50" step="1" value="0"
+                         onchange="hideresult()">
+                    <div class="range-value" id="years_value">10 שנים</div>
+                </div>
+            </div>
+            
+            <button onclick="calculateMonthlyDeposit()">חשב הפקדה חודשית</button>
+            <div id="errorMsg" class="error"></div>
+            
+            <div id="result" class="result">
+                <div class="result-title">סכום ההפקדה החודשית הנדרש:</div>
+                <div id="monthlyAmount" class="result-amount">0 ₪</div>
+                <div id="resultDetails" class="result-details"></div>
+            </div>
+        </div>
+        
+        <div class="credits">
+            מחשבון חיסכון והשקעות © 2025
+        </div>
+        </div>
+    </div>
+
+    <script>
+        // קישור בין מחוונים לשדות קלט
+        const inputFields = ['targetAmount', 'initialAmount', 'interestRate', 'managementFee', 'years'];
+        
+        // הגדרת אירועים לסנכרון בין המחוונים והשדות
+        inputFields.forEach(field => {
+            const input = document.getElementById(field);
+            const slider = document.getElementById(`${field}_slider`);
+            const valueDisplay = document.getElementById(`${field}_value`);
+            
+            // עדכון המחוון כאשר הערך בשדה משתנה
+            input.addEventListener('input', function() {
+                let value = this.value.replace(/,/g, ''); // הסרת פסיקים קיימים
+                slider.value = value;
+                updateValueDisplay(field, value);
+                
+                // עיצוב עם פסיקים עבור שדות סכום
+                if (field === 'targetAmount' || field === 'initialAmount') {
+                    this.value = numberWithCommas(value);
+                }
+            });
+            
+            // עדכון השדה כאשר המחוון זז
+            slider.addEventListener('input', function() {
+                let value = this.value;
+                updateValueDisplay(field, value);
+                
+                // עיצוב עם פסיקים עבור שדות סכום
+                if (field === 'targetAmount' || field === 'initialAmount') {
+                    input.value = numberWithCommas(value);
+                } else {
+                    input.value = value;
+                }
+            });
+            
+            // עדכון ראשוני של תצוגת הערך
+            updateValueDisplay(field, input.value);
+        });
+
+        function hideresult() {
+            const resultElement = document.getElementById('result');
+            resultElement.style.display = "none";
+        }
+        // פונקציה לעדכון תצוגת הערך של המחוון
+        function updateValueDisplay(field, value) {
+            const valueDisplay = document.getElementById(`${field}_value`);
+            
+            if (field === 'targetAmount' || field === 'initialAmount') {
+                valueDisplay.textContent = `${numberWithCommas(value)} ₪`;
+            } else if (field === 'interestRate' || field === 'managementFee') {
+                valueDisplay.textContent = `${value}%`;
+            } else if (field === 'years') {
+                valueDisplay.textContent = value == 1 ? `שנה אחת` : `${value} שנים`;
+            }
+        }
+        
+        function calculateMonthlyDeposit() {
+            // קלט מהמשתמש - הסרת פסיקים לפני המרה למספר
+            const targetAmount = parseFloat(document.getElementById('targetAmount').value.replace(/,/g, ''));
+            const initialAmount = parseFloat(document.getElementById('initialAmount').value.replace(/,/g, '')) || 0;
+            const annualInterestRate = parseFloat(document.getElementById('interestRate').value) / 100;
+            const annualManagementFee = parseFloat(document.getElementById('managementFee').value) / 100 || 0;
+            const years = parseInt(document.getElementById('years').value);
+            
+            const errorMsg = document.getElementById('errorMsg');
+            const resultElement = document.getElementById('result');
+            
+            // בדיקת תקינות קלט
+            if (isNaN(targetAmount)  || isNaN(annualInterestRate) ||  isNaN(years)) {
+                errorMsg.textContent = "אנא מלא את כל השדות בערכים מספריים תקינים";
+                errorMsg.style.display = "block";
+                resultElement.style.display = "none";
+                return;
+            }
+        
+            if (targetAmount <= 0) {
+                errorMsg.textContent = "סכום היעד חייב להיות גדול מאפס";
+                errorMsg.style.display = "block";
+                resultElement.style.display = "none";
+                return;
+            }
+            
+            if (initialAmount < 0) {
+                errorMsg.textContent = "הסכום הראשוני לא יכול להיות שלילי";
+                errorMsg.style.display = "block";
+                resultElement.style.display = "none";
+                return;
+            }
+            
+            if (years <= 0) {
+                errorMsg.textContent = "מספר השנים חייב להיות גדול מאפס";
+                errorMsg.style.display = "block";
+                resultElement.style.display = "none";
+                return;
+            }
+            
+            // מחיקת הודעות שגיאה קודמות
+            errorMsg.style.display = "none";
+            
+            // חישוב ההפקדה החודשית הנדרשת
+            const monthlyInterestRate = annualInterestRate / 12;
+            const monthlyManagementFee = annualManagementFee / 12;
+            const totalMonths = years * 12;
+            
+            let amount = initialAmount;
+            let ribit=monthlyInterestRate-monthlyManagementFee;
+            let monthlyDepositx=0;
+            let machpil=Math.pow((1+ribit),totalMonths);
+            let fvamount=initialAmount*machpil;
+            
+
+            while (amount < targetAmount) {
+                amount=fvamount+monthlyDepositx*(Math.pow((1+ribit),totalMonths)-1)/ribit;
+                monthlyDepositx+=1;
+            }
+            
+
+
+
+            
+            
+            // עיגול התוצאה כלפי מעלה לשקל הקרוב
+            monthlyDeposit = Math.ceil(monthlyDepositx);
+            
+            // הצגת התוצאה
+            document.getElementById('monthlyAmount').textContent = `${numberWithCommas(monthlyDeposit)} ₪`;
+            
+            // התאמת הניסוח לפי מספר השנים
+            let yearsText = years == 1 ? "שנה" : "שנים";
+            document.getElementById('resultDetails').textContent = 
+                `כדי להגיע ל-${numberWithCommas(targetAmount)} ₪ בתוך ${years} ${yearsText}`;
+            resultElement.style.display = "block";
+            
+            // אנימציה לאזור התוצאה
+            resultElement.style.animation = 'none';
+            resultElement.offsetHeight; // גורם לדפדפן לעדכן את ה-DOM
+            resultElement.style.animation = 'fadeIn 0.5s';
+        }
+        
+        
+        
+        function numberWithCommas(x) {
+            return Math.round(x).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+        // Hamburger menu functionality
+        function toggleNav() {
+            const hamburger = document.getElementById('hamburger');
+            const navMenu = document.getElementById('navMenu');
+            
+            if (hamburger && navMenu) {
+                hamburger.classList.toggle('active');
+                navMenu.classList.toggle('active');
+            }
+        }
+
+          
+        // Ensure navigation links work properly
+        document.querySelectorAll('.nav-menu a[href]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                // Allow normal navigation for all links except dropdown toggle
+                if (!this.hasAttribute('onclick') && this.getAttribute('href') !== '#') {
+                    // Let the browser handle the navigation
+                    return true;
+                }
+            });
+        });
+        
+// Products dropdown functionality
+function toggleHafkadaProductsDropdown(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    if (window.innerWidth > 768) {return;}
+    
+    const dropdown = document.getElementById('hafkadaProductsDropdown');
+    const link = event.target;
+    
+    // Close other dropdowns first
+    document.querySelectorAll('.dropdown-content.show').forEach(d => {
+        if (d !== dropdown) {
+            d.classList.remove('show');
+            // Reset text for other dropdowns
+            const parentLi = d.parentElement;
+            if (parentLi) {
+                const dropdownLink = parentLi.querySelector('a');
+                if (dropdownLink && dropdownLink.textContent.includes('מחשבונים')) {
+                    dropdownLink.innerHTML = 'מחשבונים ▼';
+                } else if (dropdownLink && dropdownLink.textContent.includes('כלי השוואה')) {
+                    dropdownLink.innerHTML = 'כלי השוואה ▼';
+                }
+            }
+        }
+    });
+    
+    if (dropdown.classList.contains('show')) {
+        dropdown.classList.remove('show');
+        link.innerHTML = 'מוצרים ותשואות ▼';
+    } else {
+        dropdown.classList.add('show');
+        link.innerHTML = 'מוצרים ותשואות ▲';
+    }
+    
+    return false;
+}
+
+        // Calculator dropdown functionality
+function toggleHafkadaCalculatorDropdown(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    if (window.innerWidth > 768) {return;}
+    
+    const dropdown = document.getElementById('hafkadaCalculatorDropdown');
+    const link = event.target;
+    
+    // Close other dropdowns first
+    document.querySelectorAll('.dropdown-content.show').forEach(d => {
+        if (d !== dropdown) {
+            d.classList.remove('show');
+        }
+    });
+    
+    if (dropdown.classList.contains('show')) {
+        dropdown.classList.remove('show');
+        link.innerHTML = 'מחשבונים ▼';
+    } else {
+        dropdown.classList.add('show');
+        link.innerHTML = 'מחשבונים ▲';
+    }
+    
+    return false;
+}
+
+// Tools dropdown functionality
+function toggleHafkadaToolsDropdown(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    if (window.innerWidth > 768) {return;}
+    
+    const dropdown = document.getElementById('hafkadaToolsDropdown');
+    const link = event.target;
+    
+    // Close other dropdowns first
+    document.querySelectorAll('.dropdown-content.show').forEach(d => {
+        if (d !== dropdown) {
+            d.classList.remove('show');
+        }
+    });
+    
+    if (dropdown.classList.contains('show')) {
+        dropdown.classList.remove('show');
+        link.innerHTML = 'כלי השוואה ▼';
+    } else {
+        dropdown.classList.add('show');
+        link.innerHTML = 'כלי השוואה ▲';
+    }
+    
+    return false;
+}
+
+// Close nav dropdowns when clicking outside
+document.addEventListener('click', function(event) {
+    document.querySelectorAll('.dropdown-content.show').forEach(d => {
+        if (!d.contains(event.target)) {
+            const parentLi = d.closest('.nav-dropdown');
+            const parentLink = parentLi?.querySelector('a');
+            if (parentLink && !parentLink.contains(event.target)) {
+                d.classList.remove('show');
+                if (d.id === 'hafkadaProductsDropdown') {
+                    parentLink.innerHTML = 'מוצרים ותשואות ▼';
+                } else if (d.id === 'hafkadaCalculatorDropdown') {
+                    parentLink.innerHTML = 'מחשבונים ▼';
+                } else if (d.id === 'hafkadaToolsDropdown') {
+                    parentLink.innerHTML = 'כלי השוואה ▼';
+                }
+            }
+        }
+    });
+});
+
+// Close nav dropdown when clicking on links
+document.addEventListener('click', function(event) {
+    if (event.target.closest('#hafkadaProductsDropdown a')) {
+        const navDropdown = document.getElementById('hafkadaProductsDropdown');
+        const navLink = navDropdown?.closest('.nav-dropdown')?.querySelector('a');
+        
+        if (navDropdown) navDropdown.classList.remove('show');
+        if (navLink) navLink.innerHTML = 'מוצרים ותשואות ▼';
+    }
+    
+    if (event.target.closest('#hafkadaCalculatorDropdown a')) {
+        const navDropdown = document.getElementById('hafkadaCalculatorDropdown');
+        const navLink = navDropdown?.closest('.nav-dropdown')?.querySelector('a');
+        
+        if (navDropdown) navDropdown.classList.remove('show');
+        if (navLink) navLink.innerHTML = 'מחשבונים ▼';
+    }
+    
+    if (event.target.closest('#hafkadaToolsDropdown a')) {
+        const navDropdown = document.getElementById('hafkadaToolsDropdown');
+        const navLink = navDropdown?.closest('.nav-dropdown')?.querySelector('a');
+        
+        if (navDropdown) navDropdown.classList.remove('show');
+        if (navLink) navLink.innerHTML = 'כלי השוואה ▼';
+    }
+});
+
+// Hamburger menu functionality
+document.addEventListener('DOMContentLoaded', function() {
+   
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('navMenu');
+    
+    if (hamburger && navMenu) {
+        
+        hamburger.addEventListener('click', function() {
+            this.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        document.addEventListener('click', function(e) {
+            if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
+                navMenu.classList.remove('active');
+                hamburger.classList.remove('active');
+            }
+        });
+
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                if (window.innerWidth <= 768 && !this.hasAttribute('onclick')) {
+                    navMenu.classList.remove('active');
+                    hamburger.classList.remove('active');
+                }
+            });
+        });
+    }
+});
+
+// Ensure nav dropdown links work properly
+document.querySelectorAll('#hafkadaProductsDropdown a, #hafkadaCalculatorDropdown a, #hafkadaToolsDropdown a').forEach(link => {
+    link.addEventListener('click', function(e) {
+        // Don't prevent default - let the link work normally
+        e.stopPropagation();
+        
+        // Close dropdown after a short delay to allow navigation
+        setTimeout(() => {
+            const allDropdowns = ['hafkadaProductsDropdown', 'hafkadaCalculatorDropdown', 'hafkadaToolsDropdown'];
+            allDropdowns.forEach(dropdownId => {
+                const dropdown = document.getElementById(dropdownId);
+                const dropdownLink = dropdown?.closest('.nav-dropdown')?.querySelector('a');
+                
+                if (dropdown) {
+                    dropdown.classList.remove('show');
+                }
+                if (dropdownLink) {
+                    if (dropdownId.includes('Products')) {
+                        dropdownLink.innerHTML = 'מוצרים ותשואות ▼';
+                    } else if (dropdownId.includes('Calculator')) {
+                        dropdownLink.innerHTML = 'מחשבונים ▼';
+                    } else if (dropdownId.includes('Tools')) {
+                        dropdownLink.innerHTML = 'כלי השוואה ▼';
+                    }
+                }
+            });
+        }, 100);
+    });
+});
+
+// Additional fix for dropdown links
+document.addEventListener('DOMContentLoaded', function() {
+    const dropdownLinks = document.querySelectorAll('.dropdown-content a');
+    dropdownLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            // Don't prevent default - let the link work normally
+            e.stopPropagation();
+            
+            // Close dropdown after a short delay to allow navigation
+            setTimeout(() => {
+                const dropdown = document.getElementById('calculatorDropdown');
+                const dropdownLink = dropdown?.closest('.nav-dropdown')?.querySelector('a');
+                
+                if (dropdown) {
+                    dropdown.classList.remove('show');
+                }
+                if (dropdownLink) {
+                    dropdownLink.innerHTML = 'מחשבונים ▼';
+                }
+            }, 100);
+        });
+    });
+});
+    </script>
+
+    <!-- Modal Container -->
+    <div id="modals-container"></div>
+
+    <!-- External Modal Scripts -->
+    <script src="about-modal.js"></script>
+    <script src="consultation-form.js"></script>
+    <script src="terms-modal.js"></script>
+    <script src="accessibility.js"></script>
+    <script>
+        // Load Modal HTML files
+        fetch('about-modal.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('modals-container').innerHTML += html;
+            })
+            .catch(err => console.error('Error loading about modal:', err));
+        
+        fetch('terms-modal.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('modals-container').innerHTML += html;
+            })
+            .catch(err => console.error('Error loading terms modal:', err));
+        
+        fetch('consultation-form.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('modals-container').innerHTML += html;
+            })
+            .catch(err => console.error('Error loading consultation form:', err));
+        
+        // Load Footer
+        fetch('footer.html')
+            .then(response => response.text())
+            .then(html => {
+                document.body.insertAdjacentHTML('beforeend', html);
+            })
+            .catch(err => console.error('Error loading footer:', err));
+        
+        // ========================================
+        // Navigate to Home Page Function
+        // ========================================
+        function navigateToHome() {
+            // אם אנחנו כבר בדף הבית - פשוט נגלול למעלה
+            if (window.location.pathname.endsWith('index.html') || window.location.pathname === '/') {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                // אנחנו בדף אחר - נעבור לדף הבית
+                window.location.href = 'index.html';
+            }
+        }
+    </script>
+
+</body>
+</html>

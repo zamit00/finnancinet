@@ -1,0 +1,1574 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מחשבון דחיית קצבה - פיננסי-נט</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="mainStyle.css">
+    <link rel="stylesheet" href="footer.css">
+    <link rel="stylesheet" href="about-modal.css">
+    <link rel="stylesheet" href="consultation-form.css">
+    <link rel="stylesheet" href="terms-modal.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+    
+    <style>
+        /* Header Styles */
+        .header {
+            position: sticky;
+            top: 0;
+            width: 100% !important;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+            max-width: 1400px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+            font-size: 16px;
+        }
+
+        .nav-menu a:hover {
+            color: #667eea;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            right: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s ease;
+        }
+
+        /* Navigation Dropdown */
+        .nav-dropdown {
+            position: relative;
+        }
+
+        .nav-dropdown .dropdown-content {
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            top: calc(100% - 2px);
+            right: 0;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 0 0 8px 8px;
+            box-shadow: none;
+            min-width: 220px;
+            z-index: 1001;
+            margin-top: 0;
+            border-top: none;
+            max-height: 0;
+            opacity: 0;
+            visibility: hidden;
+            overflow: hidden;
+            transition: max-height 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .nav-dropdown .dropdown-content a {
+            color: #333;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s ease;
+            font-size: 14px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .nav-dropdown .dropdown-content a:hover {
+            background-color: #f5f5f5;
+            color: #667eea;
+        }
+
+        .nav-dropdown .dropdown-content a:last-child {
+            border-bottom: none;
+        }
+
+        .nav-dropdown .dropdown-content.show {
+            max-height: 500px;
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* Desktop hover behavior */
+        @media (min-width: 769px) {
+            .nav-dropdown:hover .dropdown-content:not(.show) {
+                max-height: 500px;
+                opacity: 1;
+                visibility: visible;
+            }
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: 0.3s;
+            border-radius: 3px;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+
+        .logoimg{
+            width: 200px;
+            height: auto;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .logoimg{
+                width: 150px;
+                height: auto;
+            }
+            
+            .header {
+                padding: 1rem 0;
+                width: 100%;
+                margin: 0%;
+                padding: 0%;
+            }
+
+            .nav-container {
+                padding: 1rem 1rem;
+            }
+
+            .nav-menu {
+                position: fixed;
+                top: 80px;
+                right: 0;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(10px);
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                padding-top: 2rem;
+                display: flex;
+                opacity: 0;
+                visibility: hidden;
+                transform: translateX(100%);
+                transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-menu.active {
+                opacity: 1;
+                visibility: visible;
+                transform: translateX(0);
+                margin-top: -25px; 
+            }
+            .nav-menu.active li,.nav-menu.active li a{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                margin-left: auto;
+                margin-right: auto;
+                width: 100%;
+            }
+                /* Mobile nav-dropdown adjustments */
+                .nav-dropdown .dropdown-content {
+                    position: relative;
+                    display: flex;
+                    flex-direction: column;
+                    min-width: auto;
+                    width: clamp(200px, 100%, 270px);
+                    max-height: 0;
+                    opacity: 0;
+                    visibility: hidden;
+                    overflow: hidden;
+                    border: none;
+                    background:white;
+                    margin-top: 5px;
+                    top: auto;
+                    border-radius: 15px;
+                    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+                    padding: 0;
+                    transition: max-height 0.3s ease, opacity 0.3s ease, visibility 0.3s ease, padding-top 0.3s ease;
+                    }
+
+                    .nav-dropdown .dropdown-content a {
+                    padding: 8px 16px;
+                    border-bottom: 1px solid rgba(255,255,255,0.1);
+                    font-size: 1rem;
+                    }
+
+                    .nav-dropdown .dropdown-content.show {
+                    max-height: 500px;
+                    opacity: 1;
+                    visibility: visible;
+                    padding-top: 15px;
+                    }
+
+                .hamburger {
+                    display: flex;
+                    padding-left: 5%;
+                }
+        }
+
+        /* Scroll to Top Button - Mobile Only */
+        #scrollToTopBtn {
+            display: none;
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            z-index: 999;
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+        }
+        
+        #scrollToTopBtn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(102, 126, 234, 0.6);
+        }
+        
+        #scrollToTopBtn.show {
+            display: block;
+        }
+        
+        @media (min-width: 769px) {
+            #scrollToTopBtn {
+                display: none !important;
+            }
+        }
+
+        /* Modal Styles */
+        .about-modal {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .about-modal-content {
+            background-color: white;
+            margin: 3% auto;
+            padding: 30px;
+            border-radius: 20px;
+            max-width: 700px;
+            width: 90%;
+            max-height: 85vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.3);
+            animation: slideDown 0.4s ease;
+            direction: rtl;
+        }
+
+        .about-modal-close {
+            color: #aaa;
+            float: left;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            transition: color 0.3s ease;
+        }
+
+        .about-modal-close:hover {
+            color: #000;
+        }
+
+        .about-modal-profile {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .about-modal-profile img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+            border: 4px solid #667eea;
+        }
+
+        .about-modal-profile h2 {
+            color: #667eea;
+            margin: 0;
+            font-size: 2rem;
+        }
+
+        .about-modal-content p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .terms-modal {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .terms-modal-content {
+            background-color: white;
+            margin: 2% auto;
+            padding: 35px;
+            border-radius: 20px;
+            max-width: 900px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.3);
+            animation: slideDown 0.4s ease;
+            direction: rtl;
+        }
+
+        .terms-modal-close {
+            color: #aaa;
+            float: left;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            transition: color 0.3s ease;
+        }
+
+        .terms-modal-close:hover {
+            color: #000;
+        }
+
+        .terms-content h3 {
+            color: #667eea;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+
+        .terms-content p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        #consultationFormModal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 10000;
+            backdrop-filter: blur(5px);
+        }
+
+        #consultationFormModal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            .about-modal-content, .terms-modal-content {
+                margin: 5% auto;
+                padding: 20px;
+                width: 95%;
+            }
+            
+            .about-modal-profile img {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .about-modal-profile h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Scroll to Top Button (Mobile Only) -->
+    <button id="scrollToTopBtn" onclick="scrollToTop()" title="חזור למעלה">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+    <header class="header" dir="rtl">
+        <div class="nav-container">   
+            <nav class="nav-menu" id="navMenu">
+                <li class="nav-dropdown">
+                    <a href="#" onclick="toggleNavProductsDropdown(event)">מוצרים ותשואות ▼</a>
+                    <div class="dropdown-content" id="navProductsDropdown">
+                        <a href="mozarim.html?product=hishtalmut">קרנות השתלמות</a>
+                        <a href="mozarim.html?product=gemel">קופות גמל</a>
+                        <a href="mozarim.html?product=gemelHashkaa">קופות גמל להשקעה</a>
+                        <a href="mozarim.html?product=yeled">חסכון לילד</a>
+                        <a href="mozarim.html?product=polisot">פוליסות חסכון</a>
+                        <a href="mozarim.html?product=pensia">קרנות פנסיה חדשות</a>
+                    </div>
+                </li>
+                <li class="nav-dropdown">
+                    <a href="#" onclick="toggleNavCalculatorDropdown(event)">מחשבונים ▼</a>
+                    <div class="dropdown-content" id="navCalculatorDropdown">
+                        <a href="prisatMaanak.html">פריסת מענק פרישה</a>
+                        <a href="calac.html">מחשבון דחיית קצבה</a>
+                        <a href="ribitderibit.html">חישוב ערך עתידי</a>
+                        <a href="loan.html">סימולטור הלוואה</a>
+                        <a href="hafkada.html">מחשבון הפקדה לסכום מטרה</a>
+                        <a href="hashDmeyNihul.html">השוואת דמי ניהול</a>
+                    </div>
+                </li>
+                <li class="nav-dropdown">
+                    <a href="#" onclick="toggleNavToolsDropdown(event)">כלי השוואה ▼</a>
+                    <div class="dropdown-content" id="navToolsDropdown">
+                        <a href="hashMenahalot.html">השוואת חברות מנהלות</a>
+                        <a href="hasifotMeshulav.html">מחולל חשיפות</a>
+                        <a href="VirtualInvest.html">השוואת תיק משולב מסלולים</a>
+                        <a href="#">ציון משקל תשואה לשארפ</a>
+                    </div>
+                </li>
+                <li><a href="#" onclick="openAboutModal(); return false;">אודות</a></li>
+                <li><a href="#contact" onclick="openConsultationForm(); return false;">צור קשר</a></li>
+                <li class="whatsapp-desktop"><a href="https://wa.me/972545287184?text=שלום, אני מעוניין בייעוץ פנסיוני" target="_blank" title="צור קשר בוואטסאפ"><i class="fab fa-whatsapp" style="font-size:2rem; color:#25D366;"></i></a></li>
+            </nav>
+            <div class="whatsapp-mobile">
+                <a href="https://wa.me/972545287184?text=שלום, אני מעוניין בייעוץ פנסיוני" target="_blank" title="צור קשר בוואטסאפ">
+                    <i class="fab fa-whatsapp" style="font-size:2rem; color:#25D366;"></i>
+                </a>
+            </div>
+            <div class="logo"> <img class="logoimg" src="logoxnew.png" onclick="navigateToHome();" 
+                style="cursor: pointer;"/></div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+<div id="pensuni-early-late" dir="rtl" lang="he" data-theme="light">
+  <style>
+    /* ערכת צבעים מותאמת לאתר פיננסי-נט */
+    #pensuni-early-late[data-theme="light"]{
+      --primary:#667eea; --primary-600:#5a6fd8;
+      --ok:#059669; --warn:#b45309; --bad:#dc2626;
+      --bg:#f8fafc; --card:#ffffff; --border:#e2e8f0; --text:#333; --muted:#64748b;
+      --panel:#f1f5f9; --panel-warn:#fef3c7; --panel-ok:#ecfdf5;
+    }
+    #pensuni-early-late[data-theme="dark"]{
+      --primary:#4ba3ff; --primary-600:#2d77c4;
+      --ok:#34d399; --warn:#f59e0b; --bad:#f87171;
+      --bg:#0b1220; --card:#0f172a; --border:#334155; --text:#e2e8f0; --muted:#94a3b8;
+      --panel:#111827; --panel-warn:#3b2f13; --panel-ok:#052e1e;
+    }
+
+    #pensuni-early-late *{box-sizing:border-box}
+    #pensuni-early-late .wrap{
+      font-family: Arial,"Segoe UI",Tahoma,Heebo,sans-serif;
+      background:var(--bg); color:var(--text);
+      border:1px solid var(--border); border-radius:14px;
+      padding:18px; max-width:980px; margin:0 auto;
+      box-shadow:0 6px 24px rgba(2,6,23,.06);
+    }
+    #pensuni-early-late h2{
+      margin:0 0 15px;
+      font-size:2rem;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-align: center;
+      font-weight: 700;
+    }
+    #pensuni-early-late .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:12px}
+    #pensuni-early-late .card{
+      background:var(--card); border:1px solid var(--border);
+      border-radius:20px; padding:20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    #pensuni-early-late .card:hover{
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    }
+    #pensuni-early-late label{
+      display:block;
+      font-weight:600;
+      margin-bottom:8px;
+      color: #333;
+      font-size: 1rem;
+    }
+    #pensuni-early-late input,#pensuni-early-late select, #pensuni-early-late button.theme{
+      width:100%; 
+      background:#fff; 
+      border:2px solid #e2e8f0; 
+      border-radius:12px; 
+      padding:12px 15px; 
+      min-height:24px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+    #pensuni-early-late input:focus,#pensuni-early-late select:focus{
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+      outline: none;
+    }
+    #pensuni-early-late[data-theme="dark"] input,
+    #pensuni-early-late[data-theme="dark"] select{
+      background:#0b1220; color:var(--text); border-color:#334155;
+    }
+    #pensuni-early-late .hint{font-size:.9rem;color:var(--muted)}
+    #pensuni-early-late .btn{
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+      color:#fff; border:none; padding:15px 25px;
+      border-radius:50px; font-weight:700; cursor:pointer; width:100%;
+      font-size: 1.1rem;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+      transition: all 0.3s ease;
+    }
+    #pensuni-early-late .btn:hover{
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+    }
+    
+    #pensuni-early-late .btn:focus{outline:3px solid #9cd4ff; outline-offset:2px}
+    #pensuni-early-late .muted{color:var(--muted);font-size:.95rem}
+    #pensuni-early-late .two-col{grid-column:span 6}
+    #pensuni-early-late .three-col{grid-column:span 4}
+    #pensuni-early-late .full{grid-column:1/-1}
+    #pensuni-early-late fieldset{border:0;margin:0;padding:0}
+    #pensuni-early-late .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+    #pensuni-early-late .results table{
+      width:100%;
+      border-collapse:collapse;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    #pensuni-early-late .results th,#pensuni-early-late .results td{
+      border-bottom:1px solid var(--border);
+      text-align:right;
+      padding:15px 12px; 
+      vertical-align:top;
+    }
+    #pensuni-early-late .results thead th{
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      font-weight: 600;
+    }
+    #pensuni-early-late .panel{
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+      padding:20px;
+      border-radius:15px;
+      margin-bottom:15px;
+      border: 2px solid rgba(102, 126, 234, 0.2);
+    }
+    #pensuni-early-late .panel-warn{
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(245, 158, 11, 0.05) 100%);
+      border-right:4px solid #f59e0b;
+    }
+    #pensuni-early-late .panel-ok{
+      background: linear-gradient(135deg, rgba(5, 150, 105, 0.1) 0%, rgba(5, 150, 105, 0.05) 100%);
+      border-right:4px solid var(--ok);
+    }
+    #pensuni-early-late .headline{font-size:1.25rem;font-weight:700}
+    #pensuni-early-late .headline .tag{font-weight:800}
+    #pensuni-early-late .subnote{margin-top:6px;color:#334155}
+    #pensuni-early-late[data-theme="dark"] .subnote{color:#cbd5e1}
+    #pensuni-early-late .toolbar{display:flex;gap:8px;align-items:center}
+    #pensuni-early-late button.theme{width:auto;cursor:pointer;background:transparent;color:var(--text)}
+    @media (max-width:720px){
+      #pensuni-early-late .two-col,#pensuni-early-late .three-col{grid-column:1/-1}
+    .wrap{margin-right: auto;margin-left: auto;}
+      footer{max-width: 100%;box-sizing: border-box;margin: 0;padding: 0;}
+    }
+  
+  </style>
+
+  <div class="wrap" role="form" aria-labelledby="pe-title" aria-describedby="pe-desc">
+    <div class="toolbar" style="justify-content:space-between;margin-bottom:8px">
+      <h2 id="pe-title" style="margin:0">מחשבון כלכלי לדחיית תשלומי קצבה</h2>
+      <!-- <button class="theme" type="button" aria-label="החלף מצב תצוגה" title="מצב כהה/בהיר">🌓 מצב תצוגה</button> -->
+    </div>
+
+    <div class="grid" aria-live="polite">
+      <div class="three-col card">
+        <label for="acc">חסכון קיים לקבלת קצבה (₪)</label>
+        <input style="text-align: center;font-size: 1.3rem;" id="acc" type="number" inputmode="decimal" min="0" step="10000" value="1500000" aria-describedby="acc-hint">
+        <div id="acc-hint" class="hint">סך החיסכון הקיים לקצבה</div>
+      </div>
+
+      <div class="three-col card">
+        <label for="rate">שיעור ריבית שנתית (%)</label>
+        <input style="text-align: center;font-size: 1.3rem;" id="rate" type="number" inputmode="decimal" step="0.01" value="4.4" aria-describedby="rate-hint">
+        <div id="rate-hint" class="hint">ניתן לשנות</div>
+      </div>
+
+      <div class="three-col card">
+        <label for="yob">שנת לידה</label>
+        <input style="text-align: center;font-size: 1.3rem;" value="1969" id="yob" type="number" min="1955" max="2005" step="1" placeholder="לדוגמה: 1955" aria-describedby="yob-hint">
+        <div id="yob-hint" class="hint">בחר בין השנים 1953–2005</div>
+      </div>
+
+      <div class="three-col card">
+        <label for="sex">מין</label>
+        <select style="text-align: center;font-size: 1.3rem;" id="sex" aria-label="מין">
+          <option value="male">זכר</option>
+          <option value="female">נקבה</option>
+        </select>
+      </div>
+
+      <div class="three-col card">
+        <label for="status">מסלול קצבה</label>
+        <select style="text-align: center;font-size: 1.3rem;" id="status" aria-label="מצב משפחתי">
+          <option value="married">כולל קצבה לאלמנה</option>
+          <option value="single">יחיד ללא שאירים</option>
+        </select>
+      </div>
+
+      <div class="three-col card">
+        <label for="le">גיל לחישוב</label>
+        <input style="text-align: center;font-size: 1.3rem;" id="le" type="number" min="70" max="110" step="1" value="87" aria-describedby="le-hint">
+        <div id="le-hint" class="hint">ניתן לשינוי (רצוי להשאיר)</div>
+      </div>
+
+      <!-- חלופה ראשונה -->
+      <div class="two-col card">
+        <fieldset>
+          <legend><strong>אפשרות ראשונה – גיל התחלת קצבה</strong></legend>
+          <div class="row" class="rd" role="radiogroup" aria-label="בחירת גיל התחלה A">
+            <label><input  type="radio" name="optA" value="67" checked=""> 67</label>
+            <label><input  type="radio" name="optA" value="manual"> ידני</label>
+            <input style="text-align: center;font-size: 1.3rem;" id="startA" type="number" min="60" max="70" step="1" value="67" aria-label="גיל התחלה A (ידני)" disabled="">
+          </div>
+        </fieldset>
+      </div>
+
+      <!-- חלופה שניה -->
+      <div class="two-col card">
+        <fieldset>
+          <legend><strong>אפשרות שניה – גיל התחלת קצבה</strong></legend>
+          <div class="row" role="radiogroup" aria-label="בחירת גיל התחלה B">
+            <label><input  type="radio" name="optB" value="70" checked=""> 70</label>
+            <label><input  type="radio" name="optB" value="manual"> ידני</label>
+            <input style="text-align: center;font-size: 1.3rem;" id="startB" type="number" min="60" max="70" step="1" value="70" aria-label="גיל התחלה B (ידני)" disabled="">
+          </div>
+        </fieldset>
+      </div>
+
+      <div class="two-col card">
+        <button id="calcBtn" class="btn" type="button">חשב/י</button>
+      </div>
+
+      <div class="full card results" id="results" aria-live="polite" aria-atomic="true">     
+      </div>
+    </div>
+  </div>
+
+  <script>
+  (function(w,d){
+    function ready(fn){ if(d.readyState!=='loading') fn(); else d.addEventListener('DOMContentLoaded', fn, {once:true}); }
+    ready(init); setTimeout(init,0);
+
+    function init(){
+      const root = d.getElementById('pensuni-early-late');
+      if(!root) return setTimeout(init,50);
+      if(root.__inited) return; root.__inited = true;
+
+      // מצב כהה/בהיר
+  //  root.querySelector('button.theme')?.addEventListener('click', ()=>{
+  //      root.dataset.theme = (root.dataset.theme === 'dark') ? 'light' : 'dark';
+  //    });
+
+      // === טבלת מקדמים (מצומצמת לדוגמה — ניתן להרחיב לפי הצורך) ===
+      const factors = {
+        married: {
+          male: {
+            60:{1970:214.98,1975:216.12,1980:217.15,1985:218.10,1990:218.99,1995:219.82,2000:220.62,2005:221.36},
+            61:{1965:210.42,1970:211.79,1975:212.95,1980:214.00,1985:214.97,1990:215.88,1995:216.74,2000:217.55,2005:218.32},
+            62:{1965:207.16,1970:208.55,1975:209.71,1980:210.77,1985:211.76,1990:212.69,1995:213.57,2000:214.39,2005:215.15},
+            63:{1965:203.78,1970:205.19,1975:206.38,1980:207.47,1985:208.48,1990:209.43,1995:210.33,2000:211.17,2005:211.96},
+            64:{1965:200.28,1970:201.72,1975:202.93,1980:204.05,1985:205.09,1990:206.07,1995:206.99,2000:207.85,2005:208.66},
+            65:{1965:196.66,1970:198.12,1975:199.36,1980:200.50,1985:201.57,1990:202.58,1995:203.52,2000:204.41,2005:205.24},
+            66:{1960:191.01,1965:192.65,1970:194.07,1975:195.33,1980:196.47,1985:197.55,1990:198.57,1995:199.54,2000:200.45,2005:201.31},
+            67:{1955:187.08,1960:188.73,1965:190.16,1970:191.44,1975:192.60,1980:193.70,1985:194.74,1990:195.73,1995:196.66,2000:197.54,2005:198.37},
+            68:{1955:183.04,1960:184.68,1965:186.13,1970:187.42,1975:188.60,1980:189.72,1985:190.79,1990:191.79,1995:192.74,2000:193.64,2005:194.49},
+            69:{1955:178.88,1960:180.52,1965:181.98,1970:183.28,1975:184.48,1980:185.62,1985:186.70,1990:187.72,1995:188.69,2000:189.61,2005:190.47},
+            70:{1955:174.58,1960:176.23,1965:177.70,1970:179.01,1975:180.23,1980:181.39,1985:182.49,1990:183.52,1995:184.51,2000:185.44,2005:186.32}
+          },
+          female: {
+            60:{1970:213.55,1975:214.74,1980:215.82,1985:216.81,1990:217.73,1995:218.58,2000:219.38,2005:220.12},
+            61:{1965:210.32,1970:211.52,1975:212.62,1980:213.63,1985:214.57,1990:215.44,1995:216.26,2000:217.04,2005:217.75},
+            62:{1965:207.20,1970:208.42,1975:209.53,1980:210.56,1985:211.52,1990:212.42,1995:213.26,2000:214.05,2005:214.78},
+            63:{1965:203.75,1970:204.99,1975:206.12,1980:207.17,1985:208.15,1990:209.07,1995:209.93,2000:210.74,2005:211.49},
+            64:{1965:200.19,1970:201.45,1975:202.60,1980:203.67,1985:204.67,1990:205.61,1995:206.49,2000:207.32,2005:208.09},
+            65:{1965:196.52,1970:197.80,1975:198.97,1980:200.06,1985:201.09,1990:202.05,1995:202.95,2000:203.80,2005:204.59},
+            66:{1960:191.28,1965:192.74,1970:194.03,1975:195.22,1980:196.33,1985:197.38,1990:198.37,1995:199.29,2000:200.16,2005:200.97},
+            67:{1955:185.22,1960:186.81,1965:188.21,1970:189.47,1975:190.63,1980:191.71,1985:192.73,1990:193.69,1995:194.58,2000:195.43,2005:196.21},
+            68:{1955:181.00,1960:182.60,1965:184.01,1970:185.29,1975:186.47,1980:187.57,1985:188.60,1990:189.58,1995:190.49,2000:191.35,2005:192.15},
+            69:{1955:176.66,1960:178.27,1965:179.70,1970:180.99,1975:182.19,1980:183.31,1985:184.36,1990:185.35,1995:186.28,2000:187.16,2005:187.98},
+            70:{1955:172.20,1960:173.82,1965:175.26,1970:176.57,1975:177.79,1980:178.93,1985:180.00,1990:181.01,1995:181.96,2000:182.85,2005:183.69}
+          }
+        },
+        single: {
+          male: {
+            60:{1970:194.72,1975:196.44,1980:197.95,1985:199.33,1990:200.63,1995:201.88,2000:203.08,2005:204.22},
+            61:{1965:191.01,1970:192.76,1975:194.30,1980:195.70,1985:197.03,1990:198.30,1995:199.52,2000:200.69,2005:201.80},
+            62:{1965:187.20,1970:188.98,1975:190.55,1980:191.97,1985:193.33,1990:194.63,1995:195.87,2000:197.06,2005:198.20},
+            63:{1965:183.28,1970:185.10,1975:186.69,1980:188.14,1985:189.53,1990:190.86,1995:192.13,2000:193.35,2005:194.52},
+            64:{1965:179.26,1970:181.12,1975:182.74,1980:184.21,1985:185.63,1990:186.99,1995:188.29,2000:189.54,2005:190.74},
+            65:{1965:175.14,1970:177.03,1975:178.68,1980:180.18,1985:181.63,1990:183.02,1995:184.35,2000:185.63,2005:186.86},
+            66:{1965:170.91,1970:172.83,1975:174.51,1980:176.04,1985:177.52,1990:178.94,1995:180.31,2000:181.62,2005:182.88},
+            67:{1955:165.35,1960:167.43,1965:169.24,1970:170.82,1975:172.27,1980:173.65,1985:174.97,1990:176.24,1995:177.46,2000:178.63,2005:179.75},
+            68:{1955:160.92,1960:162.97,1965:164.78,1970:166.36,1975:167.81,1980:169.21,1985:170.55,1990:171.84,1995:173.07,2000:174.25,2005:175.38},
+            69:{1955:156.38,1960:158.40,1965:160.20,1970:161.78,1975:163.24,1980:164.65,1985:166.01,1990:167.31,1995:168.55,2000:169.75,2005:170.89},
+            70:{1955:151.71,1960:153.72,1965:155.51,1970:157.08,1975:158.56,1980:159.98,1985:161.34,1990:162.65,1995:163.91,2000:165.11,2005:166.26}
+          },
+          female: {
+            60:{1970:207.97,1975:209.26,1980:210.44,1985:211.52,1990:212.53,1995:213.49,2000:214.39,2005:215.25},
+            61:{1970:205.81,1975:207.01,1980:208.11,1985:209.16,1990:210.14,1995:211.07,2000:211.94,2005:212.76},
+            62:{1970:202.24,1975:203.46,1980:204.60,1985:205.66,1990:206.67,1995:207.62,2000:208.52,2005:209.36},
+            63:{1970:198.56,1975:199.80,1980:200.96,1985:202.05,1990:203.09,1995:204.06,2000:204.98,2005:205.84},
+            64:{1970:194.75,1975:196.02,1980:197.21,1985:198.32,1990:199.38,1995:200.38,2000:201.31,2005:202.20},
+            65:{1970:190.83,1975:192.12,1980:193.33,1985:194.47,1990:195.55,1995:196.57,2000:197.53,2005:198.43},
+            66:{1970:186.79,1975:188.10,1980:189.33,1985:190.50,1990:191.59,1995:192.63,2000:193.61,2005:194.53},
+            67:{1955:177.76,1960:179.57,1965:181.18,1970:182.63,1975:183.96,1980:185.21,1985:186.39,1990:187.51,1995:188.57,2000:189.57,2005:190.50},
+            68:{1955:173.45,1960:175.27,1965:176.89,1970:178.36,1975:179.71,1980:180.98,1985:182.17,1990:183.31,1995:184.38,2000:185.40,2005:186.36},
+            69:{1955:169.03,1960:170.86,1965:172.49,1970:173.98,1975:175.35,1980:176.64,1985:177.85,1990:179.01,1995:180.10,2000:181.13,2005:182.11},
+            70:{1955:164.50,1960:166.34,1965:167.99,1970:169.49,1975:170.88,1980:172.19,1985:173.42,1990:174.59,1995:175.71,2000:176.76,2005:177.76}
+          }
+        }
+      };
+
+      const $ = (id)=>d.getElementById(id);
+      const fmt  = (n)=>Number(n).toLocaleString('he-IL',{maximumFractionDigits:0});
+      const fmt2 = (n)=>Number(n).toLocaleString('he-IL',{maximumFractionDigits:2});
+      const annualToMonthly = (pct)=>Math.pow(1+(Number(pct)/100), 1/12)-1;
+
+      function bindStart(name, inputId){
+        const radios = Array.from(d.querySelectorAll(`input[name="${name}"]`));
+        const manual = $(inputId);
+        function sync(){
+          const val = (radios.find(r=>r.checked)||{}).value || 'manual';
+          manual.disabled = (val!=='manual');
+          if(val!=='manual'){ manual.value = val; }
+        }
+        radios.forEach(r=>r.addEventListener('change', sync));
+        sync();
+      }
+      bindStart('optA','startA');
+      bindStart('optB','startB');
+
+      function interp2D(table, age, yob){
+        const ages = Object.keys(table).map(Number).sort((a,b)=>a-b);
+        const aCl = Math.max(Math.min(age, ages[ages.length-1]), ages[0]);
+        let aL=ages[0], aH=ages[ages.length-1];
+        for(const a of ages){ if(a<=aCl) aL=a; if(a>=aCl){ aH=a; break; } }
+        function interpYear(row, y){
+          const years = Object.keys(row).map(Number).sort((a,b)=>a-b);
+          const yCl = Math.max(Math.min(y, years[years.length-1]), years[0]);
+          let yL=years[0], yH=years[years.length-1];
+          for(const yy of years){ if(yy<=yCl) yL=yy; if(yy>=yCl){ yH=yy; break; } }
+          if(yL===yH) return row[yL];
+          const t=(yCl-yL)/(yH-yL);
+          return row[yL] + t*(row[yH]-row[yL]);
+        }
+        const vL = interpYear(table[aL], yob);
+        const vH = interpYear(table[aH], yob);
+        if(aL===aH) return vL;
+        const t=(aCl-aL)/(aH-aL);
+        return vL + t*(vH-vL);
+      }
+
+      function pvAnnuity(pmt, rMonthly, nMonths){
+        if(nMonths<=0) return 0;
+        if(rMonthly===0) return pmt*nMonths;
+        return pmt*(1-Math.pow(1+rMonthly,-nMonths))/rMonthly;
+      }
+
+      // === נקודת איזון בספירת-גיל (כמו מחשבון 2) ===
+      function breakevenDiscountedAges(pmtA, startAgeA, pmtB, startAgeB, rM, ageNow, le){
+        const maxMonths = Math.max(0, Math.round((le - ageNow)*12));
+        let cumA=0, cumB=0, prevDiff=null, prevAge=null;
+        for(let m=0;m<=maxMonths;m++){
+          const age = ageNow + m/12;
+          const addA = (age >= startAgeA) ? pmtA : 0;
+          const addB = (age >= startAgeB) ? pmtB : 0;
+          cumA = (cumA + addA) / (1 + rM);
+          cumB = (cumB + addB) / (1 + rM);
+          const diff = cumB - cumA; // B - A
+          if(prevDiff!==null && diff===0) return age;
+          if(prevDiff!==null && Math.sign(diff)!==Math.sign(prevDiff)){
+            const t = Math.abs(prevDiff)/(Math.abs(prevDiff)+Math.abs(diff));
+            return prevAge + t*(1/12);
+          }
+          prevDiff = diff;
+          prevAge = age;
+        }
+        return null;
+      }
+
+      function breakevenApproxNoDiscount(pvDiff, monthlyDiff, startAgeA, startAgeB){
+        if(!isFinite(monthlyDiff) || monthlyDiff===0) return null;
+        const monthsNeeded = Math.abs(pvDiff)/Math.abs(monthlyDiff);
+        return Math.max(startAgeA,startAgeB) + (monthsNeeded/12);
+      }
+
+      function scenario(tbl, startAge, acc0, rateAnnual, yob, le, ageNow){
+        const rA = Number(rateAnnual)/100;
+        const rM = annualToMonthly(rateAnnual);
+        const yearsToStart = Math.max(0, startAge - ageNow);
+        const accAtStart = acc0 * Math.pow(1 + rA, yearsToStart);
+        const factor = interp2D(tbl, startAge, yob);
+        const monthly = accAtStart / factor; // ₪ לחודש
+        const nMonths = Math.max(0, Math.round((le - startAge)*12));
+        const pvAtStart = pvAnnuity(monthly, rM, nMonths);
+        const pvToday   = pvAtStart / Math.pow(1 + rM, Math.round(yearsToStart*12));
+        return {startAge, yearsToStart, accAtStart, factor, monthly, nMonths, pvAtStart, pvToday};
+      }
+
+      // חישוב
+      d.getElementById('calcBtn').addEventListener('click', function(){
+        try{
+          const acc = Math.max(0, Number((d.getElementById('acc').value||'').replace(/\s/g,'').replace(/,/g,''))||0);
+          const rate = Number((d.getElementById('rate').value||'').replace(',','.'))||0;
+          const yobRaw = Number((d.getElementById('yob').value||'').trim());
+          if(!yobRaw || !isFinite(yobRaw) || yobRaw<1955 || yobRaw>2005){
+            d.getElementById('results').innerHTML = '<span class="muted">יש להזין שנת לידה תקינה (1955–2005).</span>';
+            d.getElementById('yob').focus(); return;
+          }
+          const yob = yobRaw;
+          const sex = d.getElementById('sex').value;
+          const status = d.getElementById('status').value;
+          let le = Number(d.getElementById('le').value||87);
+          const ageNow = 2025 - yob;
+          // התאמת LE ברירת מחדל לפי מין אם לא שונה ידנית
+          if(sex==='female' && !d.getElementById('le').dataset.touched){ le = 89; d.getElementById('le').value=89; }
+
+          const startA = Math.max(60, Math.min(70, Number(d.getElementById('startA').value||67)));
+          const startB = Math.max(60, Math.min(70, Number(d.getElementById('startB').value||68)));
+
+          const rM = annualToMonthly(rate);
+          const tbl = factors[status][sex];
+
+          const A = scenario(tbl, startA, acc, rate, yob, le, ageNow);
+          const B = scenario(tbl, startB, acc, rate, yob, le, ageNow);
+
+          // הפרשים ונתונים נגזרים
+          const pvDiff = B.pvToday - A.pvToday;         // B − A
+          const monthlyDiff = B.monthly - A.monthly;    // B − A
+          const totalPaymentsA = A.monthly * A.nMonths;
+          const totalPaymentsB = B.monthly * B.nMonths;
+          const totalDiff = totalPaymentsB - totalPaymentsA;
+
+          // נקודת איזון: מהוונת (מדויק) + אומדן נומינלי (fallback)
+          const beAge = breakevenDiscountedAges(A.monthly, A.startAge, B.monthly, B.startAge, rM, ageNow, le);
+          const beApprox = (!beAge)
+            ? breakevenApproxNoDiscount((pvDiff), (monthlyDiff), A.startAge, B.startAge)
+            : null;
+
+          // טבלת תוצאות
+          const rows = [
+            ['גיל נוכחי', ageNow, ageNow, '—'],
+            ['גיל התחלה', A.startAge, B.startAge,
+              (B.startAge - A.startAge) ? `+${(B.startAge - A.startAge)} שנים` : '—'],
+            ['שנים עד ההתחלה', fmt2(A.yearsToStart), fmt2(B.yearsToStart), '—'],
+            ['יתרה בתחילת תקופה (₪)', fmt(A.accAtStart), fmt(B.accAtStart), fmt(B.accAtStart - A.accAtStart)],
+            ['מקדם קצבה', fmt2(A.factor), fmt2(B.factor), '—'],
+            ['קצבה חודשית (₪)', fmt(A.monthly), fmt(B.monthly), `<strong>${monthlyDiff >= 0 ? '+' : ''}${fmt(monthlyDiff)}</strong>`],
+            ['מספר תשלומים (חודשים)', fmt(A.nMonths), fmt(B.nMonths), fmt(B.nMonths - A.nMonths)],
+            ['סה"כ תשלומים נומינליים (₪)', fmt(totalPaymentsA), fmt(totalPaymentsB), `<strong>${totalDiff >= 0 ? '+' : ''}${fmt(totalDiff)}</strong>`],
+            ['ערך נוכחי למועד קצבה (₪)', fmt(Math.round(A.pvAtStart)), fmt(Math.round(B.pvAtStart)), fmt(Math.round(B.pvAtStart - A.pvAtStart))],
+            ['<strong>ערך נוכח היום (₪)</strong>', `<strong>${fmt(Math.round(A.pvToday))}</strong>`, `<strong>${fmt(Math.round(B.pvToday))}</strong>`,
+              `<strong style="color:${pvDiff >= 0 ? 'var(--ok)' : 'var(--bad)'}">${pvDiff >= 0 ? '+' : ''}${fmt(Math.round(pvDiff))}</strong>`]
+          ];
+
+          // פס־דין והמלצה
+          let verdict = '';
+          let verdictColor = '#64748b';
+          let recommendation = '';
+
+          if (Math.abs(pvDiff) < 1000) {
+            verdict = 'שתי החלופות כמעט זהות';
+            verdictColor = '#64748b';
+            recommendation = 'ההבדל זניח מבחינה כלכלית. בחר/י לפי שיקולים אישיים.';
+          } else if (pvDiff > 0) {
+            verdict = `חלופה שניה עדיפה ב-${fmt(Math.round(pvDiff))} ₪`;
+            verdictColor = '#059669';
+            const pctDiff = ((pvDiff / Math.max(1, A.pvToday)) * 100).toFixed(1);
+            recommendation = `דחיית הפרישה לגיל ${B.startAge} משתלמת יותר (יתרון של ${pctDiff}% בשווי נוכחי).`;
+          } else {
+            verdict = `חלופה ראשונה עדיפה ב-${fmt(Math.round(Math.abs(pvDiff)))} ₪`;
+            verdictColor = '#059669';
+            const pctDiff = ((Math.abs(pvDiff) / Math.max(1, B.pvToday)) * 100).toFixed(1);
+            recommendation = `פרישה מוקדמת בגיל ${A.startAge} משתלמת יותר (יתרון של ${pctDiff}% בשווי נוכחי).`;
+          }
+
+          // הערה לפי LE – מוצגת תמיד
+          let lifeNote = '';
+          if (beAge && beAge < le) {
+            const betterAtLE = (monthlyDiff > 0) ? 'B' : 'A';
+            const reason = (betterAtLE === 'B')
+              ? 'הקצבה החודשית בחלופה שניה גבוהה יותר ולכן לאחר גיל האיזון הסכום המצטבר גדול יותר'
+              : 'הקצבה החודשית בחלופה ראשונה גבוהה יותר ולכן לאחר גיל האיזון הסכום המצטבר גדול יותר';
+            lifeNote = `<div class="subnote"><strong>הערה לפי תוחלת חיים:</strong> נקודת איזון מהוונת אותרה סביב גיל <strong>${fmt2(beAge)}</strong>. בהינתן תוחלת חיים של ${le}, עדיפה חלופה ${betterAtLE} (${reason}).</div>`;
+          } else if (!beAge && beApprox && isFinite(beApprox)) {
+            const approxText = fmt2(beApprox);
+            const suffix = (beApprox > le)
+              ? ` (האומדן מעבר לתוחלת החיים שנקבעה, ולכן אין שינוי בהמלצה לפי LE).`
+              : ` (האומדן בתוך תוחלת החיים, אך בהיוון חודשי לא נמצאה חציית-סימן עד ${le}).`;
+            lifeNote = `<div class="subnote"><strong>הערה לפי תוחלת חיים:</strong> לא אותרה נקודת איזון מהוונת עד LE. אומדן נומינלי (ללא היוון) מצביע על גיל איזון ≈ <strong>${approxText}</strong>${suffix}</div>`;
+          } else {
+            lifeNote = `<div class="subnote"><strong>הערה לפי תוחלת חיים:</strong> לא אותרה נקודת איזון בטווח החישוב, ולכן אין שינוי בהמלצה לפי LE.</div>`;
+          }
+
+          // כרטיס נקודת איזון (ויזואלי) – רק אם יש איזון מהוון בתוך LE
+          let breakevenCard = '';
+          if (beAge && beAge > Math.min(A.startAge,B.startAge) && beAge <= le) {
+            breakevenCard = `
+              <div class="panel panel-warn" style="margin-top:8px">
+                <strong>נקודת איזון:</strong> אם תחיה/י עד גיל <strong>${Math.round(beAge)}</strong>,
+                שתי החלופות יניבו סכום מצטבר דומה. לפני גיל זה – נוטה להעדיף את המוקדמת; לאחר מכן – את המאוחרת.
+              </div>`;
+          } else if (beAge && beAge > le) {
+            breakevenCard = `<p class="muted">נקודת האיזון (גיל ${Math.round(beAge)}) מעבר לתוחלת החיים שהוגדרה.</p>`;
+          }
+
+          // פלט
+          let html = `
+            <div class="panel">
+              <div class="muted" style="margin-bottom:6px">תוחלת חיים: ${le} | תשואה: ${fmt2(rate)}% | שנת לידה: ${yob}</div>
+              <div class="headline" style="color:${verdictColor}">
+                <span class="tag">המלצה:</span> ${verdict}
+              </div>
+              <div class="subnote">${recommendation}</div>
+              ${lifeNote}
+            </div>
+            <table aria-label="תוצאות חישוב" style="margin-bottom:12px">
+              <thead>
+                <tr><th>פריט</th><th>חלופה ראשונה (גיל ${A.startAge})</th><th>חלופה שניה (גיל ${B.startAge})</th><th>הפרש </th></tr>
+              </thead>
+              <tbody>
+                ${rows.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td></tr>`).join('')}
+              </tbody>
+            </table>
+            ${breakevenCard}
+            <p class="muted" style="font-size:.9rem;margin-top:10px">
+              💡 <strong>אופן החישוב:</strong> החישוב מבוצע לפי ערך נוכחי של תשלומי הקצבה בריבית שנבחרה, ${fmt2(rate)}% שנתית.
+            </p>
+          `;
+          d.getElementById('results').innerHTML = html;
+          d.getElementById('results').scrollIntoView({behavior:'smooth', block:'center'});
+        } catch(err){
+          d.getElementById('results').innerHTML = 'שגיאה: '+(err && err.message ? err.message : err);
+          console.error(err);
+        }
+      });
+
+      // סימון שתוחלת חיים שונתה ידנית
+      d.getElementById('le').addEventListener('input', function(){ this.dataset.touched = '1'; });
+    }
+  })(window,document);
+  </script>
+</div>
+
+<script>
+  (function(w,d){
+    function ready(fn){ if(d.readyState!=='loading') fn(); else d.addEventListener('DOMContentLoaded', fn, {once:true}); }
+    ready(init); setTimeout(init,0);
+
+    function init(){
+      const root = d.getElementById('pensuni-early-late');
+      if(!root) return setTimeout(init,50);
+      if(root.__inited) return; root.__inited = true;
+
+      // מצב כהה/בהיר
+      root.querySelector('button.theme')?.addEventListener('click', ()=>{
+        root.dataset.theme = (root.dataset.theme === 'dark') ? 'light' : 'dark';
+      });
+
+      // === טבלת מקדמים (מצומצמת לדוגמה — ניתן להרחיב לפי הצורך) ===
+      const factors = {
+        married: {
+          male: {
+            60:{1970:214.98,1975:216.12,1980:217.15,1985:218.10,1990:218.99,1995:219.82,2000:220.62,2005:221.36},
+            61:{1965:210.42,1970:211.79,1975:212.95,1980:214.00,1985:214.97,1990:215.88,1995:216.74,2000:217.55,2005:218.32},
+            62:{1965:207.16,1970:208.55,1975:209.71,1980:210.77,1985:211.76,1990:212.69,1995:213.57,2000:214.39,2005:215.15},
+            63:{1965:203.78,1970:205.19,1975:206.38,1980:207.47,1985:208.48,1990:209.43,1995:210.33,2000:211.17,2005:211.96},
+            64:{1965:200.28,1970:201.72,1975:202.93,1980:204.05,1985:205.09,1990:206.07,1995:206.99,2000:207.85,2005:208.66},
+            65:{1965:196.66,1970:198.12,1975:199.36,1980:200.50,1985:201.57,1990:202.58,1995:203.52,2000:204.41,2005:205.24},
+            66:{1960:191.01,1965:192.65,1970:194.07,1975:195.33,1980:196.47,1985:197.55,1990:198.57,1995:199.54,2000:200.45,2005:201.31},
+            67:{1955:187.08,1960:188.73,1965:190.16,1970:191.44,1975:192.60,1980:193.70,1985:194.74,1990:195.73,1995:196.66,2000:197.54,2005:198.37},
+            68:{1955:183.04,1960:184.68,1965:186.13,1970:187.42,1975:188.60,1980:189.72,1985:190.79,1990:191.79,1995:192.74,2000:193.64,2005:194.49},
+            69:{1955:178.88,1960:180.52,1965:181.98,1970:183.28,1975:184.48,1980:185.62,1985:186.70,1990:187.72,1995:188.69,2000:189.61,2005:190.47},
+            70:{1955:174.58,1960:176.23,1965:177.70,1970:179.01,1975:180.23,1980:181.39,1985:182.49,1990:183.52,1995:184.51,2000:185.44,2005:186.32}
+          },
+          female: {
+            60:{1970:213.55,1975:214.74,1980:215.82,1985:216.81,1990:217.73,1995:218.58,2000:219.38,2005:220.12},
+            61:{1965:210.32,1970:211.52,1975:212.62,1980:213.63,1985:214.57,1990:215.44,1995:216.26,2000:217.04,2005:217.75},
+            62:{1965:207.20,1970:208.42,1975:209.53,1980:210.56,1985:211.52,1990:212.42,1995:213.26,2000:214.05,2005:214.78},
+            63:{1965:203.75,1970:204.99,1975:206.12,1980:207.17,1985:208.15,1990:209.07,1995:209.93,2000:210.74,2005:211.49},
+            64:{1965:200.19,1970:201.45,1975:202.60,1980:203.67,1985:204.67,1990:205.61,1995:206.49,2000:207.32,2005:208.09},
+            65:{1965:196.52,1970:197.80,1975:198.97,1980:200.06,1985:201.09,1990:202.05,1995:202.95,2000:203.80,2005:204.59},
+            66:{1960:191.28,1965:192.74,1970:194.03,1975:195.22,1980:196.33,1985:197.38,1990:198.37,1995:199.29,2000:200.16,2005:200.97},
+            67:{1955:185.22,1960:186.81,1965:188.21,1970:189.47,1975:190.63,1980:191.71,1985:192.73,1990:193.69,1995:194.58,2000:195.43,2005:196.21},
+            68:{1955:181.00,1960:182.60,1965:184.01,1970:185.29,1975:186.47,1980:187.57,1985:188.60,1990:189.58,1995:190.49,2000:191.35,2005:192.15},
+            69:{1955:176.66,1960:178.27,1965:179.70,1970:180.99,1975:182.19,1980:183.31,1985:184.36,1990:185.35,1995:186.28,2000:187.16,2005:187.98},
+            70:{1955:172.20,1960:173.82,1965:175.26,1970:176.57,1975:177.79,1980:178.93,1985:180.00,1990:181.01,1995:181.96,2000:182.85,2005:183.69}
+          }
+        },
+        single: {
+          male: {
+            60:{1970:194.72,1975:196.44,1980:197.95,1985:199.33,1990:200.63,1995:201.88,2000:203.08,2005:204.22},
+            61:{1965:191.01,1970:192.76,1975:194.30,1980:195.70,1985:197.03,1990:198.30,1995:199.52,2000:200.69,2005:201.80},
+            62:{1965:187.20,1970:188.98,1975:190.55,1980:191.97,1985:193.33,1990:194.63,1995:195.87,2000:197.06,2005:198.20},
+            63:{1965:183.28,1970:185.10,1975:186.69,1980:188.14,1985:189.53,1990:190.86,1995:192.13,2000:193.35,2005:194.52},
+            64:{1965:179.26,1970:181.12,1975:182.74,1980:184.21,1985:185.63,1990:186.99,1995:188.29,2000:189.54,2005:190.74},
+            65:{1965:175.14,1970:177.03,1975:178.68,1980:180.18,1985:181.63,1990:183.02,1995:184.35,2000:185.63,2005:186.86},
+            66:{1965:170.91,1970:172.83,1975:174.51,1980:176.04,1985:177.52,1990:178.94,1995:180.31,2000:181.62,2005:182.88},
+            67:{1955:165.35,1960:167.43,1965:169.24,1970:170.82,1975:172.27,1980:173.65,1985:174.97,1990:176.24,1995:177.46,2000:178.63,2005:179.75},
+            68:{1955:160.92,1960:162.97,1965:164.78,1970:166.36,1975:167.81,1980:169.21,1985:170.55,1990:171.84,1995:173.07,2000:174.25,2005:175.38},
+            69:{1955:156.38,1960:158.40,1965:160.20,1970:161.78,1975:163.24,1980:164.65,1985:166.01,1990:167.31,1995:168.55,2000:169.75,2005:170.89},
+            70:{1955:151.71,1960:153.72,1965:155.51,1970:157.08,1975:158.56,1980:159.98,1985:161.34,1990:162.65,1995:163.91,2000:165.11,2005:166.26}
+          },
+          female: {
+            60:{1970:207.97,1975:209.26,1980:210.44,1985:211.52,1990:212.53,1995:213.49,2000:214.39,2005:215.25},
+            61:{1970:205.81,1975:207.01,1980:208.11,1985:209.16,1990:210.14,1995:211.07,2000:211.94,2005:212.76},
+            62:{1970:202.24,1975:203.46,1980:204.60,1985:205.66,1990:206.67,1995:207.62,2000:208.52,2005:209.36},
+            63:{1970:198.56,1975:199.80,1980:200.96,1985:202.05,1990:203.09,1995:204.06,2000:204.98,2005:205.84},
+            64:{1970:194.75,1975:196.02,1980:197.21,1985:198.32,1990:199.38,1995:200.38,2000:201.31,2005:202.20},
+            65:{1970:190.83,1975:192.12,1980:193.33,1985:194.47,1990:195.55,1995:196.57,2000:197.53,2005:198.43},
+            66:{1970:186.79,1975:188.10,1980:189.33,1985:190.50,1990:191.59,1995:192.63,2000:193.61,2005:194.53},
+            67:{1955:177.76,1960:179.57,1965:181.18,1970:182.63,1975:183.96,1980:185.21,1985:186.39,1990:187.51,1995:188.57,2000:189.57,2005:190.50},
+            68:{1955:173.45,1960:175.27,1965:176.89,1970:178.36,1975:179.71,1980:180.98,1985:182.17,1990:183.31,1995:184.38,2000:185.40,2005:186.36},
+            69:{1955:169.03,1960:170.86,1965:172.49,1970:173.98,1975:175.35,1980:176.64,1985:177.85,1990:179.01,1995:180.10,2000:181.13,2005:182.11},
+            70:{1955:164.50,1960:166.34,1965:167.99,1970:169.49,1975:170.88,1980:172.19,1985:173.42,1990:174.59,1995:175.71,2000:176.76,2005:177.76}
+          }
+        }
+      };
+
+      const $ = (id)=>d.getElementById(id);
+      const fmt  = (n)=>Number(n).toLocaleString('he-IL',{maximumFractionDigits:0});
+      const fmt2 = (n)=>Number(n).toLocaleString('he-IL',{maximumFractionDigits:2});
+      const annualToMonthly = (pct)=>Math.pow(1+(Number(pct)/100), 1/12)-1;
+
+      function bindStart(name, inputId){
+        const radios = Array.from(d.querySelectorAll(`input[name="${name}"]`));
+        const manual = $(inputId);
+        function sync(){
+          const val = (radios.find(r=>r.checked)||{}).value || 'manual';
+          manual.disabled = (val!=='manual');
+          if(val!=='manual'){ manual.value = val; }
+        }
+        radios.forEach(r=>r.addEventListener('change', sync));
+        sync();
+      }
+      bindStart('optA','startA');
+      bindStart('optB','startB');
+
+      function interp2D(table, age, yob){
+        const ages = Object.keys(table).map(Number).sort((a,b)=>a-b);
+        const aCl = Math.max(Math.min(age, ages[ages.length-1]), ages[0]);
+        let aL=ages[0], aH=ages[ages.length-1];
+        for(const a of ages){ if(a<=aCl) aL=a; if(a>=aCl){ aH=a; break; } }
+        function interpYear(row, y){
+          const years = Object.keys(row).map(Number).sort((a,b)=>a-b);
+          const yCl = Math.max(Math.min(y, years[years.length-1]), years[0]);
+          let yL=years[0], yH=years[years.length-1];
+          for(const yy of years){ if(yy<=yCl) yL=yy; if(yy>=yCl){ yH=yy; break; } }
+          if(yL===yH) return row[yL];
+          const t=(yCl-yL)/(yH-yL);
+          return row[yL] + t*(row[yH]-row[yL]);
+        }
+        const vL = interpYear(table[aL], yob);
+        const vH = interpYear(table[aH], yob);
+        if(aL===aH) return vL;
+        const t=(aCl-aL)/(aH-aL);
+        return vL + t*(vH-vL);
+      }
+
+      function pvAnnuity(pmt, rMonthly, nMonths){
+        if(nMonths<=0) return 0;
+        if(rMonthly===0) return pmt*nMonths;
+        return pmt*(1-Math.pow(1+rMonthly,-nMonths))/rMonthly;
+      }
+
+      // === נקודת איזון בספירת-גיל (כמו מחשבון 2) ===
+      function breakevenDiscountedAges(pmtA, startAgeA, pmtB, startAgeB, rM, ageNow, le){
+        const maxMonths = Math.max(0, Math.round((le - ageNow)*12));
+        let cumA=0, cumB=0, prevDiff=null, prevAge=null;
+        for(let m=0;m<=maxMonths;m++){
+          const age = ageNow + m/12;
+          const addA = (age >= startAgeA) ? pmtA : 0;
+          const addB = (age >= startAgeB) ? pmtB : 0;
+          cumA = (cumA + addA) / (1 + rM);
+          cumB = (cumB + addB) / (1 + rM);
+          const diff = cumB - cumA; // B - A
+          if(prevDiff!==null && diff===0) return age;
+          if(prevDiff!==null && Math.sign(diff)!==Math.sign(prevDiff)){
+            const t = Math.abs(prevDiff)/(Math.abs(prevDiff)+Math.abs(diff));
+            return prevAge + t*(1/12);
+          }
+          prevDiff = diff;
+          prevAge = age;
+        }
+        return null;
+      }
+
+      function breakevenApproxNoDiscount(pvDiff, monthlyDiff, startAgeA, startAgeB){
+        if(!isFinite(monthlyDiff) || monthlyDiff===0) return null;
+        const monthsNeeded = Math.abs(pvDiff)/Math.abs(monthlyDiff);
+        return Math.max(startAgeA,startAgeB) + (monthsNeeded/12);
+      }
+
+      function scenario(tbl, startAge, acc0, rateAnnual, yob, le, ageNow){
+        const rA = Number(rateAnnual)/100;
+        const rM = annualToMonthly(rateAnnual);
+        const yearsToStart = Math.max(0, startAge - ageNow);
+        const accAtStart = acc0 * Math.pow(1 + rA, yearsToStart);
+        const factor = interp2D(tbl, startAge, yob);
+        const monthly = accAtStart / factor; // ₪ לחודש
+        const nMonths = Math.max(0, Math.round((le - startAge)*12));
+        const pvAtStart = pvAnnuity(monthly, rM, nMonths);
+        const pvToday   = pvAtStart / Math.pow(1 + rM, Math.round(yearsToStart*12));
+        return {startAge, yearsToStart, accAtStart, factor, monthly, nMonths, pvAtStart, pvToday};
+      }
+
+      // חישוב
+      d.getElementById('calcBtn').addEventListener('click', function(){
+        try{
+          const acc = Math.max(0, Number((d.getElementById('acc').value||'').replace(/\s/g,'').replace(/,/g,''))||0);
+          const rate = Number((d.getElementById('rate').value||'').replace(',','.'))||0;
+          const yobRaw = Number((d.getElementById('yob').value||'').trim());
+          if(!yobRaw || !isFinite(yobRaw) || yobRaw<1955 || yobRaw>2005){
+            d.getElementById('results').innerHTML = '<span class="muted">יש להזין שנת לידה תקינה (1955–2005).</span>';
+            d.getElementById('yob').focus(); return;
+          }
+          const yob = yobRaw;
+          const sex = d.getElementById('sex').value;
+          const status = d.getElementById('status').value;
+          let le = Number(d.getElementById('le').value||87);
+          const ageNow = 2025 - yob;
+          // התאמת LE ברירת מחדל לפי מין אם לא שונה ידנית
+          if(sex==='female' && !d.getElementById('le').dataset.touched){ le = 89; d.getElementById('le').value=89; }
+
+          const startA = Math.max(60, Math.min(70, Number(d.getElementById('startA').value||67)));
+          const startB = Math.max(60, Math.min(70, Number(d.getElementById('startB').value||68)));
+
+          const rM = annualToMonthly(rate);
+          const tbl = factors[status][sex];
+
+          const A = scenario(tbl, startA, acc, rate, yob, le, ageNow);
+          const B = scenario(tbl, startB, acc, rate, yob, le, ageNow);
+
+          // הפרשים ונתונים נגזרים
+          const pvDiff = B.pvToday - A.pvToday;         // B − A
+          const monthlyDiff = B.monthly - A.monthly;    // B − A
+          const totalPaymentsA = A.monthly * A.nMonths;
+          const totalPaymentsB = B.monthly * B.nMonths;
+          const totalDiff = totalPaymentsB - totalPaymentsA;
+
+          // נקודת איזון: מהוונת (מדויק) + אומדן נומינלי (fallback)
+          const beAge = breakevenDiscountedAges(A.monthly, A.startAge, B.monthly, B.startAge, rM, ageNow, le);
+          const beApprox = (!beAge)
+            ? breakevenApproxNoDiscount((pvDiff), (monthlyDiff), A.startAge, B.startAge)
+            : null;
+
+          // טבלת תוצאות
+          const rows = [
+            ['גיל כיום (2025 − שנת לידה)', ageNow.toFixed(2), ageNow.toFixed(2), '—'],
+            ['גיל התחלה', A.startAge.toFixed(2), B.startAge.toFixed(2),
+              (B.startAge - A.startAge) ? `+${(B.startAge - A.startAge).toFixed(2)} שנים` : '—'],
+            ['שנים עד ההתחלה', fmt2(A.yearsToStart), fmt2(B.yearsToStart), '—'],
+            ['יתרה בתחילת תקופה (₪)', fmt(A.accAtStart), fmt(B.accAtStart), fmt(B.accAtStart - A.accAtStart)],
+            ['מקדם קצבה', fmt2(A.factor), fmt2(B.factor), '—'],
+            ['קצבה חודשית (₪)', fmt(A.monthly), fmt(B.monthly), `<strong>${monthlyDiff >= 0 ? '+' : ''}${fmt(monthlyDiff)}</strong>`],
+            ['מספר תשלומים (חודשים)', fmt(A.nMonths), fmt(B.nMonths), fmt(B.nMonths - A.nMonths)],
+            ['סה"כ תשלומים ללא היוון (₪)', fmt(totalPaymentsA), fmt(totalPaymentsB), `<strong>${totalDiff >= 0 ? '+' : ''}${fmt(totalDiff)}</strong>`],
+            ['PV במועד ההתחלה (₪)', fmt(Math.round(A.pvAtStart)), fmt(Math.round(B.pvAtStart)), fmt(Math.round(B.pvAtStart - A.pvAtStart))],
+            ['<strong>PV היום (₪)</strong>', `<strong>${fmt(Math.round(A.pvToday))}</strong>`, `<strong>${fmt(Math.round(B.pvToday))}</strong>`,
+              `<strong style="color:${pvDiff >= 0 ? 'var(--ok)' : 'var(--bad)'}">${pvDiff >= 0 ? '+' : ''}${fmt(Math.round(pvDiff))}</strong>`]
+          ];
+
+          // פס־דין והמלצה
+          let verdict = '';
+          let verdictColor = '#64748b';
+          let recommendation = '';
+
+          if (Math.abs(pvDiff) < 1000) {
+            verdict = 'שתי החלופות כמעט זהות';
+            verdictColor = '#64748b';
+            recommendation = 'ההבדל זניח מבחינה כלכלית. בחר/י לפי שיקולים אישיים.';
+          } else if (pvDiff > 0) {
+            verdict = `חלופה שניה עדיפה ב-${fmt(Math.round(pvDiff))} ₪`;
+            verdictColor = '#059669';
+            const pctDiff = ((pvDiff / Math.max(1, A.pvToday)) * 100).toFixed(1);
+            recommendation = `דחיית הפרישה לגיל ${B.startAge} משתלמת יותר (יתרון של ${pctDiff}% בשווי נוכחי).`;
+          } else {
+            verdict = `חלופה ראשונה עדיפה ב-${fmt(Math.round(Math.abs(pvDiff)))} ₪`;
+            verdictColor = '#059669';
+            const pctDiff = ((Math.abs(pvDiff) / Math.max(1, B.pvToday)) * 100).toFixed(1);
+            recommendation = `פרישה מוקדמת בגיל ${A.startAge} משתלמת יותר (יתרון של ${pctDiff}% בשווי נוכחי).`;
+          }
+
+          // הערה לפי LE – מוצגת תמיד
+          let lifeNote = '';
+          if (beAge && beAge < le) {
+            const betterAtLE = (monthlyDiff > 0) ? 'B' : 'A';
+            const reason = (betterAtLE === 'B')
+              ? 'הקצבה החודשית בחלופה שניה גבוהה יותר ולכן לאחר גיל האיזון הסכום המצטבר גדול יותר'
+              : 'הקצבה החודשית בחלופה ראשונה גבוהה יותר ולכן לאחר גיל האיזון הסכום המצטבר גדול יותר';
+            lifeNote = `<div class="subnote"><strong>הערה לפי תוחלת חיים:</strong> נקודת איזון מהוונת אותרה סביב גיל <strong>${fmt2(beAge)}</strong>. בהינתן תוחלת חיים של ${le}, עדיפה חלופה ${betterAtLE} (${reason}).</div>`;
+          } else if (!beAge && beApprox && isFinite(beApprox)) {
+            const approxText = fmt2(beApprox);
+            const suffix = (beApprox > le)
+              ? ` (האומדן מעבר לתוחלת החיים שנקבעה, ולכן אין שינוי בהמלצה לפי LE).`
+              : ` (האומדן בתוך תוחלת החיים, אך בהיוון חודשי לא נמצאה חציית-סימן עד ${le}).`;
+            lifeNote = `<div class="subnote"><strong>הערה לפי תוחלת חיים:</strong> לא אותרה נקודת איזון מהוונת עד LE. אומדן נומינלי (ללא היוון) מצביע על גיל איזון ≈ <strong>${approxText}</strong>${suffix}</div>`;
+          } else {
+            lifeNote = `<div class="subnote"><strong>הערה לפי תוחלת חיים:</strong> לא אותרה נקודת איזון בטווח החישוב, ולכן אין שינוי בהמלצה לפי LE.</div>`;
+          }
+
+          // כרטיס נקודת איזון (ויזואלי) – רק אם יש איזון מהוון בתוך LE
+          let breakevenCard = '';
+          if (beAge && beAge > Math.min(A.startAge,B.startAge) && beAge <= le) {
+            breakevenCard = `
+              <div class="panel panel-warn" style="margin-top:8px">
+                <strong>נקודת איזון:</strong> אם תחיה/י עד גיל <strong>${Math.round(beAge)}</strong>,
+                שתי החלופות יניבו סכום מצטבר דומה. לפני גיל זה – נוטה להעדיף את המוקדמת; לאחר מכן – את המאוחרת.
+              </div>`;
+          } else if (beAge && beAge > le) {
+            breakevenCard = `<p class="muted">נקודת האיזון (גיל ${Math.round(beAge)}) מעבר לתוחלת החיים שהוגדרה.</p>`;
+          }
+
+          // פלט
+          let html = `
+            <div class="panel">
+              <div class="muted" style="margin-bottom:6px">תוחלת חיים: ${le} | תשואה: ${fmt2(rate)}% | שנת לידה: ${yob}</div>
+              <div class="headline" style="color:${verdictColor}">
+                <span class="tag">המלצה:</span> ${verdict}
+              </div>
+              <div class="subnote">${recommendation}</div>
+              ${lifeNote}
+            </div>
+            <table aria-label="תוצאות חישוב" style="margin-bottom:12px">
+              <thead>
+                <tr><th>פריט</th><th>חלופה ראשונה (גיל ${A.startAge.toFixed(2)})</th><th>חלופה שניה (גיל ${B.startAge.toFixed(2)})</th><th>הפרש (B−A)</th></tr>
+              </thead>
+              <tbody>
+                ${rows.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td></tr>`).join('')}
+              </tbody>
+            </table>
+            ${breakevenCard}
+            <p class="muted" style="font-size:.9rem;margin-top:10px">
+              💡 <strong>אופן החישוב:</strong> חישוב ערך נוכחי של תשלומי הקצבה לפי הריבית שנקבעה: ${fmt2(rate)}% שנתית.
+            </p>
+          `;
+          d.getElementById('results').innerHTML = html;
+          d.getElementById('results').scrollIntoView({behavior:'smooth', block:'center'});
+        } catch(err){
+          d.getElementById('results').innerHTML = 'שגיאה: '+(err && err.message ? err.message : err);
+          console.error(err);
+        }
+      });
+
+      // סימון שתוחלת חיים שונתה ידנית
+      d.getElementById('le').addEventListener('input', function(){ this.dataset.touched = '1'; });
+    }
+  })(window,document);
+  </script>
+
+  <script>
+    // Navigation functions
+    function toggleNavProductsDropdown(event) {
+        event.preventDefault();
+        const dropdown = document.getElementById('navProductsDropdown');
+        const otherDropdowns = document.querySelectorAll('.dropdown-content:not(#navProductsDropdown)');
+        
+        otherDropdowns.forEach(d => d.classList.remove('show'));
+        dropdown.classList.toggle('show');
+    }
+
+    function toggleNavCalculatorDropdown(event) {
+        event.preventDefault();
+        const dropdown = document.getElementById('navCalculatorDropdown');
+        const otherDropdowns = document.querySelectorAll('.dropdown-content:not(#navCalculatorDropdown)');
+        
+        otherDropdowns.forEach(d => d.classList.remove('show'));
+        dropdown.classList.toggle('show');
+    }
+
+    function toggleNavToolsDropdown(event) {
+        event.preventDefault();
+        const dropdown = document.getElementById('navToolsDropdown');
+        const otherDropdowns = document.querySelectorAll('.dropdown-content:not(#navToolsDropdown)');
+        
+        otherDropdowns.forEach(d => d.classList.remove('show'));
+        dropdown.classList.toggle('show');
+    }
+
+    function navigateToHome() {
+        window.location.href = 'index.html';
+    }
+
+    // Mobile menu toggle
+    document.addEventListener('DOMContentLoaded', function() {
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('navMenu');
+        
+        if (hamburger && navMenu) {
+            hamburger.addEventListener('click', function() {
+                hamburger.classList.toggle('active');
+                navMenu.classList.toggle('active');
+            });
+        }
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function(event) {
+            const dropdowns = document.querySelectorAll('.dropdown-content');
+            dropdowns.forEach(dropdown => {
+                if (!dropdown.contains(event.target) && !event.target.closest('.nav-dropdown')) {
+                    dropdown.classList.remove('show');
+                }
+            });
+        });
+    });
+
+    // Scroll to Top functionality
+    function scrollToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }
+    
+    // Show/Hide scroll to top button on scroll (mobile only)
+    function updateScrollButton() {
+        const scrollBtn = document.getElementById('scrollToTopBtn');
+        if (scrollBtn && window.innerWidth <= 768) {
+            if (window.pageYOffset > 300) {
+                scrollBtn.classList.add('show');
+            } else {
+                scrollBtn.classList.remove('show');
+            }
+        }
+    }
+
+    // Add scroll event listener
+    window.addEventListener('scroll', updateScrollButton);
+    window.addEventListener('resize', updateScrollButton);
+  </script>
+
+  <!-- Modals Container -->
+  <div id="modals-container">
+    <!-- About Modal -->
+    <div id="aboutModal" class="about-modal">
+      <div class="about-modal-content">
+        <span class="about-modal-close" onclick="closeAboutModal()">&times;</span>
+        <div class="about-modal-profile">
+          <img src="profile.avif" alt="חגי זך">
+          <h2>עליי</h2>
+        </div>
+        <p>
+          שמי חגי זך, יועץ פנסיוני ורואה חשבון בעל רישיון, עם מעל 20 שנות ניסיון מקצועי בעולם הפנסיוני, והחיסכון.
+        </p>
+        <p>
+          כסמנכ"ל בחברת ביטוח גדולה ליוויתי סוכנים, עצמאים ומעסיקים בתהליכים הפנסיונים השונים תוך הבנה עמוקה של הצרכים, הרגולציה והמערכת הפנסיונית בישראל.
+        </p>
+        <p>
+          את האתר הזה הקמתי כדי לשתף ידע מקצועי, כלים מתקדמים ומחשבונים חכמים – שיאפשרו לכם להבין את האפשרויות שלכם, להשוות בין מוצרים ולתכנן את העתיד הכלכלי שלכם בביטחון ובבהירות.
+        </p>
+        <p>
+          אני מאמין שידע פיננסי הוא כוח – וכשמבינים באמת את הזכויות, העלויות וההשלכות, אפשר לקבל החלטות טובות יותר.
+        </p>
+        <p>
+          באתר תמצאו תובנות, מדריכים ומחשבונים שמתרגמים נושאים מורכבים לשפה פשוטה וברורה.
+        </p>
+        <p>
+          אם תרצו ליווי אישי, אשמח לספק שירותי ייעוץ פנסיוני וניתוחים פיננסיים מותאמים אישית, שיסייעו לכם להפיק את המקסימום מהחיסכון שלכם.
+        </p>
+        <p>
+          <strong>יחד נבנה תכנון פנסיוני נכון, חכם ומשתלם — שמבטיח ביטחון כלכלי לשנים קדימה.</strong>
+        </p>
+      </div>
+    </div>
+
+    <!-- Consultation Form Modal -->
+    <div id="consultationFormModal">
+      <div style="background: white; border-radius: 20px; padding: 40px; max-width: 500px; width: 90%; max-height: 70vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.3); position: relative;">
+        <i class="fas fa-times" style="font-size: 2rem; cursor: pointer; color: #dc3545; margin-bottom: 2rem;" onclick="closeConsultationForm()"></i>
+        
+        <form style='max-height:90%;margin-bottom:5%;' id="consultationForm" dir="rtl" style="text-align: right;">
+          <div style="margin-bottom: 20px;">
+            <label style="display: block; margin-bottom: 8px; color: #333; font-weight: bold;">שם מלא *</label>
+            <input type="text" id="fullName" required style="width: 100%; padding: 12px; border: 2px solid #e1e5e9; border-radius: 10px; font-size: 1rem; transition: border-color 0.3s ease;" placeholder="הכנס את שמך המלא">
+          </div>
+          
+          <div style="margin-bottom: 20px;">
+            <label style="display: block; margin-bottom: 8px; color: #333; font-weight: bold;">מספר טלפון *</label>
+            <input type="tel" id="phoneNumber" required style="width: 100%; padding: 12px; border: 2px solid #e1e5e9; border-radius: 10px; font-size: 1rem; transition: border-color 0.3s ease;" placeholder="050-1234567">
+          </div>
+          
+          <div style="margin-bottom: 20px;">
+            <label style="display: block; margin-bottom: 8px; color: #333; font-weight: bold;">כתובת אימייל</label>
+            <input type="email" id="email" style="width: 100%; padding: 12px; border: 2px solid #e1e5e9; border-radius: 10px; font-size: 1rem; transition: border-color 0.3s ease;" placeholder="example@email.com">
+          </div>
+          
+          <div style="margin-bottom: 25px;">
+            <label style="display: block; margin-bottom: 8px; color: #333; font-weight: bold;">הודעה (אופציונלי)</label>
+            <textarea id="message" rows="4" style="width: 100%; padding: 12px; border: 2px solid #e1e5e9; border-radius: 10px; font-size: 1rem; transition: border-color 0.3s ease; resize: vertical;" placeholder="ספר לנו על הצרכים הפנסיוניים שלך..."></textarea>
+          </div>
+          
+          <div style="display: flex; gap: 15px; justify-content: center;">
+            <button type="submit" style="background: linear-gradient(45deg, #667eea, #764ba2); color: white; border: none; padding: 15px 30px; border-radius: 25px; font-size: 1rem; font-weight: bold; cursor: pointer; transition: all 0.3s ease; flex: 1;">
+              📤 שלח בקשה
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Terms Modal -->
+    <div id="termsModal" class="terms-modal">
+      <div class="terms-modal-content">
+        <span class="terms-modal-close" onclick="closeTermsModal()">&times;</span>
+        <h2>תנאי שימוש</h2>
+        <div class="terms-content">
+          <h3>1. כללי</h3>
+          <p>ברוכים הבאים לאתר פיננסי-נט. השימוש באתר זה כפוף לתנאי השימוש המפורטים להלן.</p>
+          
+          <h3>2. מטרת האתר</h3>
+          <p>האתר מספק מידע כללי ומחשבונים למטרות חישוב ואומדן בלבד. המידע אינו מהווה ייעוץ פנסיוני או פיננסי מקצועי.</p>
+          
+          <h3>3. אחריות</h3>
+          <p>המשתמשים באתר עושים זאת על אחריותם המלאה. בעלי האתר לא יהיו אחראים לכל נזק שייגרם כתוצאה מהשימוש במידע המוצג באתר.</p>
+          
+          <h3>4. זכויות יוצרים</h3>
+          <p>כל התוכן באתר מוגן בזכויות יוצרים. אסור להעתיק, להפיץ או להשתמש בתוכן ללא רשות מפורשת.</p>
+          
+          <h3>5. שינויים</h3>
+          <p>בעלי האתר שומרים לעצמם את הזכות לשנות את תנאי השימוש בכל עת ללא הודעה מוקדמת.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Scripts -->
+  <script src="about-modal.js"></script>
+  <script src="consultation-form.js"></script>
+  <script src="terms-modal.js"></script>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-content">
+      <div class="footer-links">
+        <a href="#" onclick="openAboutModal(); return false;">📖 אודות</a>
+        <a href="#" onclick="openTermsModal(); return false;">📋 תנאי שימוש</a>
+        <a href="#" onclick="openConsultationForm(); return false;">✉️ צור קשר</a>
+        <a href="https://wa.me/972545287184?text=שלום, אני מעוניין בייעוץ פנסיוני" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+        <a href="#" onclick="navigateToHome(); return false;">🏠 דף הבית</a>
+      </div>
+      
+      <div class="footer-copyright">
+        © 2025 פיננסי-נט | כל הזכויות שמורות
+      </div>
+      
+      <div class="footer-disclaimer">
+        <strong>הצהרה חשובה:</strong> המידע באתר זה הינו למטרות מידע בלבד ואינו מהווה ייעוץ פנסיוני, פיננסי או השקעתי. 
+        לפני כל החלטה פיננסית מומלץ להיוועץ באנשי מקצוע מורשים.
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מחשבון סכום יתרות מקבצי XML | Pensify.me</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Varela+Round&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --color-primary: #0A2540;
+            --color-secondary: #F37253;
+            --color-light-gray: #F4F6F8;
+            --color-medium-gray: #E2E8F0;
+            --color-white: #FFFFFF;
+            --font-montserrat: 'Montserrat', sans-serif;
+            --font-varela: 'Varela Round', sans-serif;
+        }
+        body {
+            font-family: var(--font-varela);
+            color: var(--color-primary);
+            margin: 0;
+            padding: 0;
+            background-color: var(--color-light-gray);
+            line-height: 1.6;
+            direction: rtl;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            background-color: var(--color-primary);
+            color: var(--color-white);
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .header .logo {
+            font-family: var(--font-montserrat);
+            font-weight: 700;
+            font-size: 24px;
+            color: var(--color-white);
+            text-decoration: none;
+        }
+        .main-content {
+            background-color: var(--color-white);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            margin-top: 20px;
+            text-align: center;
+        }
+        h1 {
+            font-family: var(--font-montserrat);
+            color: var(--color-primary);
+            margin-bottom: 30px;
+        }
+        .file-upload-section {
+            margin-bottom: 30px;
+        }
+        .cta-button {
+            background-color: var(--color-secondary);
+            color: var(--color-white);
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 15px;
+        }
+        .cta-button:hover {
+            background-color: #e0654a;
+        }
+        #totalSumOutput {
+            font-family: var(--font-varela);
+            font-size: 20px;
+            color: var(--color-primary);
+            margin-top: 40px;
+            font-weight: 700;
+            text-align: right;
+            line-height: 1.8;
+        }
+        #totalSumOutput div { margin-bottom: 10px; }
+        .error-message { color: red; margin-top: 10px; }
+        .chart-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 30px;
+            gap: 20px;
+        }
+        .chart-wrapper {
+            position: relative;
+            width: 80%;
+            max-width: 400px;
+        }
+        #myDoughnutChart { width: 100% !important; height: auto !important; }
+        .custom-legend {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 15px;
+            border: 1px solid var(--color-medium-gray);
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            text-align: right;
+            width: 100%;
+            max-width: 500px;
+            box-sizing: border-box;
+        }
+        .custom-legend h3 { margin-bottom: 10px; }
+        .legend-item {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            width: 100%;
+            flex-wrap: wrap;
+        }
+        .legend-color-box { width: 20px; height: 20px; border-radius: 4px; }
+        .legend-label { font-size: 16px; color: var(--color-primary); flex-grow: 1; }
+        .legend-value { font-size: 16px; color: var(--color-secondary); font-weight: bold; }
+        @media (max-width: 768px) {
+            .header { flex-direction: column; }
+            .main-content { padding: 20px; }
+            #totalSumOutput { font-size: 18px; }
+            .chart-wrapper, .custom-legend { width: 100%; max-width: none; }
+        }
+    </style>
+</head>
+<body dir="rtl">
+<header class="header">
+    <a href="#" class="logo">PENSIFY.ME</a>
+</header>
+<div class="container">
+    <h1>מחשבון סכום יתרות מקבצי XML</h1>
+    <div class="main-content">
+        <div class="file-upload-section">
+            <h2>הקלד תעודת זהות</h2>
+            <input type="text" id="idNumberInput" placeholder="תעודת זהות" style="padding:8px; width:250px; direction:ltr;">
+            <br><br>
+            <h2>העלאת קבצי SwiftNess</h2>
+            <input type="file" id="xmlFileInput" accept=".xml" multiple>
+            <button id="calculateSumButton" class="cta-button" style="display:none;">חשב סכומים מקובצים</button>
+        </div>
+        <div id="totalSumOutput" style="display:none;"></div>
+        <div class="chart-container" style="display:none; min-width:500px;">
+            <div class="chart-wrapper"><canvas id="myDoughnutChart"></canvas></div>
+            <div id="customLegend" class="custom-legend"><h3>:מקרא</h3></div>
+        </div>
+        <div id="errorMessage" class="error-message" style="display:none;"></div>
+    </div>
+</div>
+
+<script>
+let uploadedFiles = [];
+let myChart = null;
+
+const sugMutzarDescriptions = {
+    '1': 'פוליסת ביטוח חיים משולב חיסכון',
+    '2': 'קרן פנסיה',
+    '3': 'קופת גמל',
+    '4': 'קרן השתלמות',
+    '5': 'פוליסת חיסכון טהור',
+    '6': 'פוליסת סיכון טהור (ריסק מוות ו/או פוליסת אכ"ע SA)',
+    '7': 'ביטוח חיים משכנתא',
+    '8': 'פוליסת סיכון טהור קולקטיב',
+    '9': 'קופת גמל להשקעה',
+    '10': 'חיסכון לכל ילד'
+};
+
+const chartColors = ['#F37253','#0A2540','#4CAF50','#2196F3','#FFC107','#9C27B0','#FF5722','#607D8B','#795548','#E91E63'];
+
+const totalAmountPlugin = {
+    id: 'totalAmountPlugin',
+    beforeDraw(chart) {
+        if (chart.config.options.elements.center) {
+            const ctx = chart.ctx;
+            const centerConfig = chart.config.options.elements.center;
+            const txt = centerConfig.text;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.font = `bold 30px ${centerConfig.fontStyle || 'Arial'}`;
+            ctx.fillStyle = centerConfig.color || '#000';
+            ctx.fillText(txt, (chart.chartArea.left + chart.chartArea.right)/2, (chart.chartArea.top + chart.chartArea.bottom)/2);
+        }
+    }
+};
+Chart.register(totalAmountPlugin);
+
+document.getElementById('xmlFileInput').addEventListener('change', e => {
+    uploadedFiles = Array.from(e.target.files);
+    document.getElementById('calculateSumButton').style.display = uploadedFiles.length ? 'block' : 'none';
+    resetDisplay();
+});
+
+document.getElementById('calculateSumButton').addEventListener('click', btnclick);
+
+function resetDisplay() {
+    document.getElementById('totalSumOutput').innerHTML = '';
+    document.getElementById('errorMessage').style.display = 'none';
+    document.querySelector('.chart-container').style.display = 'none';
+    if (myChart) myChart.destroy();
+}
+
+async function btnclick() {
+    resetDisplay();
+    const errorMessageDiv = document.getElementById('errorMessage');
+    const idNumber = document.getElementById('idNumberInput').value.trim();
+    if (!idNumber) { errorMessageDiv.textContent = 'אנא הקלד תעודת זהות'; errorMessageDiv.style.display = 'block'; return; }
+    if (uploadedFiles.length === 0) { errorMessageDiv.textContent = 'אנא בחר קבצי XML'; errorMessageDiv.style.display = 'block'; return; }
+
+    const groupedSums = {};
+    let overallTotalSum = 0;
+
+    for (const file of uploadedFiles) {
+        try {
+            const xmlString = await readFileAsText(file);
+            const xmlDoc = new DOMParser().parseFromString(xmlString, "text/xml");
+            const mutzarElements = xmlDoc.getElementsByTagName('Mutzar');
+
+            for (let i = 0; i < mutzarElements.length; i++) {
+                const mutzar = mutzarElements[i];
+                const idElement = mutzar.getElementsByTagName('MISPAR-ZIHUY-LAKOACH')[0];
+                if (!idElement || !idElement.textContent.trim().includes(idNumber)) continue;
+
+                const sugMutzarElement = mutzar.getElementsByTagName('SUG-MUTZAR')[0];
+                if (!sugMutzarElement) continue;
+                const sugMutzar = sugMutzarElement.textContent.trim();
+
+                const heshbonotOPolisot = mutzar.getElementsByTagName('HeshbonotOPolisot')[0];
+                if (!heshbonotOPolisot) continue;
+                const heshbonOPolisaElements = heshbonotOPolisot.getElementsByTagName('HeshbonOPolisa');
+
+                for (let j = 0; j < heshbonOPolisaElements.length; j++) {
+                    const perutYitrotElements = heshbonOPolisaElements[j].getElementsByTagName('PerutYitrot');
+                    for (let k = 0; k < perutYitrotElements.length; k++) {
+                        const totalErkeiPidionElement = perutYitrotElements[k].getElementsByTagName('TOTAL-ERKEI-PIDION')[0];
+                        if (totalErkeiPidionElement) {
+                            const val = parseFloat(totalErkeiPidionElement.textContent);
+                            if (!isNaN(val)) {
+                                groupedSums[sugMutzar] = (groupedSums[sugMutzar] || 0) + val;
+                                overallTotalSum += val;
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (err) {
+            errorMessageDiv.textContent = `שגיאה בקובץ ${file.name}: ${err.message}`;
+            errorMessageDiv.style.display = 'block';
+            return;
+        }
+    }
+
+    if (Object.keys(groupedSums).length === 0) { errorMessageDiv.textContent = 'לא נמצאו נתונים תואמים לתעודת הזהות'; errorMessageDiv.style.display = 'block'; return; }
+
+    const labels = [];
+    const dataValues = [];
+    const backgroundColors = [];
+    let colorIndex = 0;
+    const sortedKeys = Object.keys(groupedSums).sort((a, b) => parseInt(a) - parseInt(b));
+    sortedKeys.forEach(key => {
+        labels.push(sugMutzarDescriptions[key] || `קוד לא ידוע (${key})`);
+        dataValues.push(groupedSums[key]);
+        backgroundColors.push(chartColors[colorIndex++ % chartColors.length]);
+    });
+
+    const formattedOverallTotalSum = new Intl.NumberFormat('he-IL', { style: 'currency', currency: 'ILS' }).format(overallTotalSum);
+    const ctx = document.getElementById('myDoughnutChart').getContext('2d');
+    myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: { labels, datasets: [{ data: dataValues, backgroundColor: backgroundColors, borderWidth: 2, borderColor: 'white' }] },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '70%',
+            plugins: {
+                legend: { display: false },
+                tooltip: { callbacks: { label: c => `${c.label}: ${new Intl.NumberFormat('he-IL',{style:'currency',currency:'ILS'}).format(c.parsed)}` }},
+                totalAmountPlugin: { text: formattedOverallTotalSum, color: 'var(--color-primary)', fontStyle: 'var(--font-montserrat)' }
+            },
+            elements: { center: { text: formattedOverallTotalSum, color: 'var(--color-primary)', fontStyle: 'var(--font-montserrat)' } }
+        }
+    });
+
+    const customLegendDiv = document.getElementById('customLegend');
+    customLegendDiv.innerHTML = '<h3>:מקרא</h3>';
+    sortedKeys.forEach((key, idx) => {
+        const color = chartColors[idx % chartColors.length];
+        const value = new Intl.NumberFormat('he-IL', { style: 'currency', currency: 'ILS' }).format(groupedSums[key]);
+        const description = sugMutzarDescriptions[key] || `קוד לא ידוע (${key})`;
+        customLegendDiv.innerHTML += `<div class="legend-item"><span class="legend-value">${value}</span><span class="legend-label">${description} (${key})</span><div class="legend-color-box" style="background:${color}"></div></div>`;
+    });
+
+    document.querySelector('.chart-container').style.display = 'flex';
+}
+
+function readFileAsText(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = e => resolve(e.target.result);
+        reader.onerror = e => reject(e);
+        reader.readAsText(file);
+    });
+}
+</script>
+</body>
+</html>
