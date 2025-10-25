@@ -992,7 +992,7 @@
             ['מספר תשלומים (חודשים)', fmt(A.nMonths), fmt(B.nMonths), fmt(B.nMonths - A.nMonths)],
             ['סה"כ תשלומים נומינליים (₪)', fmt(totalPaymentsA), fmt(totalPaymentsB), `<strong>${totalDiff >= 0 ? '+' : ''}${fmt(totalDiff)}</strong>`],
             ['ערך נוכחי למועד קצבה (₪)', fmt(Math.round(A.pvAtStart)), fmt(Math.round(B.pvAtStart)), fmt(Math.round(B.pvAtStart - A.pvAtStart))],
-            ['<strong>ערך נוכח היום (₪)</strong>', `<strong>${fmt(Math.round(A.pvToday))}</strong>`, `<strong>${fmt(Math.round(B.pvToday))}</strong>`,
+            ['<strong>ערך נוכחי (₪)</strong>', `<strong>${fmt(Math.round(A.pvToday))}</strong>`, `<strong>${fmt(Math.round(B.pvToday))}</strong>`,
               `<strong style="color:${pvDiff >= 0 ? 'var(--ok)' : 'var(--bad)'}">${pvDiff >= 0 ? '+' : ''}${fmt(Math.round(pvDiff))}</strong>`]
           ];
 
@@ -1602,3 +1602,4 @@
 </body>
 
 </html>
+
