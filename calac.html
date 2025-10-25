@@ -691,6 +691,9 @@
           word-wrap: break-word !important;
           max-width: 100% !important;
       }
+      .results table{
+        font-size: 0.7rem;
+      }
     }
   
   </style>
@@ -1046,28 +1049,34 @@
 
           // פלט
           let html = `
-            <div class="panel">
-              <div class="muted" style="margin-bottom:6px">תוחלת חיים: ${le} | תשואה: ${fmt2(rate)}% | שנת לידה: ${yob}</div>
-              <div class="headline" style="color:${verdictColor}">
-                <span class="tag">המלצה:</span> ${verdict}
-              </div>
-              <div class="subnote">${recommendation}</div>
-              ${lifeNote}
-            </div>
-            <table style="max-width:100%;box-sizing:border-box;margin-right:auto;
-            margin-left:auto;padding:0;" aria-label="תוצאות חישוב" style="margin-bottom:12px">
-              <thead>
-                <tr><th>פריט</th><th>חלופה ראשונה (גיל ${A.startAge})</th><th>חלופה שניה (גיל ${B.startAge})</th><th>הפרש </th></tr>
-              </thead>
-              <tbody>
-                ${rows.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td></tr>`).join('')}
-              </tbody>
-            </table>
-            ${breakevenCard}
-            <p class="muted" style="font-size:.9rem;margin-top:10px">
-              💡 <strong>אופן החישוב:</strong> החישוב מבוצע לפי ערך נוכחי של תשלומי הקצבה בריבית שנבחרה, ${fmt2(rate)}% שנתית.
-            </p>
-          `;
+    <div class="panel">
+        <div class="muted" style="margin-bottom:6px">תוחלת חיים: ${le} | תשואה: ${fmt2(rate)}% | שנת לידה: ${yob}</div>
+        <div class="headline" style="color:${verdictColor}">
+            <span class="tag">המלצה:</span> ${verdict}
+        </div>
+        <div class="subnote">${recommendation}</div>
+        ${lifeNote}
+    </div>
+    <div class="results" aria-label="תוצאות חישוב" style="overflow-x: auto; margin-bottom:12px;">
+        <table style="width: 100%; border-collapse: collapse;" aria-label="תוצאות חישוב">
+            <thead>
+                <tr>
+                    <th>פריט</th>
+                    <th>חלופה ראשונה (גיל ${A.startAge})</th>
+                    <th>חלופה שניה (גיל ${B.startAge})</th>
+                    <th>הפרש</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${rows.map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td></tr>`).join('')}
+            </tbody>
+        </table>
+    </div>
+    ${breakevenCard}
+    <p class="muted" style="font-size:.9rem;margin-top:10px">
+        💡 <strong>אופן החישוב:</strong> החישוב מבוצע לפי ערך נוכחי של תשלומי הקצבה בריבית שנבחרה, ${fmt2(rate)}% שנתית.
+    </p>
+`;
           d.getElementById('results').innerHTML = html;
           d.getElementById('results').scrollIntoView({behavior:'smooth', block:'center'});
         } catch(err){
