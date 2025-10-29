@@ -1155,9 +1155,9 @@ function addYearsOptions() {
     let maxYears;
     
     if (direction === 'forward') {
-        maxYears = Math.min(6, Math.floor(tenureYears / 4));
+        maxYears = Math.min(6, Math.round(tenureYears / 4));
     } else { // backward
-        maxYears = Math.min(6, Math.floor(tenureYears));
+        maxYears = Math.min(6, Math.round(tenureYears));
     }
     document.querySelector("#lblYearsSelect").textContent = `שנות פריסה (בחר בין 1 ל -  ${maxYears})`;
     const sel = document.querySelector("#yearsSelect");
@@ -1559,3 +1559,4 @@ document.querySelectorAll('#prisatProductsDropdown a, #prisatCalculatorDropdown 
 <div class="footer-note">כל הזכויות שמורות. החישוב אינו מהווה ייעוץ פיננסי או משפטי.</div>
 </body>
 </html>
+
