@@ -2024,25 +2024,25 @@
                         ניתוח איכות תיק
                     </h3>
                     <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                        <button class="analysis-tab-btn active" onclick="switchAnalysisTab('risk')" id="riskAnalysisBtn">
-                            <i class="fas fa-shield-alt"></i>
-                            רמת סיכון
+                        <button class="analysis-tab-btn active" onclick="switchAnalysisTab('returns')" id="returnsAnalysisBtn">
+                            <i class="fas fa-chart-bar"></i>
+                            תשואות
                         </button>
                         <button class="analysis-tab-btn" onclick="switchAnalysisTab('fees')" id="feesAnalysisBtn">
                             <i class="fas fa-money-bill-wave"></i>
                             דמי ניהול
                         </button>
-                        <button class="analysis-tab-btn" onclick="switchAnalysisTab('returns')" id="returnsAnalysisBtn">
-                            <i class="fas fa-chart-bar"></i>
-                            תשואות
+                        <button class="analysis-tab-btn" onclick="switchAnalysisTab('risk')" id="riskAnalysisBtn">
+                            <i class="fas fa-shield-alt"></i>
+                            רמת סיכון
                         </button>
                     </div>
                 </div>
                 
                 <!-- כל הניתוחים במקביל, רק אחד מוצג בכל פעם -->
-                <div id="riskAnalysisContent" class="analysis-content-tab" style="display: block;"></div>
+                <div id="returnsAnalysisContent" class="analysis-content-tab" style="display: block;"></div>
                 <div id="feesAnalysisContent" class="analysis-content-tab" style="display: none;"></div>
-                <div id="returnsAnalysisContent" class="analysis-content-tab" style="display: none;"></div>
+                <div id="riskAnalysisContent" class="analysis-content-tab" style="display: none;"></div>
             `;
             
             container.innerHTML = html;
