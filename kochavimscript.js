@@ -143,7 +143,7 @@ async function maslulim(t,moz,hevra){
             border:none;">						
 						<td style="text-align:center;" >מה</td>
             <td>שם המסלול</td>
-						<td style="text-align:center;" >חודש</td>
+						<td style="text-align:center;" >מתחילת שנה</td>
 						<td style="text-align:center;" onclick='sortTable(this)'>שנה<i class="fa fa-sort"></i></td>
 						<td style="text-align:center;" onclick='sortTable(this)'>3 שנים<i class="fa fa-sort"></i></td>
 						<td style="text-align:center;" onclick='sortTable(this)'>5 שנים<i class="fa fa-sort"></i></td>
@@ -158,7 +158,7 @@ async function maslulim(t,moz,hevra){
                     // יצירת תא ראשון
                     let td = document.createElement('td');
                     td.style.color = '#333';
-		    td.style.textAlign='center';
+		                td.style.textAlign='center';
                     td.className="tdmh";
                     td.style.boxSizing="border-box";
                     td.textContent = dataY[tb].mh;
@@ -176,15 +176,15 @@ async function maslulim(t,moz,hevra){
                     link.className="linktdbig";
                   
                     link.textContent = dataY[tb].shemkupa;
-              td.appendChild(link);
-              trm.appendChild(td);
+                    td.appendChild(link);
+                    trm.appendChild(td);
                 
                     td = document.createElement('td');
                     
                     td.className="tdsmall";
                     td.style.boxSizing="border-box";
                     td.style.textAlign="center";
-                    td.textContent = dataY[tb].tusaAharona.toFixed(2) + "%";
+                    td.textContent = dataY[tb].tesuaMitchilatshana + "%";
                     trm.appendChild(td);
                     // יצירת תאים נוספים
                     td = document.createElement('td');

@@ -379,7 +379,7 @@
         }
         @media (max-width: 768px) {
             .analysis-card {
-                max-width: 250px;
+                width: clamp(250px, 90%, 100%);
             }
             
             footer,
@@ -2238,6 +2238,40 @@
             
             const totalAmount = riskDistribution['גבוה'] + riskDistribution['בינוני'] + riskDistribution['נמוך'];
             
+            // חישוב אחוזים לכל רמת סיכון
+            const riskPercentages = {
+                'גבוה': totalAmount > 0 ? ((riskDistribution['גבוה'] / totalAmount) * 100).toFixed(1) : 0,
+                'בינוני': totalAmount > 0 ? ((riskDistribution['בינוני'] / totalAmount) * 100).toFixed(1) : 0,
+                'נמוך': totalAmount > 0 ? ((riskDistribution['נמוך'] / totalAmount) * 100).toFixed(1) : 0
+            };
+            
+            // בדיקה איזו רמת סיכון מהווה מעל 70% מהתיק - זה רמת הסיכון הכוללת
+            let dominantRiskLevel = null;
+            let dominantPercentage = 0;
+            Object.keys(riskPercentages).forEach(risk => {
+                const percentage = parseFloat(riskPercentages[risk]);
+                if (percentage > 70 && percentage > dominantPercentage) {
+                    dominantRiskLevel = risk;
+                    dominantPercentage = percentage;
+                }
+            });
+            
+            // בדיקת התאמה לרמת הסיכון שנבחרה
+            let hasAlignment = null;
+            
+            if (clientRisk && clientRisk !== "") {
+                const clientRiskPercentage = parseFloat(riskPercentages[clientRisk]);
+                
+                if (dominantRiskLevel) {
+                    // יש רמת סיכון דומיננטית (מעל 70%)
+                    hasAlignment = dominantRiskLevel === clientRisk;
+                } else {
+                    // אין רמת סיכון דומיננטית (אף אחת לא מעל 70%)
+                    // אם יש מעל 70% ברמת הסיכון הנבחרת - יש התאמה
+                    hasAlignment = clientRiskPercentage >= 70;
+                }
+            }
+            
             // יצירת כרטיסיה מרכזת עם גרף עוגה
             const riskChartId = 'riskDistributionChart_' + Date.now();
             
@@ -2262,13 +2296,14 @@
             
             Object.keys(riskDistribution).forEach(risk => {
                 if (riskDistribution[risk] > 0) {
-                    const percentage = ((riskDistribution[risk] / totalAmount) * 100).toFixed(1);
+                    const percentage = riskPercentages[risk];
+                    const isDominant = dominantRiskLevel === risk;
                     html += `
-                        <div style="background: rgba(255,255,255,0.15); padding: 15px; border-radius: 12px; backdrop-filter: blur(10px);">
+                        <div style="background: rgba(255,255,255,0.15); padding: 15px; border-radius: 12px; backdrop-filter: blur(10px); ${isDominant ? 'border: 2px solid rgba(255,255,255,0.5); box-shadow: 0 0 15px rgba(255,255,255,0.3);' : ''}">
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                                 <div style="display: flex; align-items: center; gap: 10px;">
                                     <div style="width: 20px; height: 20px; border-radius: 50%; background: ${riskColors[risk]}; box-shadow: 0 2px 8px rgba(0,0,0,0.2);"></div>
-                                    <span style="font-weight: 600; font-size: 1.1rem;">סיכון ${risk}</span>
+                                    <span style="font-weight: 600; font-size: 1.1rem;">סיכון ${risk}${isDominant ? ' ⭐ (דומיננטי)' : ''}</span>
                                 </div>
                                 <span style="font-weight: bold; font-size: 1.3rem;">₪${riskDistribution[risk].toLocaleString('he-IL', {maximumFractionDigits: 0})}</span>
                             </div>
@@ -2297,6 +2332,13 @@
                             <strong>סך כל החיסכון:</strong> ₪${totalAmount.toLocaleString('he-IL', {maximumFractionDigits: 0})}
                             <div class="small-text" style="font-size: 0.7rem; opacity: 0.9;">לא כולל קרנות ותיקות</div>
                         </div>
+                        ${hasAlignment !== null && clientRisk ? `
+                            <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.3);">
+                                <div style="font-size: 1rem; font-weight: 600; color: white; line-height: 1.6;">
+                                    רמת הסיכון שלך היא ${clientRisk} - תמהיל ההשקעה של הכספים שלך ${hasAlignment ? 'תואם' : 'אינו תואם'} לרמת הסיכון שלך.
+                                </div>
+                            </div>
+                        ` : ''}
                     </div>
                 </div>
             `;
@@ -2977,6 +3019,93 @@
                     // צבע כללי לפי תשואה שנתית
                     const overallColor = comparisonYear.color;
                     
+                    // חישוב מסלולים מובילים
+                    let topPathwaysTable = '';
+                    try {
+                        // מציאת כל המסלולים באותו מוצר ואותו סוג מסלול
+                        const allPathways = await filterMaslul(maslulType, productName, 0);
+                        
+                        if (allPathways && allPathways.length > 0) {
+                            // מיון לפי תשואה שנתית (יורד)
+                            const sortedPathways = allPathways
+                                .filter(p => p.tesuam && !isNaN(parseFloat(p.tesuam)) && parseFloat(p.tesuam) > 0)
+                                .sort((a, b) => parseFloat(b.tesuam) - parseFloat(a.tesuam))
+                                .slice(0, 10); // לוקח את 10 המובילים כדי למצוא את המסלול הרלוונטי
+                            
+                            // מציאת המסלול הרלוונטי (של הלקוח) לפי קוד מסלול
+                            const clientPathwayIndex = sortedPathways.findIndex(p => 
+                                p.mh && p.mh.toString() === kodMaslul.toString()
+                            );
+                            
+                            // בניית רשימה: 3 המובילים + המסלול הרלוונטי (אם לא ב-3 המובילים)
+                            let topPathways = sortedPathways.slice(0, 3);
+                            let isClientInTop3 = clientPathwayIndex >= 0 && clientPathwayIndex < 3;
+                            
+                            // אם המסלול של הלקוח לא ב-3 המובילים, מוסיפים אותו
+                            if (!isClientInTop3 && clientPathwayIndex >= 0) {
+                                topPathways.push(sortedPathways[clientPathwayIndex]);
+                            }
+                            
+                            if (topPathways.length > 0) {
+                                // יצירת טבלה
+                                topPathwaysTable = `
+                                    <div style="margin-top: 20px; padding-top: 15px; border-top: 2px solid #e0e0e0;">
+                                        <h5 style="color: var(--primary); margin: 0 0 15px 0; font-size: 1.1rem; font-weight: 600;">
+                                            <i class="fas fa-trophy"></i>
+                                            המסלולים המובילים במוצר (${productName} - ${maslulType})
+                                        </h5>
+                                        <div style="overflow-x: auto;">
+                                            <table style="width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden;">
+                                                <thead>
+                                                    <tr style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                                                        <th style=" text-align: center; font-weight: 600; font-size: 0.9rem;">דירוג</th>
+                                                        <th style=" text-align: center; font-weight: 600; font-size: 0.9rem;">שם מסלול</th>
+                                                        <th style=" text-align: center; font-weight: 600; font-size: 0.9rem;">תשואה שנתית</th>
+                                                        <th style=" text-align: center; font-weight: 600; font-size: 0.9rem;">מנהלת</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                `;
+                                
+                                topPathways.forEach((pathway, index) => {
+                                    const isClientPathway = pathway.mh && pathway.mh.toString() === kodMaslul.toString();
+                                    const rowColor = isClientPathway ? '#e3f2fd' : 'white';
+                                    const borderColor = isClientPathway ? '#2196f3' : 'transparent';
+                                    // מציאת הדירוג האמיתי מתוך כל המסלולים הממוינים
+                                    const realRank = sortedPathways.findIndex(p => p.mh === pathway.mh) + 1;
+                                    const returnValue = parseFloat(pathway.tesuam || 0);
+                                    const returnDisplay = returnValue > 0 ? returnValue.toFixed(2) + '%' : 'N/A';
+                                    
+                                    topPathwaysTable += `
+                                        <tr style="background: ${rowColor}; border-right: 3px solid ${borderColor};">
+                                            <td style="padding: 10px; text-align: center; font-weight: ${isClientPathway ? 'bold' : 'normal'};">
+                                                ${isClientPathway ? '⭐' : ''} ${realRank}
+                                            </td>
+                                            <td style="padding: 10px; text-align: center; font-weight: ${isClientPathway ? 'bold' : 'normal'}; word-wrap: break-word;">
+                                                ${pathway.shemkupa || pathway.shemMaslulHashkaa || 'לא ידוע'}${isClientPathway ? ' (המסלול שלך)' : ''}
+                                            </td>
+                                            <td style="padding: 10px; text-align: center; font-weight: ${isClientPathway ? 'bold' : 'normal'}; color: var(--primary);">
+                                                ${returnDisplay}
+                                            </td>
+                                            <td style="padding: 10px; text-align: center; font-size: 0.85rem; color: var(--text-light);">
+                                                ${pathway.menahelet || 'לא צוין'}
+                                            </td>
+                                        </tr>
+                                    `;
+                                });
+                                
+                                topPathwaysTable += `
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                `;
+                            }
+                        }
+                    } catch (error) {
+                        console.error('שגיאה בחישוב מסלולים מובילים:', error);
+                    }
+                    
                     html += `
                         <div style="background: #f8f9fa; padding: 15px; border-radius: 10px; margin-bottom: 15px; border-right: 4px solid ${overallColor};">
                             <div style="display: flex; justify-content: space-between; align-items: start; flex-wrap: wrap; gap: 10px; margin-bottom: 15px;">
@@ -3100,6 +3229,8 @@
                                     </div>
                                 </div>
                             </div>
+                            
+                            ${topPathwaysTable}
                         </div>
                     `;
                 }
