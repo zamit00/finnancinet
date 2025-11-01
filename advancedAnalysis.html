@@ -2401,72 +2401,164 @@
                 }
             }, 100);
             
-            // שלב 3: הצגת הנתונים המרוכזים
-            const sortedEntries = Object.values(productMaslulMap).sort((a, b) => b.totalAmount - a.totalAmount);
+            // שלב 3: קיבוץ הנתונים לפי רמת סיכון
+            const riskGroups = {
+                'נמוך': [],
+                'בינוני': [],
+                'גבוה': []
+            };
             
-            
-            sortedEntries.forEach((entry) => {
-                // שימוש בפונקציה המתקדמת לחישוב סיכון לפי סטיות סטטיסטיות
-                // מעבירים את סוג המוצר (mozarType) ולא את שם התוכנית
+            // קבץ כל המוצרים לפי רמת הסיכון
+            Object.values(productMaslulMap).forEach((entry) => {
                 const mozarForCalc = entry.mozarType || entry.productName;
                 const pathwayRisk = calculateRiskByStandardDeviation(mozarForCalc, entry.maslulType);
-                const match = clientRisk ? checkRiskMatch(clientRisk, pathwayRisk) : null;
+                
+                if (pathwayRisk === 'נמוך' || pathwayRisk === 'בינוני' || pathwayRisk === 'גבוה') {
+                    const match = clientRisk ? checkRiskMatch(clientRisk, pathwayRisk) : null;
+                    
+                    riskGroups[pathwayRisk].push({
+                        productName: entry.productName,
+                        maslulType: entry.maslulType,
+                        totalAmount: entry.totalAmount,
+                        pathwayRisk: pathwayRisk,
+                        match: match
+                    });
+                }
+            });
+            
+            // הצגת 3 כרטיסיות לפי רמת סיכון
+            const riskOrder = ['נמוך', 'בינוני', 'גבוה'];
+            const riskIcons = {
+                'נמוך': 'fa-shield-alt',
+                'בינוני': 'fa-chart-line',
+                'גבוה': 'fa-rocket'
+            };
+            
+            riskOrder.forEach((riskLevel) => {
+                const groupItems = riskGroups[riskLevel];
+                
+                if (groupItems.length === 0) return; // דלג אם אין פריטים ברמת סיכון זו
+                
+                // חישוב סכום כולל לרמת סיכון זו
+                const totalForRisk = groupItems.reduce((sum, item) => sum + item.totalAmount, 0);
+                
+                // בדיקת התאמה - האם כל הפריטים ברמת סיכון זו תואמים ללקוח
+                let allMatch = true;
+                let anyMatch = false;
+                if (clientRisk) {
+                    groupItems.forEach(item => {
+                        if (item.match && item.match.isMatch) {
+                            anyMatch = true;
+                        } else {
+                            allMatch = false;
+                        }
+                    });
+                }
+                
+                // קביעת צבע וסטטוס
+                let matchStatus = '';
+                let matchColor = '#6c757d';
+                let matchIcon = 'fa-question-circle';
+                
+                if (clientRisk) {
+                    if (allMatch && groupItems.length > 0) {
+                        matchStatus = 'מתאים לפרופיל הסיכון שלך';
+                        matchColor = '#28a745';
+                        matchIcon = 'fa-check-circle';
+                    } else if (riskLevel === clientRisk) {
+                        matchStatus = 'תואם לרמת הסיכון שלך';
+                        matchColor = '#28a745';
+                        matchIcon = 'fa-check-circle';
+                    } else {
+                        matchStatus = 'לא תואם לרמת הסיכון שלך';
+                        matchColor = '#dc3545';
+                        matchIcon = 'fa-exclamation-triangle';
+                    }
+                }
                 
                 html += `
-                    <div class="analysis-card" style="border-right: 4px solid ${match ? match.color : '#6c757d'}; margin-bottom: 20px;">
-                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 15px; flex-wrap: wrap; gap: 15px;">
+                    <div class="analysis-card" style="border-right: 4px solid ${riskColors[riskLevel]}; margin-bottom: 25px;">
+                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 20px; flex-wrap: wrap; gap: 15px;">
                             <div style="flex: 1; min-width: 200px;">
-                                <h4 style="color: var(--primary); margin: 0 0 10px 0; font-size: 1.3rem;">
-                                    <i class="fas fa-layer-group"></i>
-                                    ${entry.productName}
-                                </h4>
-                                <div style="color: var(--text-light); font-size: 0.95rem;">
-                                    <i class="fas fa-route"></i> ${entry.maslulType}
+                                <h3 style="color: ${riskColors[riskLevel]}; margin: 0 0 10px 0; font-size: 1.5rem; display: flex; align-items: center; gap: 10px;">
+                                    <i class="fas ${riskIcons[riskLevel]}"></i>
+                                    מסלולים בסיכון ${riskLevel}
+                                </h3>
+                                <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-top: 15px;">
+                                    <div style="background: #f8f9fa; padding: 10px; border-radius: 6px;">
+                                        <small style="color: var(--text-light); display: block; margin-bottom: 5px;">רמת סיכון מסלולים:</small>
+                                        <span class="status-badge ${riskLevel === 'גבוה' ? 'status-danger' : riskLevel === 'בינוני' ? 'status-warning' : 'status-good'}">
+                                            ${riskLevel}
+                                        </span>
+                                    </div>
+                                    ${clientRisk ? `
+                                        <div style="background: #f8f9fa; padding: 10px; border-radius: 6px;">
+                                            <small style="color: var(--text-light); display: block; margin-bottom: 5px;">רמת סיכון שלך:</small>
+                                            <span class="status-badge ${clientRisk === 'גבוה' ? 'status-danger' : clientRisk === 'בינוני' ? 'status-warning' : 'status-good'}">
+                                                ${clientRisk}
+                                            </span>
+                                        </div>
+                                    ` : ''}
                                 </div>
                             </div>
                             <div style="text-align: left;">
-                                <div style="font-size: 1.5rem; font-weight: bold; color: var(--success);">
-                                    ₪${entry.totalAmount.toLocaleString('he-IL', {maximumFractionDigits: 0})}
+                                <div style="font-size: 1.8rem; font-weight: bold; color: ${riskColors[riskLevel]};">
+                                    ₪${totalForRisk.toLocaleString('he-IL', {maximumFractionDigits: 0})}
                                 </div>
                                 <div style="color: var(--text-light); font-size: 0.9rem;">
-                                    סך הכל
+                                    סך הכל ברמת סיכון זו
                                 </div>
                             </div>
                         </div>
                         
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px;">
-                            <div style="background: #f8f9fa; padding: 10px; border-radius: 6px;">
-                                <small style="color: var(--text-light);">רמת סיכון מסלול:</small><br>
-                                <span class="status-badge ${pathwayRisk === 'גבוה' ? 'status-danger' : pathwayRisk === 'בינוני' ? 'status-warning' : 'status-good'}">
-                                    ${pathwayRisk}
-                                </span>
-                            </div>
-                            <div style="background: #f8f9fa; padding: 10px; border-radius: 6px;">
-                                <small style="color: var(--text-light);">רמת סיכון לקוח:</small><br>
-                                <span class="status-badge ${clientRisk === 'גבוה' ? 'status-danger' : clientRisk === 'בינוני' ? 'status-warning' : clientRisk === 'נמוך' ? 'status-good' : 'status-warning'}" style="${!clientRisk ? 'background: #fff3cd; color: #856404;' : ''}">
-                                    ${clientRisk || 'לא בוצע שאלון סיכון'}
-                                </span>
-                            </div>
-                        </div>
-                        
-                        ${match ? 
-                            `<div style="margin-top: 15px; padding: 10px; background: white; border-radius: 6px;">
+                        ${matchStatus ? `
+                            <div style="margin-bottom: 20px; padding: 12px; background: ${matchColor === '#28a745' ? '#d4edda' : '#f8d7da'}; border-radius: 8px; border-right: 3px solid ${matchColor};">
                                 <div style="display: flex; align-items: center; gap: 8px;">
-                                    <i class="fas ${match.icon}" style="color: ${match.color}; font-size: 1.2rem;"></i>
-                                    <span style="color: ${match.color}; font-weight: 500;">${match.message}</span>
+                                    <i class="fas ${matchIcon}" style="color: ${matchColor}; font-size: 1.2rem;"></i>
+                                    <span style="color: ${matchColor === '#28a745' ? '#155724' : '#721c24'}; font-weight: 600;">${matchStatus}</span>
                                 </div>
-                            </div>` : 
-                            `<div style="margin-top: 15px; padding: 15px; background: #fff8e1; border-radius: 8px; border-right: 4px solid #ff9800;">
-                                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
-                                    <i class="fas fa-exclamation-circle" style="color: #ff9800; font-size: 1.2rem;"></i>
-                                    <span style="color: #e65100; font-weight: 600;">לא ניתן להחליט ללא אופי סיכון</span>
+                            </div>
+                        ` : ''}
+                        
+                        <div style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
+                            <h4 style="color: var(--text-dark); margin: 0 0 15px 0; font-size: 1.1rem;">
+                                <i class="fas fa-list"></i>
+                                רשימת מוצרים ומסלולים (${groupItems.length})
+                            </h4>
+                            <div style="display: grid; gap: 12px;">
+                `;
+                
+                // מיון לפי סכום (יורד)
+                groupItems.sort((a, b) => b.totalAmount - a.totalAmount);
+                
+                groupItems.forEach((item) => {
+                    html += `
+                        <div style="background: white; padding: 15px; border-radius: 6px; border-right: 3px solid ${riskColors[riskLevel]};">
+                            <div style="display: flex; justify-content: space-between; align-items: start; flex-wrap: wrap; gap: 10px;">
+                                <div style="flex: 1; min-width: 200px;">
+                                    <div style="font-weight: bold; color: var(--text-dark); margin-bottom: 5px; font-size: 1.05rem;">
+                                        ${item.productName}
+                                    </div>
+                                    <div style="color: var(--text-light); font-size: 0.9rem;">
+                                        <i class="fas fa-route"></i> ${item.maslulType}
+                                    </div>
                                 </div>
-                                <button class="btn btn-primary" onclick="goToStep(1); setTimeout(openRiskQuestModalAndReturn, 300);" style="width: 100%; justify-content: center;">
-                                    <i class="fas fa-clipboard-list"></i>
-                                    מלא שאלון סיכון
-                                </button>
-                            </div>`
-                        }
+                                <div style="text-align: left; min-width: 120px;">
+                                    <div style="font-weight: bold; color: ${riskColors[riskLevel]}; font-size: 1.2rem;">
+                                        ₪${item.totalAmount.toLocaleString('he-IL', {maximumFractionDigits: 0})}
+                                    </div>
+                                    <div style="color: var(--text-light); font-size: 0.85rem;">
+                                        יתרה
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                html += `
+                            </div>
+                        </div>
                     </div>
                 `;
             });

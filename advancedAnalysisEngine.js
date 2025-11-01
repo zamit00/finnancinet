@@ -14,42 +14,81 @@ const fieldsToAverageForAdvancedAnalysis = [
       }else{
           sugmuzar=mozar;
       }
-        const dataY = await filterMaslul(maslul, sugmuzar, 0);
-        
-        if (dataY.length === 0) return;
-        const result = {
+      
+      // קודם נחפש ב-dataIndicators שכבר מחושבים
+      if (typeof dataIndicators !== 'undefined' && Array.isArray(dataIndicators) && dataIndicators.length > 0) {
+          const existingIndicator = dataIndicators.find(item => 
+              item.mozar === sugmuzar && item.maslul === maslul
+          );
+          
+          if (existingIndicator) {
+              // נמצא - נחזיר את הנתונים הקיימים
+              return {
+                  mozar: sugmuzar,
+                  maslul: maslul,
+                  tesuam: existingIndicator.tesuam || '0',
+                  tesuam36: existingIndicator.tesuam36 || '0',
+                  tesuam60: existingIndicator.tesuam60 || '0',
+                  tesuaMitchilatshana: existingIndicator.tesuaMitchilatshana || '0',
+                  dmeyNihul: existingIndicator.dmeyNihul || '0',
+                  dmeyNihulHafkad: existingIndicator.dmeyNihulHafkad || '0',
+                  dmeyNihulMeshuklal: existingIndicator.dmeyNihulMeshuklal || '0'
+              };
+          }
+      }
+      
+      // אם לא נמצא ב-dataIndicators - נחשב מחדש
+      const dataY = await filterMaslul(maslul, sugmuzar, 0);
+      
+      if (dataY.length === 0) return null;
+      
+      const result = {
           mozar: sugmuzar,
           maslul: maslul
-        };
-        
-        for (const field of fieldsToAverageForAdvancedAnalysis) {
-         
+      };
+      
+      // חישוב ממוצעים לכל השדות
+      for (const field of fieldsToAverageForAdvancedAnalysis) {
           const validItems = dataY.filter(obj =>
-            obj[field] !== undefined &&
-            obj[field] !== null &&
-            obj[field] !== '' &&
-            !isNaN(obj[field]) &&
-            parseFloat(obj[field]) !== 0  // לא לספור אפסים - מי שאין לו נתון לא משתתף בממוצע
+              obj[field] !== undefined &&
+              obj[field] !== null &&
+              obj[field] !== '' &&
+              !isNaN(obj[field]) &&
+              parseFloat(obj[field]) !== 0
           );
-  
-          if(field==='tesuam' || field==='tesuam36' || field==='tesuam60' || field==='tesuaMitchilatshana'){
+
+          if (field === 'tesuam' || field === 'tesuam36' || field === 'tesuam60' || field === 'tesuaMitchilatshana') {
               const total = validItems.reduce((sum, obj) => sum + parseFloat(obj[field]), 0);
               const avg = validItems.length > 0 ? total / validItems.length : 0;
-              result[field] = avg.toFixed(2); 
+              result[field] = avg.toFixed(2);
+          } else if (field === 'dmeyNihul') {
+              const total = validItems.reduce((sum, obj) => sum + parseFloat(obj[field]), 0);
+              const avg = validItems.length > 0 ? total / validItems.length : 0;
+              result[field] = avg.toFixed(2);
+          } else if (field === 'dmeyNihulHafkad') {
+              const total = validItems.reduce((sum, obj) => sum + parseFloat(obj[field]), 0);
+              const avg = validItems.length > 0 ? total / validItems.length : 0;
+              result[field] = avg.toFixed(2);
           }
-          else if(mozar!=='קרנות חדשות' && field==='dmeyNihulHafkad'){
-          
-              if(result['dmeyNihulHafkad'] && result['dmeyNihul']){
-                  result['dmeyNihulMeshuklal'] = (Number(result['dmeyNihulHafkad'])/10 + Number(result['dmeyNihul'])).toFixed(2);
-              }
-          } else {
-              result['dmeyNihulHafkad'] = 0.16;
-              result['dmeyNihul'] = 1.6;
-              result['dmeyNihulMeshuklal'] = 0.25;
-          }
-        }
-        return result;
-      };
+      }
+      
+      // חישוב דמי ניהול משוקלל
+      if (result['dmeyNihulHafkad'] && result['dmeyNihul']) {
+          const hafkad = parseFloat(result['dmeyNihulHafkad']) || 0;
+          const nihul = parseFloat(result['dmeyNihul']) || 0;
+          result['dmeyNihulMeshuklal'] = ((hafkad / 10) + nihul).toFixed(2);
+      } else if (result['dmeyNihul']) {
+          // רק דמי ניהול מצבירה (ללא הפקדה)
+          result['dmeyNihulMeshuklal'] = (parseFloat(result['dmeyNihul']) || 0).toFixed(2);
+      } else {
+          // ברירת מחדל - אין נתונים
+          result['dmeyNihul'] = '0';
+          result['dmeyNihulHafkad'] = '0';
+          result['dmeyNihulMeshuklal'] = '0';
+      }
+      
+      return result;
+  };
   // ייבוא נתונים מ-sessionStorage ומחיקה מיידית
   function importAndClearSessionData() {
       const gil = sessionStorage.getItem('gilForAdvancedAnalysis');
