@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>פיננסינט</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #e3f2fd, #b2dfdb);
+            color: #05445E;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .closewindow{color:green;position:absolute;right:20px;top:5px;}
+        .container {
+            width: clamp(300px,95vw,600px);
+            background: white;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        #riskForm{width:100%;box-sizing:border-box;margin:0;padding:5px;}
+        
+        h1 {
+            text-align: center;
+            color: #00796B;
+        }
+        .question {
+            margin-bottom: 15px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        label {
+            display: block;
+            margin: 5px 0;
+            cursor: pointer;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background: #00796B;
+            color: white;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 15px;
+        }
+        button:hover {
+            background: #004D40;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            color: #05445E;
+        }
+        .bold{
+            font-weight: bold;
+
+        }
+        .hesber,li{
+            text-align: justify;
+        }
+        .ul{width: 90%;margin-right: 0px;padding: 15px;}
+        li{padding: 3px;}
+        #riskForm{display: none;}
+        .btn{
+            color: white;
+            background-color: green;
+            font-size: medium;
+            text-align: center;
+            width: 250px;
+            height: 40px;
+            
+        }
+        #searchkupa{width: 250px;}
+        #result{text-align: justify;display: none;}
+        #sik{width: 100%;text-align: center;}
+        #hes{padding: 5px;box-sizing: border-box;color: darkblue;}
+  @media screen and (max-width:600px){
+    #hes{text-align: right;
+        padding-right:10px; }
+
+  }
+    </style>
+<script>
+    function hideIframe(){
+            window.parent.hideframe();
+            window.parent.showAllimages()
+        }
+    function showme(){
+      window.parent.hideframe();
+      window.parent.hideAllimages();  
+      window.parent.showIframe('hasifotMeshulav.html'); }
+    
+    </script>
+    </head>
+<body dir="rtl">
+    <div class='closewindow' onclick='hideIframe()'>X</div>
+    <div class="container">
+        <h1>שאלון סיכון</h1>
+        <div id="conthesber">
+            <p class="hesber">
+                פרופיל הסיכון של משקיע נקבע לפי מספר מרכיבים מרכזיים:
+            </p>
+            <ul class="ul">
+                <li><span class="bold">מטרת ההשקעה</span> – האם המשקיע שואף לשמר הון, להגדיל אותו בהדרגה,
+                    או להשיג תשואה גבוהה גם במחיר של תנודתיות.</li>
+                <li><span class="bold">טווח ההשקעה</span> – פרק הזמן שבו המשקיע מתכנן 
+                    להחזיק בנכסים (קצר, בינוני או ארוך טווח).</li>
+                <li><span class="bold">יכולת עמידה בתנודתיות </span>– תגובת המשקיע לשינויים בערך
+                    ההשקעות שלו, במיוחד בתקופות ירידה.</li>
+                <li><span class="bold">ניסיון בהשקעות </span>– רמת ההיכרות והניסיון של 
+                    המשקיע בשוק ההון ובסוגי נכסים שונים.</li>
+                <li><span class="bold">סוגי הנכסים המועדפים </span>– רמת ההיכרות והניסיון של המשקיע 
+                    בשוק ההון ובסוגי נכסים שונים.</li>
+                <li><span class="bold">רמת הנוחות עם סיכון </span>– ההעדפה האישית 
+                    של המשקיע לגבי רמות שונות של סיכון.</li>
+            </ul>
+            <button class="btn" onclick="sheelon()">לשאלון סיכון</button>
+        </div>
+        <form id="riskForm">
+            <div class="question">1. מהי מטרת ההשקעה שלך?</div>
+            <label><input type="radio" name="q1" value="1"> שמירה על הקרן בלבד</label>
+            <label><input type="radio" name="q1" value="2"> צמיחה עם סיכון נמוך</label>
+            <label><input type="radio" name="q1" value="3"> תשואה גבוהה גם במחיר של תנודתיות</label>
+            
+            <div class="question">2. מהו טווח זמן ההשקעה המתוכנן?</div>
+            <label><input type="radio" name="q2" value="1"> פחות משנה</label>
+            <label><input type="radio" name="q2" value="2"> 1-5 שנים</label>
+            <label><input type="radio" name="q2" value="3"> יותר מ-5 שנים</label>
+            
+            <div class="question">3. איך היית מגיב לירידה של 20% בערך ההשקעה שלך?</div>
+            <label><input type="radio" name="q3" value="1"> מוכר מיד כדי למנוע הפסדים</label>
+            <label><input type="radio" name="q3" value="2"> מחכה לראות מה קורה</label>
+            <label><input type="radio" name="q3" value="3"> קונה עוד כי זו הזדמנות</label>
+            
+            <div class="question">4. האם יש לך ניסיון בהשקעות?</div>
+            <label><input type="radio" name="q4" value="1"> אין ניסיון כלל</label>
+            <label><input type="radio" name="q4" value="2"> ניסיון בסיסי</label>
+            <label><input type="radio" name="q4" value="3"> ניסיון רב</label>
+            
+            <div class="question">5. באיזה סוג נכסים היית מעדיף להשקיע?</div>
+            <label><input type="radio" name="q5" value="1">   פקדונות בנקאיים עם ריבית קבועה</label>
+            <label><input type="radio" name="q5" value="2">  קרנות נאמנות עם סיכון בינוני</label>
+            <label><input type="radio" name="q5" value="3"> מניות בשוק ההון</label>
+            
+            <div class="question">6. מהו אחוז הכסף המושקע מסך הכסף הנזיל שלך?</div>
+            <label><input type="radio" name="q6" value="1"> אחוז נמוך מאוד</label>
+            <label><input type="radio" name="q6" value="2"> אחוז בינוני</label>
+            <label><input type="radio" name="q6" value="3"> אחוז גבוה</label>
+            
+            <button type="button" onclick="calculateRisk()">חשב</button>
+        </form>
+        <div id="result">
+            <h3 id="sik"></h3>
+            <p id="hes"></p>
+            
+             <button class='btn' id="searchkupa"onclick='showme()'>עבור למחולל חשיפות</button> 
+        </div>
+    </div>
+
+    <script>
+        const sik=document.getElementById("sik");
+        const hes=document.getElementById("hes");
+        function sheelon(){
+            const hesber=document.getElementById('conthesber');
+            const form=document.getElementById('riskForm');
+            hesber.style.display='none';
+            form.style.display='block';
+        }
+        function calculateRisk() {
+            const result=document.getElementById('result');
+            let totalScore = 0;
+            const questions = document.querySelectorAll("input[type='radio']:checked");
+            if (questions.length < 6) {
+                document.getElementById("result").innerText = "אנא ענה על כל השאלות";
+                return;
+            }
+            document.getElementById('riskForm').style.display='none';
+            window.scrollTo({ top: 140, behavior: 'smooth' });
+            questions.forEach(q => totalScore += parseInt(q.value));
+            let riskLevel, explanation;
+            
+            if (totalScore <= 7) {
+                riskLevel = "סיכון נמוך";
+                explanation ='בהתאם לתשובותיך לשאלון נראה כי אתה משקיע סולידי אשר אינו אוהב סיכון והכספים שמיועדים להשקעה אינם יכולים לסבול הפסדים מבחינתך. המסלולים המתאימים להשקעתך הם אלה אשר בעלי תנודתיות נמוכה עם חשיפה נמוכה למניות. מסלולים כמו כספי שקלי, אג"ח ממשלות ואפילו אשראי ואג"ח. בבחירת ההשקעה חשוב להתייעץ עם בעל רישיון פנסיוני או יועץ השקעות מוסמך כדי שיתאים לך את ההשקעה המתאימה לצרכים שלך.';
+            } else if (totalScore <= 12) {
+                riskLevel = "סיכון בינוני";
+                explanation = "בהתאם לתשובותיך לשאלון נראה כי אתה משקיע אשר מוכן לקחת סיכונים אבל במידת מה. אתה מסוגל לספוג ולהכיל הפסדים אבל עד גבול מסוים. אני מניח שאתה מחפש רווחים מעבר לרווחים הניתנים במסלולים השיקליים כגון פיקדונות בנקאיים וקרנות כספיות. המסלולים המתאימים להשקעתך הם אלה אשר בעלי תנודתיות בינונית עם חשיפה בינונית למניות. מסלולים כמו כללי, לבני 50 עד 60. בבחירת ההשקעה חשוב להתייעץ עם בעל רישיון פנסיוני או יועץ השקעות מוסמך כדי שיתאים לך את ההשקעה המתאימה לצרכים שלך.";
+            } else {
+                riskLevel = "סיכון גבוה";
+                explanation = "בהתאם לתשובותיך לשאלון נראה כי אתה משקיע אשר מצפה לתשואה גבוהה על ההשקעה שלך תוך  לקיחת סיכונים ברמה גבוהה. אתה מסוגל לספוג ולהכיל הפסדים. חשוב להבין שהשקעה כזו צריכה להיות מאופיינת כהשקעה לטווח הארוך כדי לדעת להכיל גם ירידות בשוק ההון ותקופות משבר. המסלולים המתאימים להשקעתך הם אלה אשר בעלי תנודתיות גבוהה עם חשיפה גבוהה למניות. מסלולים כמו מנייתי, עוקב מדד sp500, עוקבי מדדי מניות, מניות סחיר. בבחירת ההשקעה חשוב להתייעץ עם בעל רישיון פנסיוני או יועץ השקעות מוסמך כדי שיתאים לך את ההשקעה המתאימה לצרכים שלך.";
+            }
+            if(riskLevel === "סיכון גבוה"){
+                sik.style.color='red';
+            }
+            else if(riskLevel === "סיכון בינוני"){
+                sik.style.color='orange';
+            }
+            else{
+                sik.style.color='green';
+            }
+            sik.innerHTML = `<strong>${riskLevel}</strong>`
+            hes.innerHTML =`${explanation}`;
+            result.style.display='block';
+        }
+    </script>
+</body>
+</html>
+
+
