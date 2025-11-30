@@ -1,0 +1,283 @@
+/* Professional Info Modal Styles */
+.professional-info-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 10000;
+    backdrop-filter: blur(5px);
+    overflow-y: auto;
+    padding: 2rem 0;
+}
+
+.professional-info-modal.show {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.professional-info-card {
+    background: white;
+    border-radius: 20px;
+    padding: 3rem;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    text-align: right;
+    line-height: 1.8;
+    max-width: 900px;
+    width: 90%;
+    margin: 2rem auto;
+    position: relative;
+    animation: slideInFromTop 0.4s ease;
+    direction: rtl;
+}
+
+@keyframes slideInFromTop {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.professional-info-card .close-btn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: #e74c3c;
+    color: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
+    z-index: 10;
+}
+
+.professional-info-card .close-btn:hover {
+    background: #c0392b;
+    transform: scale(1.1) rotate(90deg);
+    box-shadow: 0 6px 16px rgba(231, 76, 60, 0.5);
+}
+
+.professional-info-card h1 {
+    font-size: 2.2rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    padding-bottom: 1rem;
+    border-bottom: 3px solid #667eea;
+}
+
+.professional-info-card h2 {
+    font-size: 1.6rem;
+    margin: 2rem 0 1rem;
+    color: #667eea;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.professional-info-card h2 i {
+    color: #764ba2;
+    font-size: 1.4rem;
+}
+
+.professional-info-card p {
+    color: #555;
+    margin-bottom: 1rem;
+    font-size: 1.05rem;
+    line-height: 1.8;
+}
+
+.professional-info-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0 1.5rem 0;
+}
+
+.professional-info-card ul li {
+    margin-bottom: 1rem;
+    padding: 12px 15px 12px 40px;
+    position: relative;
+    color: #555;
+    font-size: 1.05rem;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+    border-radius: 8px;
+    border-right: 4px solid #667eea;
+    transition: all 0.3s ease;
+}
+
+.professional-info-card ul li:hover {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+    transform: translateX(-5px);
+}
+
+.professional-info-card ul li::before {
+    content: '✓';
+    position: absolute;
+    right: 15px;
+    color: #667eea;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.professional-info-card ul li b,
+.professional-info-card ul li strong {
+    color: #667eea;
+    font-weight: 600;
+}
+
+.professional-info-card .section {
+    margin-bottom: 2rem;
+}
+
+.professional-info-card .head {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+    padding: 2rem;
+    border-radius: 15px;
+    margin-bottom: 2rem;
+    border-right: 4px solid #667eea;
+}
+
+.professional-info-card .head h2 {
+    margin-top: 0;
+    color: #333;
+    border-bottom: none;
+}
+
+.professional-info-card .head p {
+    margin-bottom: 0;
+}
+
+.professional-info-card .footer {
+    text-align: center;
+    padding: 1.5rem;
+    margin-top: 3rem;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+    border-radius: 10px;
+    border: 2px solid rgba(102, 126, 234, 0.2);
+}
+
+.professional-info-card .footer p {
+    margin: 0;
+    font-size: 0.95rem;
+    color: #666;
+}
+
+.professional-info-card ol {
+    counter-reset: item;
+    list-style: none;
+    padding: 0;
+}
+
+.professional-info-card ol li {
+    counter-increment: item;
+    margin-bottom: 1.5rem;
+    padding: 15px 15px 15px 50px;
+    position: relative;
+    background: white;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.professional-info-card ol li:hover {
+    border-color: #667eea;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+}
+
+.professional-info-card ol li::before {
+    content: counter(item);
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .professional-info-modal {
+        padding: 1rem 0;
+    }
+    
+    .professional-info-card {
+        padding: 2rem 1.5rem;
+        width: 95%;
+        margin: 1rem auto;
+    }
+    
+    .professional-info-card h1 {
+        font-size: 1.6rem;
+        line-height: 1.3;
+    }
+    
+    .professional-info-card h2 {
+        font-size: 1.3rem;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .professional-info-card p,
+    .professional-info-card li {
+        font-size: 0.95rem;
+        line-height: 1.6;
+    }
+    
+    .professional-info-card .head {
+        padding: 1.5rem;
+    }
+    
+    .professional-info-card .close-btn {
+        top: 10px;
+        left: 10px;
+        width: 35px;
+        height: 35px;
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .professional-info-card {
+        padding: 1.5rem 1rem;
+    }
+    
+    .professional-info-card h1 {
+        font-size: 1.4rem;
+    }
+    
+    .professional-info-card h2 {
+        font-size: 1.2rem;
+    }
+    
+    .professional-info-card p,
+    .professional-info-card li {
+        font-size: 0.9rem;
+    }
+}
+
