@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Sitemap: https://zamit00.github.io/moneyGrows/sitemap.xml
