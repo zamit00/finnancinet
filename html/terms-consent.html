@@ -10,7 +10,24 @@
         <p style="font-size: 0.95rem; color: #666;">
             האתר מספק כלים ומידע להשוואת מוצרים פנסיוניים. המידע אינו מהווה ייעוץ פיננסי.
         </p>
-        <button id="acceptTermsBtn">הבנתי ומסכים/ה</button>
+        <button id="acceptTermsBtn" onclick="close">הבנתי ומסכים/ה</button>
     </div>
+    <script>
+        // Check if user has already accepted terms
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!localStorage.getItem('termsAccepted')) {
+                document.getElementById('termsConsentOverlay').style.display = 'flex';
+            }
+        });
+
+        // Close overlay and store consent
+        function closeTermsConsent() {
+            localStorage.setItem('termsAccepted', 'true');
+            document.getElementById('termsConsentOverlay').style.display = 'none';
+        }
+
+        // Attach event listener to button
+        document.getElementById('acceptTermsBtn').addEventListener('click', closeTermsConsent);
+    </script>
 </div>
 
